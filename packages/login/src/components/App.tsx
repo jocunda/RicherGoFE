@@ -1,6 +1,7 @@
 import "../styles/index.scss"
 import React from "react"
 
+
 const App = () => {
     return <>
         <section className="hero"></section>
