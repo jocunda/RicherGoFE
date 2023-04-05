@@ -1,27 +1,19 @@
 {
-  "name": "root",
-  "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "lerna run start",
-    "test": "lerna run test"
+    "start": "lerna run --parallel start",
+    "build": "lerna run build",
+    "serve": "lerna run --parallel serve",
+    "clean": "lerna run --parallel clean",
+    "prepare": "lerna run yarn"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jocunda/webpack-full.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jocunda/webpack-full/issues"
-  },
-  "homepage": "https://github.com/jocunda/webpack-full#readme",
-  "description": "��#\u0000 \u0000w\u0000e\u0000b\u0000p\u0000a\u0000c\u0000k\u0000-\u0000f\u0000u\u0000l\u0000l\u0000\r\u0000 \u0000",
-  "keywords": [],
   "devDependencies": {
     "lerna": "^6.6.1"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
 }

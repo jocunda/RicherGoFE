@@ -13,8 +13,8 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
     mode: mode,
+    entry: './src/index.tsx',
     target: target,
-    entry: "./src/index.tsx",
     module: {
         rules: [
             {
@@ -55,11 +55,11 @@ module.exports = {
         ],
     },
     plugins: [
-        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             template: "./public/index.html"
         }),
+        new CleanWebpackPlugin()
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],

@@ -6,7 +6,7 @@ const App = () => {
         <section className="hero"></section>
         <main>
             <section>
-                <h1>Hi, React</h1>
+                <h1>Hi, App_Home</h1>
             </section>
         </main>
 

@@ -55,11 +55,11 @@ module.exports = {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
-            template: "./src/index.html"
-        }),
-        new CleanWebpackPlugin()
+            template: "./public/index.html"
+        })
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],

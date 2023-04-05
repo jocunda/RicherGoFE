@@ -1,11 +1,11 @@
-# `home`
+# `app_login`
 
 > TODO: description
 
 ## Usage
 
 ```
-const home = require('home');
+const appLogin = require('app_login');
 
 // TODO: DEMONSTRATE API
 ```
