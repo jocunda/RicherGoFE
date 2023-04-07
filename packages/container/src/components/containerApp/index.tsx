@@ -10,7 +10,12 @@ export const ContainerApp = ({
     AppHome, AppLogin
 }: ContainerAppProps) => {
     return <>
-        <AppHome />
-        <AppLogin />
+        <React.Suspense fallback={false}>
+            <AppHome />
+        </React.Suspense>
+        <React.Suspense fallback={false}>
+            <AppLogin />
+        </React.Suspense>
+
     </>
 }

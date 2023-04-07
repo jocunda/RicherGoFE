@@ -1,7 +1,12 @@
 const path = require("path");
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { ModuleFederationPlugin } = webpack.container;
+const deps = require("./package.json").dependencies;
+require("dotenv").config({ path: "./.env" });
+
 
 let mode = "development";
 let target = "web";
@@ -58,6 +63,27 @@ module.exports = {
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             template: "./public/index.html"
+        }),
+        new ModuleFederationPlugin({
+            name: "container",
+            remotes: {
+                apphome: process.env.DEV_APPHOME,
+                applogin: process.env.DEV_APPLOGIN,
+            },
+            shared: {
+                ...deps,
+                react: { singleton: true, eager: true, requiredVersion: deps.react },
+                "react-dom": {
+                    singleton: true,
+                    eager: true,
+                    requiredVersion: deps["react-dom"],
+                },
+                "react-router-dom": {
+                    singleton: true,
+                    eager: true,
+                    requiredVersion: deps["react-router-dom"],
+                },
+            },
         }),
         new CleanWebpackPlugin()
     ],
