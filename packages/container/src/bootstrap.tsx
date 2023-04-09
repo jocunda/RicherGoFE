@@ -1,7 +1,6 @@
-import App from "./components/App"
+import App from "./App"
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
-
 import { createRoot } from 'react-dom/client';
 
 const domNode = document.getElementById('root') as HTMLElement;

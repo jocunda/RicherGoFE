@@ -7,7 +7,6 @@ const { ModuleFederationPlugin } = webpack.container;
 const deps = require("./package.json").dependencies;
 require("dotenv").config({ path: "./.env" });
 
-
 let mode = "development";
 let target = "web";
 
@@ -18,7 +17,7 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
     mode: mode,
-    entry: './src/index.tsx',
+    entry: './src/index.ts',
     target: target,
     module: {
         rules: [
@@ -67,12 +66,16 @@ module.exports = {
         new ModuleFederationPlugin({
             name: "container",
             remotes: {
-                app_home: process.env.DEV_APPHOME,
-                app_login: process.env.DEV_APPLOGIN,
+                app_home: "app_home@http://localhost:3001/remoteEntry.js",
+                app_login: "app_login@http://localhost:3002/remoteEntry.js",
             },
             shared: {
                 ...deps,
-                react: { singleton: true, eager: true, requiredVersion: deps.react },
+                react: {
+                    singleton: true,
+                    eager: true,
+                    requiredVersion: deps.react
+                },
                 "react-dom": {
                     singleton: true,
                     eager: true,
@@ -85,7 +88,7 @@ module.exports = {
                 },
             },
         }),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
     ],
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],

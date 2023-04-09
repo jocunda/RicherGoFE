@@ -61,14 +61,18 @@ module.exports = {
         new CleanWebpackPlugin(),
         new ModuleFederationPlugin({
             name: "app_home",
-            filename: 'bundle.js',
+            filename: "remoteEntry.js",
             exposes: {
                 // expose each component
                 "./CounterAppHome": "./src/components/CounterAppHome",
             },
             shared: {
                 ...deps,
-                react: { singleton: true, eager: true, requiredVersion: deps.react },
+                react: {
+                    singleton: true,
+                    eager: true,
+                    requiredVersion: deps.react
+                },
                 "react-dom": {
                     singleton: true,
                     eager: true,
@@ -98,5 +102,6 @@ module.exports = {
         port: 3001,
         static: './dist',
         hot: true,
-    }
+    },
+    
 }
