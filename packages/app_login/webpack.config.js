@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
     mode: mode,
-    entry: './src/index.tsx',
+    entry: './src/index.ts',
     target: target,
     module: {
         rules: [

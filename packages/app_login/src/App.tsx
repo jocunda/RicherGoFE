@@ -1,6 +1,6 @@
-import "../styles/index.scss"
+import "./styles/index.scss"
 import React from "react"
-import CounterAppLogin from "./CounterAppLogin"
+import CounterAppLogin from "./components/CounterAppLogin"
 
 const App = () => {
     return <>
