@@ -1,4 +1,5 @@
 {
+  "name": "container",
   "private": true,
   "scripts": {
     "start": "webpack serve",
@@ -32,12 +33,13 @@
     "webpack-dev-server": "^4.13.1"
   },
   "dependencies": {
+    "app_home": "^0.0.0",
+    "app_login": "^0.0.0",
     "postcss-preset-env": "^8.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.10.0",
+    "react-router-dom": "^6.10.0"
   },
-  "name": "webpack-full",
   "workspaces": [
     "packages/*"
   ]

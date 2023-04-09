@@ -1,5 +1,6 @@
 import "../styles/index.scss"
 import React from "react"
+import CounterAppHome from "./CounterAppHome"
 
 const App = () => {
     return <>
@@ -8,6 +9,7 @@ const App = () => {
             <section>
                 <h1>Hi, App_Home</h1>
             </section>
+            <CounterAppHome />
         </main>
 
     </>

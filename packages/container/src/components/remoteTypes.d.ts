@@ -1,13 +1,13 @@
 ///<reference types="react" />
 
-declare module "app_home/AppHome" {
-    const AppHome: React.ComponentType;
+declare module "app_home/CounterAppHome" {
+    const CounterAppHome: React.ComponentType;
 
-    export default AppHome;
+    export default CounterAppHome;
 }
 
-declare module "app_login/AppLogin" {
-    const AppLogin: React.ComponentType;
+declare module "app_login/CounterAppLogin" {
+    const CounterAppLogin: React.ComponentType;
 
-    export default AppLogin;
+    export default CounterAppLogin;
 }

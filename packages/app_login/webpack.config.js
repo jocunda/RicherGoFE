@@ -1,7 +1,10 @@
 const path = require("path");
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { ModuleFederationPlugin } = webpack.container;
+const deps = require("./package.json").dependencies;
 
 let mode = "development";
 let target = "web";
@@ -56,6 +59,28 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new ModuleFederationPlugin({
+            name: "app_login",
+            filename: 'bundle.js',
+            exposes: {
+                // expose each component
+                "./CounterAppLogin": "./src/components/CounterAppLogin",
+            },
+            shared: {
+                ...deps,
+                react: { singleton: true, eager: true, requiredVersion: deps.react },
+                "react-dom": {
+                    singleton: true,
+                    eager: true,
+                    requiredVersion: deps["react-dom"],
+                },
+                "react-router-dom": {
+                    singleton: true,
+                    eager: true,
+                    requiredVersion: deps["react-router-dom"],
+                },
+            },
+        }),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             template: "./public/index.html"
@@ -65,12 +90,12 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         assetModuleFilename: "images/[hash][ext][query]",
     },
     devtool: "source-map",
     devServer: {
+        port: 3002,
         static: './dist',
         hot: true,
     }

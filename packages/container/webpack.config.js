@@ -67,8 +67,8 @@ module.exports = {
         new ModuleFederationPlugin({
             name: "container",
             remotes: {
-                apphome: process.env.DEV_APPHOME,
-                applogin: process.env.DEV_APPLOGIN,
+                app_home: process.env.DEV_APPHOME,
+                app_login: process.env.DEV_APPLOGIN,
             },
             shared: {
                 ...deps,
@@ -97,6 +97,7 @@ module.exports = {
     },
     devtool: "source-map",
     devServer: {
+        port: 3000,
         static: './dist',
         hot: true,
     }

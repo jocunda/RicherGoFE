@@ -16,6 +16,5 @@ export const ContainerApp = ({
         <React.Suspense fallback={false}>
             <AppLogin />
         </React.Suspense>
-
     </>
 }

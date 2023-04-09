@@ -1,5 +1,6 @@
 import "../styles/index.scss"
 import React from "react"
+import CounterAppLogin from "./CounterAppLogin"
 
 const App = () => {
     return <>
@@ -8,6 +9,7 @@ const App = () => {
             <section>
                 <h1>Hi, App_login</h1>
             </section>
+            <CounterAppLogin />
         </main>
 
     </>

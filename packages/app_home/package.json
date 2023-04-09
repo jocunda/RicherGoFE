@@ -1,12 +1,12 @@
 {
-  "name": "app-home",
+  "name": "app_home",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "webpack serve",
     "build": "cross-env NODE_ENV=production webpack",
     "build-dev": "webpack",
-    "serve": "serve dist -p 3002",
+    "serve": "serve dist -p 3001",
     "clean": "del /S /Q dist"
   },
   "devDependencies": {
