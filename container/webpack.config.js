@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshTypeScript = require("react-refresh-typescript");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -8,18 +9,12 @@ const { ModuleFederationPlugin } = webpack.container;
 const deps = require("./package.json").dependencies;
 require("dotenv").config({ path: "./.env" });
 
-let mode = "development";
-let target = "web";
-
-if (process.env.NODE_ENV === "production") {
-  mode = "production";
-  target = "browserslist";
-}
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  mode: mode,
+  mode: isDevelopment ? "development" : "production",
+  target: isDevelopment ? "web" : "browserslist",
   entry: "./src/index.ts",
-  target: target,
   module: {
     rules: [
       {
@@ -41,21 +36,19 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: "ts-loader",
-      },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
-            ],
+        use: [
+          {
+            loader: require.resolve("ts-loader"),
+            options: {
+              getCustomTransformers: () => ({
+                before: [isDevelopment && ReactRefreshTypeScript()].filter(
+                  Boolean
+                ),
+              }),
+              transpileOnly: isDevelopment,
+            },
           },
-        },
+        ],
       },
     ],
   },
@@ -87,8 +80,8 @@ module.exports = {
       },
     }),
     new CleanWebpackPlugin(),
-    new ReactRefreshWebpackPlugin(),
-  ],
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
@@ -101,10 +94,8 @@ module.exports = {
   devServer: {
     port: 3000,
     static: "./dist",
-    hot: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
-      //change it to 'http://localhost:3000' for secure option
     },
   },
 };

@@ -8,7 +8,7 @@ const App = () => {
       <section className="hero"></section>
       <main>
         <section>
-          <h1>Hi, App_Home</h1>
+          <h1>Hi, App_Home123</h1>
         </section>
         <CounterAppHome />
       </main>
