@@ -67,8 +67,8 @@ module.exports = {
         new ModuleFederationPlugin({
             name: "container",
             remotes: {
-                app_home: "app_home@http://localhost:3001/remoteEntry.js",
-                app_login: "app_login@http://localhost:3002/remoteEntry.js",
+                app_home: process.env.DEV_APPHOME,
+                app_login: process.env.DEV_APPLOGIN
             },
             shared: {
                 ...deps,
@@ -104,6 +104,7 @@ module.exports = {
         hot: true,
         headers: {
             "Access-Control-Allow-Origin": "*",
+             //change it to 'http://localhost:3000' for secure option
           },
     }
 }

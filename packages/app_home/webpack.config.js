@@ -101,6 +101,7 @@ module.exports = {
         hot: true,
         headers: {
             "Access-Control-Allow-Origin": "*",
+             //change it to 'http://localhost:3000' for secure option
           },
     },
     
