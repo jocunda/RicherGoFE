@@ -74,17 +74,14 @@ module.exports = {
                 ...deps,
                 react: {
                     singleton: true,
-                    eager: true,
                     requiredVersion: deps.react
                 },
                 "react-dom": {
                     singleton: true,
-                    eager: true,
                     requiredVersion: deps["react-dom"],
                 },
                 "react-router-dom": {
                     singleton: true,
-                    eager: true,
                     requiredVersion: deps["react-router-dom"],
                 },
             },
@@ -105,5 +102,8 @@ module.exports = {
         port: 3000,
         static: './dist',
         hot: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
     }
 }

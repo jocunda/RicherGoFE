@@ -65,23 +65,19 @@ module.exports = {
             exposes: {
                 // expose each component
                 "./CounterAppLogin": "./src/components/CounterAppLogin",
-           
             },
             shared: {
                 ...deps,
                 react: {
                     singleton: true,
-                    eager: true,
                     requiredVersion: deps.react
                 },
                 "react-dom": {
                     singleton: true,
-                    eager: true,
                     requiredVersion: deps["react-dom"],
                 },
                 "react-router-dom": {
                     singleton: true,
-                    eager: true,
                     requiredVersion: deps["react-router-dom"],
                 },
             },
@@ -103,6 +99,10 @@ module.exports = {
         port: 3002,
         static: './dist',
         hot: true,
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            //change it to 'http://localhost:3000' for secure option
+          },
     },
    
 }
