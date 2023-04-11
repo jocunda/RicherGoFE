@@ -1,0 +1,35 @@
+{
+  "name": "app_header",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "webpack serve",
+    "start": "cross-env IS_MICRO_FE=true webpack serve",
+    "build": "cross-env NODE_ENV=production webpack",
+    "build-dev": "webpack",
+    "serve": "serve dist -p 3001",
+    "clean": "del /S /Q dist"
+  },
+  "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@types/react": "^18.0.34",
+    "@types/react-dom": "^18.0.11",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.2.4",
+    "react-refresh": "^0.14.0",
+    "sass": "^1.61.0",
+    "sass-loader": "^13.2.2",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack": "^5.78.0"
+  },
+  "dependencies": {
+    "postcss-preset-env": "^8.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
