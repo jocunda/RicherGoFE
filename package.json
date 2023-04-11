@@ -9,12 +9,16 @@
     "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {
-    "lerna": "^6.6.1"
+    "lerna": "^6.6.1",
+    "webpack": "^5.78.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.2"
   },
   "workspaces": {
     "packages": [
       "app_home",
       "app_login",
+      "app_header",
       "container"
     ]
   }
