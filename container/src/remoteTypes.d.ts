@@ -11,3 +11,10 @@ declare module "app_login/CounterAppLogin" {
 
     export default CounterAppLogin;
 }
+
+declare module "app_header/Header" {
+    const Header: React.ComponentType;
+
+    export default Header;
+}
+

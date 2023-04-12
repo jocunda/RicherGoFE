@@ -1,3 +1,3 @@
 import("./bootstrap");
 
-export {}
+export default true

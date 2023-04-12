@@ -58,11 +58,11 @@ module.exports = {
     new CleanWebpackPlugin(),
     isMicroFE
       ? new ModuleFederationPlugin({
-          name: "app_home",
+          name: "app_header",
           filename: "remoteEntry.js",
           exposes: {
             // expose each component
-            "./CounterAppHome": "./src/components/CounterAppHome",
+            "./Header": "./src/components/Header",
           },
           shared: {
             ...deps,

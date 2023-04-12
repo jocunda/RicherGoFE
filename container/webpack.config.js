@@ -62,6 +62,7 @@ module.exports = {
       remotes: {
         app_home: process.env.DEV_APPHOME,
         app_login: process.env.DEV_APPLOGIN,
+        app_header: process.env.DEV_APPHEADER,
       },
       shared: {
         ...deps,

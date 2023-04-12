@@ -1,9 +1,16 @@
 import React from "react";
 
-const Header = () => {
+interface HeaderProps {
+  count: number;
+  onClear: () => void;
+}
+
+const Header = ({ count, onClear }: HeaderProps) => {
   return (
     <>
-      <h1>React Home123</h1>
+      <h1>This is Header</h1>
+      <div>{count}</div>
+      <button onClick={onClear}>Clear Cart</button>
     </>
   );
 };
