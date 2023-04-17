@@ -10,7 +10,9 @@ interface AppHeaderProps {
 
 const AppHome = React.lazy(() => import("app_home/CounterAppHome"));
 const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
-const AppHeader: React.FC<AppHeaderProps> = React.lazy(() => import("app_header/Header"));
+const AppHeader: React.FC<AppHeaderProps> = React.lazy(
+  () => import("app_header/Header")
+);
 
 const ProtectedRoute = ({ redirect, children }: any) => {
   if (redirect) {
@@ -54,10 +56,7 @@ const App = () => {
       </React.Suspense>
       <div>Count: {count}</div>
       <div>
-        <button
-          onClick={() => setCount(count + 1)}>
-          Add to cart
-        </button>
+        <button onClick={() => setCount(count + 1)}>Add to cart</button>
       </div>
     </>
   );

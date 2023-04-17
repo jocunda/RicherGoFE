@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { ModuleFederationPlugin } = webpack.container;
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const ReactRefreshTypeScript = require("react-refresh-typescript");
+const proxy = require("http-proxy-middleware");
 
 const deps = require("./package.json").dependencies;
 const isDevelopment = process.env.NODE_ENV !== "production";
@@ -96,6 +97,13 @@ module.exports = {
   },
   devtool: "source-map",
   devServer: {
+    proxy: {
+      "/api/*": {
+        target: "https://localhost:4000",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     port: 3002,
     static: "./dist",
     hot: !isMicroFE,
