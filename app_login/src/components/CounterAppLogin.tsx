@@ -1,5 +1,6 @@
 import React from "react";
 
+
 function Login() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.FormEvent<HTMLFormElement>
@@ -14,6 +15,7 @@ function Login() {
     // Or you can work with it as a plain object:
     const formJson = Object.fromEntries(formData.entries());
 
+
     fetch("/api/Authenticate/login", {
       headers: {
         Accept: "application/json",
@@ -24,15 +26,17 @@ function Login() {
     })
       .then((response) => {
         if (response.status === 200) {
-          debugger;
           return response.json();
         } else {
           throw new Error("Something went wrong on API server!");
         }
       })
-      .then((response) => {
-        console.debug(response);
-        // …
+      .then(({ token }) => {
+        if (token) {
+          //change to user, not safe
+          localStorage.setItem("token", JSON.stringify(token));
+          alert("Welcome back in. Authenticating...");
+        }
       })
       .catch((error) => {
         console.error(error);

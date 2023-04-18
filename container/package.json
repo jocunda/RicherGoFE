@@ -28,7 +28,8 @@
     "webpack": "^5.78.0",
     "webpack-bundle-analyzer": "^4.8.0",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.13.1"
+    "webpack-dev-server": "^4.13.1",
+    "http-proxy-middleware": "^2.0.6"
   },
   "dependencies": {
     "postcss-preset-env": "^8.2.0",

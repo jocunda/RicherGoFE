@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Router from "./router/Router";
 
 
-interface AppHeaderProps {
+type AppHeaderProps = {
   count: number;
   onClear: () => void;
 }
@@ -23,6 +23,7 @@ const App = () => {
     <>
       <Router />
       <h1>This is container</h1>
+      <a href="./home">home</a>
       <React.Suspense fallback={<div>Loading...</div>}>
         <AppHeader count={count} onClear={() => setCount(0)} />
       </React.Suspense>

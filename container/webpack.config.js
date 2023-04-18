@@ -93,11 +93,18 @@ module.exports = {
   },
   devtool: "source-map",
   devServer: {
+    proxy: {
+      "/api/*": {
+        target: "http://localhost:4001",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     port: 3000,
     static: "./dist",
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
-    historyApiFallback: true
+    historyApiFallback: true,
   },
 };
