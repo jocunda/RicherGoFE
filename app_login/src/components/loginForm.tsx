@@ -57,7 +57,6 @@ function LoginForm() {
 
   return (
     <>
-      sdffdsdf
       <form method="post" onSubmit={handleSubmit}>
         <label>
           UserName: <input name="UserName" />

@@ -6,7 +6,7 @@ type AppHeaderProps = {
 };
 
 const AppHome = React.lazy(() => import("app_home/CounterAppHome"));
-
+const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
 const AppHeader: React.FC<AppHeaderProps> = React.lazy(
   () => import("app_header/Header")
 );
@@ -18,6 +18,11 @@ type RouteProps = {
 };
 
 const routes: RouteProps[] = [
+  {
+    path: "/",
+    component: AppLogin,
+    auth: false,
+  },
   {
     path: "/header",
     component: AppHeader,

@@ -1,6 +1,5 @@
 import React from "react";
 
-
 function Login() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.FormEvent<HTMLFormElement>
@@ -34,7 +33,7 @@ function Login() {
       .then(({ token }) => {
         if (token) {
           //change to user, not safe
-          localStorage.setItem("token", JSON.stringify(token));
+          localStorage.setItem("token", token);
           alert("Welcome back in. Authenticating...");
         }
       })
@@ -42,7 +41,7 @@ function Login() {
         console.error(error);
       });
   };
-  return (
+  return <>
     <form method="post" onSubmit={handleSubmit}>
       <label>
         UserName: <input name="UserName" />
@@ -55,7 +54,8 @@ function Login() {
       <button type="reset">Reset</button>
       <button type="submit">Login</button>
     </form>
-  );
+
+  </>;
 }
 
 export default Login;

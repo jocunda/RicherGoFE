@@ -7,9 +7,9 @@ const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
 
 const ComponentWrapper = ({ component: Component }: any) => <Component />;
 const Router = () => {
-  const { isAuth } = useAuth();
+  const { userName, isAuth } = useAuth();
 
-  console.log("Auth: ", isAuth); //check auth
+  console.log(`userName: ${userName}`); //check auth
 
   return (
     <Routes>
