@@ -19,6 +19,7 @@
       "app_home",
       "app_login",
       "app_header",
+      "app_user",
       "container"
     ]
   }

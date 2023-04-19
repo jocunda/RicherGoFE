@@ -1,36 +1,45 @@
 import React from "react";
 
-type AppHeaderProps = {
-  count: number;
-  onClear: () => void;
-};
-
 const AppHome = React.lazy(() => import("app_home/CounterAppHome"));
 const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
-const AppHeader: React.FC<AppHeaderProps> = React.lazy(
-  () => import("app_header/Header")
+const AppUser = React.lazy(() => import("app_user/AppUser"));
+const ResetPasswordForm = React.lazy(
+  () => import("app_user/ResetPasswordForm")
 );
 
 type RouteProps = {
   path: string;
-  component: any;
+  element: React.ComponentType;
   auth: boolean;
+  children?: RouteProps[];
 };
 
 const routes: RouteProps[] = [
   {
     path: "/",
-    component: AppLogin,
+    element: AppLogin,
     auth: false,
   },
   {
-    path: "/header",
-    component: AppHeader,
+    path: "/login",
+    element: AppLogin,
+    auth: false,
+  },
+  {
+    path: "/user",
+    element: AppUser,
     auth: true,
+    children: [
+      {
+        path: "/reset",
+        element: ResetPasswordForm,
+        auth: true,
+      },
+    ],
   },
   {
     path: "/home",
-    component: AppHome,
+    element: AppHome,
     auth: true,
   },
 ];

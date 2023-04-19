@@ -58,14 +58,12 @@ module.exports = {
     new CleanWebpackPlugin(),
     isMicroFE
       ? new ModuleFederationPlugin({
-          name: "app_home",
+          name: "app_user",
           filename: "remoteEntry.js",
-          remotes: {
-            app_header: process.env.DEV_APPHEADER,
-          },
           exposes: {
             // expose each component
-            "./CounterAppHome": "./src/components/CounterAppHome",
+            "./AppUser": "./src/components/AppUser",
+            "./ResetPasswordForm": "./src/components/ResetPasswordForm",
           },
           shared: {
             ...deps,
@@ -99,7 +97,7 @@ module.exports = {
   },
   devtool: "source-map",
   devServer: {
-    port: 3001,
+    port: 3004,
     static: "./dist",
     hot: !isMicroFE,
     headers: {

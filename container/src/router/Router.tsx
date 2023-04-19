@@ -24,7 +24,7 @@ const Router = () => {
               </React.Suspense>
               :
               <React.Suspense fallback={<div>Loading...</div>}>
-                <ComponentWrapper component={route.component} />
+                <ComponentWrapper component={route.element} />
               </React.Suspense>
           }
         />
