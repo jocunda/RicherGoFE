@@ -1,10 +1,8 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { Suspense } from "react";
+
 
 function Component1() {
-  return <>app
-    <Outlet />
-  </>;
+  return <>comp1</>;
 }
 
 export { Component1 };

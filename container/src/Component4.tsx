@@ -1,7 +1,7 @@
 import React from "react";
 
 function Component4() {
-  return <>home</>;
+  return <>com4</>;
 }
 
-export default Component4;
+export { Component4 };

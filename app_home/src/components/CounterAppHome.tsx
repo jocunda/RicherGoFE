@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 type AppHeaderProps = {
   count: number;
   onClear: () => void;

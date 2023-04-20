@@ -1,13 +1,8 @@
 import React from "react";
-import { IndexRouteObject, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function Component2() {
-  return <>login
-    <Outlet />
-  </>;
+  return <>comp2</>;
 }
-const indexRouteObject: IndexRouteObject = {
-  Component: Component2,
-  index: true
-};
-export default indexRouteObject;
+
+export { Component2 };

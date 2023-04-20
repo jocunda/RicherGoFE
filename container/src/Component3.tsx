@@ -1,7 +1,7 @@
 import React from "react";
 
 function Component3() {
-  return <>user</>;
+  return <>comp3</>;
 }
 
 export { Component3 };
