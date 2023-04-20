@@ -1,36 +1,45 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { Suspense } from "react";
+import { Route, Navigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import routes from "./router.config";
 
-const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
+import type { RouteProps } from "./router.config";
 
-const ComponentWrapper = ({ component: Component }: any) => <Component />;
-const Router = () => {
+export function renderRoutes(routes: RouteProps[], isProtected: boolean) {
   const { userName, isAuth } = useAuth();
+  console.log(routes);
+  debugger
 
-  console.log(`userName: ${userName}`); //check auth
+  //check auth
+  const [previousProtectedPath, setPreviousProtectedPath] = React.useState("");
 
-  return (
-    <Routes>
-      {routes.map((route) => (
-        <Route
-          key={route.path}
-          path={route.path}
-          element={
-            route.auth && !isAuth ? //if not auth user required to login
-              <React.Suspense fallback={<div>Loading...</div>}>
-                <AppLogin />
-              </React.Suspense>
-              :
-              <React.Suspense fallback={<div>Loading...</div>}>
-                <ComponentWrapper component={route.element} />
-              </React.Suspense>
-          }
-        />
-      ))}
-    </Routes>
-  );
-};
+  return routes.map(({ path, component, isProtected, nestedRoutes }) => {
+    const routePath = isProtected ? path : `${path}`;
+    const children = nestedRoutes ? renderRoutes(nestedRoutes, isProtected) : undefined;
 
-export default Router;
+    return (
+      <Route
+        key={path}
+        path={routePath}
+        element={
+          isProtected ? (
+            isAuth ? (
+              <Suspense fallback={<div>Loading...</div>}>
+                {component && React.createElement(component, null, children)}
+              </Suspense>
+            ) : (
+              <Navigate
+                to="/login"
+                replace
+                state={{ from: previousProtectedPath }}
+              />
+            )
+          ) : (
+            <Suspense fallback={<div>Loading...</div>}>
+              {component && React.createElement(component, null, children)}
+            </Suspense>
+          )
+        }
+      />
+    );
+  });
+}

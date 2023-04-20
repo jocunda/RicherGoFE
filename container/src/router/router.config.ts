@@ -1,4 +1,5 @@
-import React from "react";
+import { Suspense } from "react";
+import { RouteObject } from "react-router-dom";
 
 const AppHome = React.lazy(() => import("app_home/CounterAppHome"));
 const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
@@ -7,41 +8,34 @@ const ResetPasswordForm = React.lazy(
   () => import("app_user/ResetPasswordForm")
 );
 
-type RouteProps = {
-  path: string;
-  element: React.ComponentType;
-  auth: boolean;
-  children?: RouteProps[];
-};
-
-const routes: RouteProps[] = [
+// 定义路由配置
+export const routesConfig: RouteObject[] = [
   {
     path: "/",
-    element: AppLogin,
-    auth: false,
-  },
-  {
-    path: "/login",
-    element: AppLogin,
-    auth: false,
-  },
-  {
-    path: "/user",
-    element: AppUser,
-    auth: true,
+    element: (<></>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppHome/>
+      </Suspense>
+    ),
     children: [
       {
-        path: "/reset",
-        element: ResetPasswordForm,
-        auth: true,
+        path: "login",
+        lazy: () => import("app_login/CounterAppLogin"),
+      },
+      {
+        path: "user",
+        lazy: () => import("app_user/AppUser"),
+        children: [
+          {
+            path: "reset",
+            lazy: () => import("app_user/ResetPasswordForm"),
+          },
+        ],
       },
     ],
   },
   {
     path: "/home",
-    element: AppHome,
-    auth: true,
+    lazy: () => import("app_home/CounterAppHome"),
   },
 ];
-
-export default routes;

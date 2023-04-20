@@ -30,10 +30,15 @@ function Login() {
           throw new Error("Something went wrong on API server!");
         }
       })
-      .then(({ token }) => {
-        if (token) {
-          //change to user, not safe
-          localStorage.setItem("token", token);
+      .then(({ token, expiration }) => {
+        if (token && expiration) {
+          // Convert expiration date to a Date object
+          const expirationDate = new Date(expiration);
+
+          // Convert expiration date to UTC string
+          const expirationString = expirationDate.toUTCString();
+          // Set cookie with token and expiration
+          document.cookie = `token=${token}; expires=${expirationString}; path=/;`;
           alert("Welcome back in. Authenticating...");
         }
       })

@@ -15,12 +15,22 @@ const ResetPasswordForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+
+      const cookieString = document.cookie; // Get cookie string
+
+      const token = cookieString
+        .split(';')
+        .map(cookie => cookie.trim())
+        .find(cookie => cookie.startsWith('token='))
+        ?.split('=')[1]; // Extract token value from cookie string
+
+
       // Call backend API for password change logic
       const response = await fetch("/api/Authenticate/changePassword", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem("token") || ''}`
+          'Authorization': `Bearer ${token || ''}`
         },
         body: JSON.stringify({
           oldPassword,

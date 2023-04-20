@@ -90,6 +90,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     assetModuleFilename: "images/[hash][ext][query]",
+    publicPath: "/",
   },
   devtool: "source-map",
   devServer: {
