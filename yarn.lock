@@ -416,6 +416,26 @@
     write-pkg "4.0.0"
     yargs "16.2.0"
 
+"@mimo/modules@file:D:\\webpack-full\\packages\\modules":
+  version "0.0.0"
+  resolved "file:packages/modules"
+
+"@mimo/ui@file:D:\\webpack-full\\packages\\mimo-ui":
+  version "1.0.0"
+  resolved "file:packages/mimo-ui"
+  dependencies:
+    postcss-preset-env "^8.3.0"
+    react "^18.1.0"
+    react-dom "^18.2.0"
+    serve "^14.2.0"
+
+"@mimo/utilities@^0.0.0", "@mimo/utilities@file:D:\\webpack-full\\packages\\utilities":
+  version "0.0.0"
+  resolved "file:packages/utilities"
+  dependencies:
+    react "^18.2.0"
+    react-dom "^18.2.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -996,10 +1016,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.31", "@types/react@^18.0.33", "@types/react@^18.0.34":
-  version "18.0.34"
-  resolved "https://registry.npmjs.org/@types/react/-/react-18.0.34.tgz"
-  integrity sha512-NO1UO8941541CJl1BeOXi8a9dNKFK09Gnru5ZJqkm4Q3/WoQJtHvmwt0VX0SB9YCEwe7TfSSxDuaNmx6H2BAIQ==
+"@types/react@*", "@types/react@^18.0.31", "@types/react@^18.0.33", "@types/react@^18.0.34", "@types/react@^18.0.37":
+  version "18.0.37"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.0.37.tgz"
+  integrity sha512-4yaZZtkRN3ZIQD3KSEwkfcik8s0SWV+82dlJot1AbGYHCzJkWP3ENBY6wYeDRmKZ6HkrgoGAmR2HqdwYGp6OEw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1432,6 +1452,7 @@ anymatch@~3.1.2:
   version "0.0.0"
   resolved "file:app_user"
   dependencies:
+    "@mimo/utilities" "^0.0.0"
     postcss-preset-env "^8.3.0"
     react "^18.2.0"
     react-dom "^18.2.0"
@@ -6000,7 +6021,7 @@ react-router@6.10.0:
   dependencies:
     "@remix-run/router" "1.5.0"
 
-react@^18.2.0, react@>=16.8, react@>=16.8.0:
+react@^18.1.0, react@^18.2.0, react@>=16.8, react@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

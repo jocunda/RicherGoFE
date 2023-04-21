@@ -1,4 +1,17 @@
+
 import React, { useState } from "react";
+
+
+function getCookies() {
+  const cookieString = document.cookie; // Get cookie string
+
+  const token = cookieString
+    .split(";")
+    .map((cookie) => cookie.trim())
+    .find((cookie) => cookie.startsWith("token="))
+    ?.split("=")[1]; // Extract token value from cookie string
+  return token;
+}
 
 const ResetPasswordForm: React.FC = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -16,21 +29,12 @@ const ResetPasswordForm: React.FC = () => {
     event.preventDefault();
     try {
 
-      const cookieString = document.cookie; // Get cookie string
-
-      const token = cookieString
-        .split(';')
-        .map(cookie => cookie.trim())
-        .find(cookie => cookie.startsWith('token='))
-        ?.split('=')[1]; // Extract token value from cookie string
-
-
       // Call backend API for password change logic
       const response = await fetch("/api/Authenticate/changePassword", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token || ''}`
+          'Authorization': `Bearer ${getCookies() || ''}`
         },
         body: JSON.stringify({
           oldPassword,

@@ -20,7 +20,8 @@
       "app_login",
       "app_header",
       "app_user",
-      "container"
+      "container",
+      "packages/*"
     ]
   }
 }
