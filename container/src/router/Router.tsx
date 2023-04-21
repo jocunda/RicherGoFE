@@ -9,6 +9,13 @@ export function renderRoutes(routes: RouteProps[], isProtected: boolean) {
   console.log(routes);
   debugger
 
+  const AppHome = React.lazy(() => import("app_home/CounterAppHome"));
+  const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
+  const AppUser = React.lazy(() => import("app_user/AppUser"));
+  const ResetPasswordForm = React.lazy(
+    () => import("app_user/ResetPasswordForm")
+  );
+
   //check auth
   const [previousProtectedPath, setPreviousProtectedPath] = React.useState("");
 

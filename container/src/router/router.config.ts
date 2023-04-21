@@ -1,41 +1,46 @@
-import { Suspense } from "react";
-import { RouteObject } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
-const AppHome = React.lazy(() => import("app_home/CounterAppHome"));
-const AppLogin = React.lazy(() => import("app_login/CounterAppLogin"));
-const AppUser = React.lazy(() => import("app_user/AppUser"));
-const ResetPasswordForm = React.lazy(
-  () => import("app_user/ResetPasswordForm")
-);
-
-// 定义路由配置
-export const routesConfig: RouteObject[] = [
+const router = createBrowserRouter([
   {
     path: "/",
-    element: (<></>
-      <Suspense fallback={<div>Loading...</div>}>
-        <AppHome/>
-      </Suspense>
-    ),
     children: [
       {
-        path: "login",
-        lazy: () => import("app_login/CounterAppLogin"),
+        path: "",
+        async lazy() {
+          let CounterAppHome = await import("app_home/CounterAppHome");
+          return { Component: CounterAppHome.default };
+        },
       },
       {
         path: "user",
-        lazy: () => import("app_user/AppUser"),
         children: [
           {
+            path: "",
+            async lazy() {
+              let AppUser = await import("app_user/AppUser");
+              return { Component: AppUser.default };
+            },
+          },
+          {
             path: "reset",
-            lazy: () => import("app_user/ResetPasswordForm"),
+            async lazy() {
+              let ResetPasswordForm = await import(
+                "app_user/ResetPasswordForm"
+              );
+              return { Component: ResetPasswordForm.default };
+            },
           },
         ],
       },
+      {
+        path: "login",
+        async lazy() {
+          let CounterAppLogin = await import("app_login/CounterAppLogin");
+          return { Component: CounterAppLogin.default };
+        },
+      },
     ],
   },
-  {
-    path: "/home",
-    lazy: () => import("app_home/CounterAppHome"),
-  },
-];
+]);
+
+export { router };
