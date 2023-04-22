@@ -1,11 +1,9 @@
 import React from "react";
 
-const AppUser = () => {
+export default function AppUser() {
   return (
     <>
       <h1>AppUser</h1>
     </>
   );
-};
-
-export default AppUser;
+}; 

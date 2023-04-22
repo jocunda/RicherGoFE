@@ -1,6 +1,11 @@
 import React from "react";
+import { Link, useLoaderData } from "react-router-dom";
 
-function Login() {
+export default function Login() {
+  console.log("microfe component: Login");
+  const data = useLoaderData();
+  console.log('Login data: ', data);
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
@@ -59,8 +64,7 @@ function Login() {
       <button type="reset">Reset</button>
       <button type="submit">Login</button>
     </form>
+    <Link to='/'>home</Link>
 
   </>;
 }
-
-export default Login;

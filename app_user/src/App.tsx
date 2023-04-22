@@ -1,6 +1,6 @@
 import "./styles/index.scss";
 import React from "react";
-import AppUser from "./components/AppUser";
+import AppUser from "./components/AppUser/Component";
 
 const App = () => {
   return (

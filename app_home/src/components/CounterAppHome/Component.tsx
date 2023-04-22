@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 type AppHeaderProps = {
   count: number;
@@ -9,7 +10,11 @@ const AppHeader: React.FC<AppHeaderProps> = React.lazy(
   () => import("app_header/Header")
 );
 
-const Counter = () => {
+export default function CounterAppHome() {
+  console.log("microfe component: CounterAppHome");
+  const data = useLoaderData();
+  console.log('CounterAppHome data: ', data);
+
   const [count, setCount] = useState<number>(0);
   return (
     <>
@@ -23,6 +28,4 @@ const Counter = () => {
       </div>
     </>
   );
-};
-
-export default Counter;
+}; 

@@ -1,30 +1,25 @@
 ///<reference types="react" />
 
 declare module "app_home/CounterAppHome" {
-  const CounterAppHome: React.ComponentType;
-
-  export default CounterAppHome;
+  const Component: React.ComponentType;
+  const loader: () => {};
 }
 
 declare module "app_login/CounterAppLogin" {
-  const CounterAppLogin: React.ComponentType;
-
-  export default CounterAppLogin;
+  const Component: React.ComponentType;
+  const loader: () => {};
 }
 
 declare module "app_user/AppUser" {
-  const AppUser: React.ComponentType;
-
-  export default AppUser;
+  const Component: React.ComponentType;
+  const loader: () => {};
 }
 declare module "app_user/ResetPasswordForm" {
-  const ResetPasswordForm: React.ComponentType;
-
-  export default ResetPasswordForm;
+  const Component: React.ComponentType;
+  const loader: () => {};
 }
 
 declare module "app_header/Header" {
-  const Header: React.ComponentType;
-
-  export default Header;
+  const Component: React.ComponentType;
+  const loader: () => {};
 }

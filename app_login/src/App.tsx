@@ -1,5 +1,5 @@
 import React from "react";
-import CounterAppLogin from "./components/CounterAppLogin";
+import CounterAppLogin from "./components/CounterAppLogin/Component";
 import LoginForm from "./components/loginForm";
 
 import "./styles/index.scss";

@@ -1,19 +1,12 @@
-
 import React, { useState } from "react";
+import { getToken } from "@mimo/utilities";
+import { useLoaderData } from "react-router-dom";
 
+function ResetPasswordForm() {
+  console.log("microfe component: ResetPasswordForm");
+  const data = useLoaderData();
+  console.log('ResetPasswordForm data: ', data);
 
-function getCookies() {
-  const cookieString = document.cookie; // Get cookie string
-
-  const token = cookieString
-    .split(";")
-    .map((cookie) => cookie.trim())
-    .find((cookie) => cookie.startsWith("token="))
-    ?.split("=")[1]; // Extract token value from cookie string
-  return token;
-}
-
-const ResetPasswordForm: React.FC = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -34,7 +27,7 @@ const ResetPasswordForm: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getCookies() || ''}`
+          'Authorization': `Bearer ${getToken() || ''}`
         },
         body: JSON.stringify({
           oldPassword,
@@ -85,4 +78,4 @@ const ResetPasswordForm: React.FC = () => {
   );
 };
 
-export default ResetPasswordForm;
+export default ResetPasswordForm; 

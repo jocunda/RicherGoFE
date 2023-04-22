@@ -1,6 +1,6 @@
 import "./styles/index.scss";
 import React from "react";
-import CounterAppHome from "./components/CounterAppHome";
+// import CounterAppHome from "./components/CounterAppHome";
 
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
         <section>
           <h1>Hi, App_Home123</h1>
         </section>
-        <CounterAppHome />
+        {/* <CounterAppHome /> */}
       </main>
     </>
   );

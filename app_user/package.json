@@ -31,10 +31,11 @@
     "webpack-dev-server": "^4.13.2"
   },
   "dependencies": {
-    "@mimo/utilities": "^0.0.0",
+    "@mimo/utilities": "^1.0.0",
     "postcss-preset-env": "^8.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
     "serve": "^14.2.0"
   }
 }

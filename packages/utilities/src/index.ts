@@ -1,6 +1,4 @@
-module.exports = getCookies;
-
-function getCookies() {
+export function getToken() {
   const cookieString = document.cookie; // Get cookie string
 
   const token = cookieString
