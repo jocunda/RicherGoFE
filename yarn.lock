@@ -416,11 +416,11 @@
     write-pkg "4.0.0"
     yargs "16.2.0"
 
-"@mimo/apis@file:D:\\webpack-full\\packages\\mimo-apis":
+"@mimo/api@file:D:\\RicherGoFE\\packages\\api":
   version "1.0.0"
-  resolved "file:packages/mimo-apis"
+  resolved "file:packages/api"
 
-"@mimo/ui@file:D:\\webpack-full\\packages\\mimo-ui":
+"@mimo/ui@file:D:\\RicherGoFE\\packages\\mimo-ui":
   version "1.0.0"
   resolved "file:packages/mimo-ui"
   dependencies:
@@ -429,7 +429,7 @@
     react-dom "^18.2.0"
     serve "^14.2.0"
 
-"@mimo/utilities@^1.0.0", "@mimo/utilities@file:D:\\webpack-full\\packages\\utilities":
+"@mimo/utilities@^1.0.0", "@mimo/utilities@file:D:\\RicherGoFE\\packages\\utilities":
   version "1.0.0"
   resolved "file:packages/utilities"
 
@@ -1416,7 +1416,7 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-"app_header@file:D:\\webpack-full\\app_header":
+"app_header@file:D:\\RicherGoFE\\app_header":
   version "0.0.0"
   resolved "file:app_header"
   dependencies:
@@ -1424,7 +1424,7 @@ anymatch@~3.1.2:
     react "^18.2.0"
     react-dom "^18.2.0"
 
-"app_home@file:D:\\webpack-full\\app_home":
+"app_home@file:D:\\RicherGoFE\\app_home":
   version "0.0.0"
   resolved "file:app_home"
   dependencies:
@@ -1434,7 +1434,7 @@ anymatch@~3.1.2:
     react-router-dom "^6.10.0"
     serve "^14.2.0"
 
-"app_login@file:D:\\webpack-full\\app_login":
+"app_login@file:D:\\RicherGoFE\\app_login":
   version "0.0.0"
   resolved "file:app_login"
   dependencies:
@@ -1446,7 +1446,7 @@ anymatch@~3.1.2:
     serve "^14.2.0"
     yup "^1.1.0"
 
-"app_user@file:D:\\webpack-full\\app_user":
+"app_user@file:D:\\RicherGoFE\\app_user":
   version "0.0.0"
   resolved "file:app_user"
   dependencies:
@@ -1454,6 +1454,7 @@ anymatch@~3.1.2:
     postcss-preset-env "^8.3.0"
     react "^18.2.0"
     react-dom "^18.2.0"
+    react-router-dom "^6.10.0"
     serve "^14.2.0"
 
 "aproba@^1.0.3 || ^2.0.0", aproba@^2.0.0:
@@ -2165,7 +2166,7 @@ console-control-strings@^1.1.0:
   resolved "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz"
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
-"container@file:D:\\webpack-full\\container":
+"container@file:D:\\RicherGoFE\\container":
   resolved "file:container"
   dependencies:
     postcss-preset-env "^8.2.0"

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { createLoader, createProtectedLoader } from "../apis";
+import { createLoader, createProtectedLoader } from "@mimo/utilities";
 
 const router = createBrowserRouter([
   {
