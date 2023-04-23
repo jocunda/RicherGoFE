@@ -25,6 +25,8 @@ export function createProtectedLoader(remoteEntry: () => Promise<any>) {
 
     const { user } = await isLoggedIn();
     if (!user) {
+      //save user last path in session
+      sessionStorage.setItem("lastVisitedPage", window.location.pathname);
       return redirect("/login");
     }
 
