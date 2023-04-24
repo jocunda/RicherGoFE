@@ -22,11 +22,15 @@ export function createLoader(remoteEntry: () => Promise<any>) {
 export function createProtectedLoader(remoteEntry: () => Promise<any>) {
   return async function () {
     let { loader } = await remoteEntry();
-
     const { user } = await isLoggedIn();
-    if (!user) {
+
+    // Exclude /login path from being recorded as last visited page
+    const currentPath = window.location.pathname;
+    const isLoginPage = currentPath === "/login";
+
+    if (!user && !isLoginPage) {
       //save user last path in session
-      sessionStorage.setItem("lastVisitedPage", window.location.pathname);
+      sessionStorage.setItem("lastVisitedPage", currentPath);
       return redirect("/login");
     }
 
