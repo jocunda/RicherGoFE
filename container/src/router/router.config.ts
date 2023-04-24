@@ -32,6 +32,11 @@ const router = createBrowserRouter([
         loader: createLoader(() => import("app_login/CounterAppLogin")),
         lazy: () => import("app_login/CounterAppLogin"),
       },
+      {
+        path: "error",
+        loader: createLoader(() => import("app_error/AppError")),
+        lazy: () => import("app_error/AppError"),
+      },
     ],
   },
 ]);

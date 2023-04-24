@@ -63,6 +63,7 @@ module.exports = {
         app_home: process.env.DEV_APPHOME,
         app_login: process.env.DEV_APPLOGIN,
         app_user: process.env.DEV_APPUSER,
+        app_error: process.env.DEV_APPERROR,
       },
       shared: {
         ...deps,

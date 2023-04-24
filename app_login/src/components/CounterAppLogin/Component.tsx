@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     authLogin(e);
 
-    // Read last visited page from sessionStorage???
+    // Read last visited page from sessionStorage
     const lastVisitedPage = sessionStorage.getItem('lastVisitedPage');
 
     // Redirect back to last visited page or a default page after successful login
