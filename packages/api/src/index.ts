@@ -13,9 +13,6 @@ export async function isLoggedIn() {
     const { userName } = await response.json();
     return { user: userName };
   }
-
-  // TODO: if response is not 401, should show error like 504 Gateway Timeout
-
   return { user: undefined };
 }
 
@@ -36,9 +33,10 @@ export function authLogin(e: React.FormEvent<HTMLFormElement>) {
   })
     .then((response) => {
       if (response.status === 200) {
+        console.log(response);
         return response.json();
       } else {
-        throw new Error("Something went wrong on API server!");
+        throw new Error(`Error ${response.status} ${response.statusText}`);
       }
     })
     .then(({ token, expiration }) => {

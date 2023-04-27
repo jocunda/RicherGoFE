@@ -1,4 +1,5 @@
-import Component from "./Component";
-import loader from "./loader";
+import { AppError } from "./Component";
 
-export { loader, Component }; // IndexRouteObject
+// export default AppError;
+// export default { AppError }; // IndexRouteObject
+export { AppError };

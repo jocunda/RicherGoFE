@@ -1,9 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import { createLoader, createProtectedLoader } from "@mimo/utilities";
+import React from "react";
+
+
+const AppError = React.lazy(() => import("app_error/AppError").then(({ AppError }) => ({ default: AppError }))); // export  { AppError };
+//const AppError = React.lazy(() => import("app_error/AppError")); // export  { AppError };/
+
 
 const router = createBrowserRouter([
   {
     path: "/",
+    errorElement: <AppError />,
     children: [
       {
         path: "",
@@ -31,11 +38,7 @@ const router = createBrowserRouter([
         path: "login",
         loader: createLoader(() => import("app_login/CounterAppLogin")),
         lazy: () => import("app_login/CounterAppLogin"),
-      },
-      {
-        path: "error",
-        loader: createLoader(() => import("app_error/AppError")),
-        lazy: () => import("app_error/AppError"),
+        errorElement: <AppError />,
       },
     ],
   },

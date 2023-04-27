@@ -18,12 +18,12 @@ declare module "app_user/ResetPasswordForm" {
   const Component: React.ComponentType;
   const loader: () => {};
 }
-
-declare module "app_error/AppError" {
-  const Component: React.ComponentType;
-  const loader: () => {};
-}
 declare module "app_header/Header" {
   const Component: React.ComponentType;
   const loader: () => {};
+}
+
+declare module "app_error/AppError" {
+  const AppError: React.ComponentType;
+  //export default AppError;
 }

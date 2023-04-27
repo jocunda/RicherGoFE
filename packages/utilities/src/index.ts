@@ -29,8 +29,10 @@ export function createProtectedLoader(remoteEntry: () => Promise<any>) {
     const isLoginPage = currentPath === "/login";
 
     if (!user && !isLoginPage) {
+      //TODO:get item
       //save user last path in session
-      sessionStorage.setItem("lastVisitedPage", currentPath);
+      //sessionStorage.setItem("lastVisitedPage", currentPath);
+      // return redirect(`/login?next=${currentPath}`);
       return redirect("/login");
     }
 

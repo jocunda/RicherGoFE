@@ -1,6 +1,5 @@
 import "./styles/index.scss";
 import React from "react";
-import AppError from "./components/AppError/Component";
 
 const App = () => {
   return (
@@ -10,7 +9,6 @@ const App = () => {
         <section>
           <h1>Error Area</h1>
         </section>
-        <AppError />
       </main>
     </>
   );

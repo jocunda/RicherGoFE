@@ -15,10 +15,10 @@ export default function Login() {
     e.preventDefault();
     authLogin(e);
 
-    // Read last visited page from sessionStorage
+    // Read last visited page from sessionStorage TODO:NOT AUTHORIZATION!
     const lastVisitedPage = sessionStorage.getItem('lastVisitedPage');
-
     // Redirect back to last visited page or a default page after successful login
+
     if (lastVisitedPage) {
       navigate(lastVisitedPage);
     } else {
