@@ -416,9 +416,9 @@
     write-pkg "4.0.0"
     yargs "16.2.0"
 
-"@mimo/api@file:D:\\RicherGoFE\\packages\\api":
+"@mimo/authentication@file:D:\\RicherGoFE\\packages\\authentication":
   version "1.0.0"
-  resolved "file:packages/api"
+  resolved "file:packages/authentication"
 
 "@mimo/ui@file:D:\\RicherGoFE\\packages\\mimo-ui":
   version "1.0.0"

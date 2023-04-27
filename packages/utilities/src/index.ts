@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
-import { isLoggedIn } from "@mimo/api";
+import type { Response } from "./types";
+import { getUser } from "@mimo/authentication";
 
 export function getToken() {
   const cookieString = document.cookie; // Get cookie string
@@ -22,22 +23,70 @@ export function createLoader(remoteEntry: () => Promise<any>) {
 export function createProtectedLoader(remoteEntry: () => Promise<any>) {
   return async function () {
     let { loader } = await remoteEntry();
-    const { user } = await isLoggedIn();
+    const { data } = await getUser();
 
     // Exclude /login path from being recorded as last visited page
     const currentPath = window.location.pathname;
     const isLoginPage = currentPath === "/login";
 
-    if (!user && !isLoginPage) {
-      //TODO:get item
-      //save user last path in session
-      //sessionStorage.setItem("lastVisitedPage", currentPath);
-      // return redirect(`/login?next=${currentPath}`);
+    //save user last path in session
+    sessionStorage.setItem("lastVisitedPage", currentPath);
+
+    if (!data?.username && !isLoginPage) {
       return redirect("/login");
     }
 
-    const data = await loader();
+    const loaderData = await loader();
 
-    return { ...user, ...data };
+    return { ...data, ...loaderData };
   };
 }
+
+async function request<T>(
+  url: string,
+  method: RequestInit["method"],
+  requestPayload?: any,
+  config?: RequestInit
+): Promise<Response<T>> {
+  try {
+    const token = getToken();
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      method,
+      ...(requestPayload && { body: JSON.stringify(requestPayload) }),
+      ...config,
+    });
+    if (response.status === 200) {
+      const data = (await response.json()) as T;
+      return {
+        data,
+      };
+    } else {
+      const errorMessage = (await response.json()) as string;
+      return {
+        error: response.status,
+        errorMessage,
+      };
+    }
+  } catch (error) {
+    return {
+      error: -1,
+      errorMessage: error.toString(),
+    };
+  }
+}
+
+export const api = {
+  get: <ResponseData>(url: string) => request<ResponseData>(url, "GET"),
+  post: <ResponseData>(url: string, requestPayload: any) =>
+    request<ResponseData>(url, "POST", requestPayload),
+  put: <ResponseData>(url: string, requestPayload: any) =>
+    request<ResponseData>(url, "PUT", requestPayload),
+  batch: <ResponseData>(url: string, requestPayload: any) =>
+    request<ResponseData>(url, "BATCH", requestPayload),
+  delete: <ResponseData>(url: string) => request<ResponseData>(url, "DELETE"),
+};

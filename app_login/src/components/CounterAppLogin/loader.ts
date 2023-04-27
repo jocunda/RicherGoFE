@@ -1,7 +1,7 @@
 export default async function getLoginData() {
-  console.log('micro fe loader: Login');
+  console.log("micro fe loader: Login");
 
   return {
-    loginData: [1, 2, 3]
-  }
+    loginData: [1, 2, 3],
+  };
 }
