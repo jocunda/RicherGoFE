@@ -1,8 +1,12 @@
 import React from "react";
-
-// 
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
-
+import {
+  useId,
+  Input,
+  Label,
+  Button,
+} from "@fluentui/react-components";
+import { PersonRegular, Eye24Regular } from "@fluentui/react-icons";
 // APIs
 import { login } from "@mimo/authentication";
 
@@ -51,18 +55,30 @@ export default function Login() {
 
   }
 
+  const username = useId("username");
+  const password = useId("password");
+
+
   return <>
     <form method="post" onSubmit={handleSubmit}>
-      <label>
-        UserName: <input name="UserName" />
-      </label>
-      <label>
-        Password:
-        <input name="Password" type="password" />
-      </label>
+
+      <Label size="large" htmlFor={username}>Username</Label>
+      <Input
+        size="large"
+        contentBefore={<PersonRegular />}
+        id={username} />
+      <Label size="large" htmlFor={password}>Password</Label>
+      <Input
+        size="large"
+        type="password" defaultValue="password"
+        contentAfter={<Eye24Regular />}
+        id={password}
+      />
+
       <hr />
-      <button type="reset">Reset</button>
-      <button type="submit">Login</button>
+      <Button type="reset" size="large" >Reset</Button>
+      <Button type="submit" size="large" disabled>Login</Button>
+
     </form>
     <Link to='/'>home</Link>
 
