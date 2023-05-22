@@ -10,6 +10,11 @@ declare module "app_login/CounterAppLogin" {
   const loader: () => {};
 }
 
+declare module "app_login/AppRegister" {
+  const Component: React.ComponentType;
+  const loader: () => {};
+}
+
 declare module "app_user/AppUser" {
   const Component: React.ComponentType;
   const loader: () => {};

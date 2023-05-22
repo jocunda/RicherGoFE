@@ -1,5 +1,8 @@
 import React from "react";
-
+import { Button } from "@fluentui/react-components";
+import {
+  Dismiss24Filled
+} from "@fluentui/react-icons";
 interface HeaderProps {
   count: number;
   onClear: () => void;
@@ -10,7 +13,11 @@ const Header = ({ count, onClear }: HeaderProps) => {
     <>
       <h1>This is Header</h1>
       <div>{count}</div>
-      <button onClick={onClear}>Clear Cart</button>
+      <Button
+        icon={<Dismiss24Filled />}
+        onClick={onClear}
+        size="large"
+      >Clear Cart</Button>
     </>
   );
 };

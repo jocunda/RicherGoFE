@@ -1,12 +1,21 @@
-import React from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+
+//styles
 import {
   useId,
   Input,
-  Label,
   Button,
+  Field,
+  Link,
 } from "@fluentui/react-components";
-import { PersonRegular, Eye24Regular } from "@fluentui/react-icons";
+import {
+  PersonRegular,
+  Eye24Regular,
+  EyeOff24Regular
+} from "@fluentui/react-icons";
+import "../../styles/index.scss"
+
 // APIs
 import { login } from "@mimo/authentication";
 
@@ -57,30 +66,57 @@ export default function Login() {
 
   const username = useId("username");
   const password = useId("password");
+  const [type, setType] = useState<"password" | "text">("password");
 
+
+
+  const togglePasswordVisibility = () => {
+    setType((prevType) => (prevType === "password" ? "text" : "password"));
+  };
 
   return <>
+
     <form method="post" onSubmit={handleSubmit}>
-
-      <Label size="large" htmlFor={username}>Username</Label>
-      <Input
+      <Field
         size="large"
-        contentBefore={<PersonRegular />}
-        id={username} />
-      <Label size="large" htmlFor={password}>Password</Label>
-      <Input
+        label="Username"
+        validationState="error"
+        validationMessage="This is an error message.">
+        <Input
+          size="large"
+          contentBefore={<PersonRegular />}
+          id={username} />
+      </Field>
+      <Field
         size="large"
-        type="password" defaultValue="password"
-        contentAfter={<Eye24Regular />}
-        id={password}
-      />
+        label="Password"
+        validationState="success"
+        validationMessage="This is a success message."
+      >
+        <Input
+          size="large"
+          type={type}
+          contentAfter={type === "password" ? <EyeOff24Regular onClick={togglePasswordVisibility} /> : <Eye24Regular onClick={togglePasswordVisibility} />}
+          id={password}
+        />
+      </Field>
 
-      <hr />
-      <Button type="reset" size="large" >Reset</Button>
-      <Button type="submit" size="large" disabled>Login</Button>
-
+      <Button
+        appearance="primary"
+        type="submit"
+        size="large"
+        disabled
+      >Login</Button>
     </form>
-    <Link to='/'>home</Link>
+
+    <div className="box register">
+      <Link href="./login">
+        Forgot Password?
+      </Link>
+      <Link href="./register">
+        Register
+      </Link>
+    </div>
 
   </>;
 }

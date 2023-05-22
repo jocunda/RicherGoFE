@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import { Button } from "@fluentui/react-components";
+import {
+  AddCircle24Regular
+} from "@fluentui/react-icons";
 
 type AppHeaderProps = {
   count: number;
@@ -11,10 +15,8 @@ const AppHeader: React.FC<AppHeaderProps> = React.lazy(
 );
 
 export default function CounterAppHome() {
-  console.log("microfe component: CounterAppHome");
   const data = useLoaderData();
   console.log('CounterAppHome data: ', data);
-
   const [count, setCount] = useState<number>(0);
   return (
     <>
@@ -24,7 +26,11 @@ export default function CounterAppHome() {
       </React.Suspense>
       <div>Count: {count}</div>
       <div>
-        <button onClick={() => setCount(count + 1)}>Add to cart</button>
+        <Button
+          icon={<AddCircle24Regular />}
+          size="large"
+          onClick={() => setCount(count + 1)}
+        >Add to Cart</Button>
       </div>
     </>
   );

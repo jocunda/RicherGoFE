@@ -64,6 +64,7 @@ module.exports = {
           exposes: {
             // expose each component
             "./CounterAppLogin": "./src/components/CounterAppLogin",
+            "./AppRegister": "./src/components/AppRegister",
           },
           shared: {
             ...deps,
