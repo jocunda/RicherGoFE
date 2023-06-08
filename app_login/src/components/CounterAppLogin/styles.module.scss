@@ -1,3 +1,18 @@
-.input{
-  padding: 0
+.register {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.box {
+  margin-top: 20px;
+}
+
+.alertSection {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  z-index: 20;
 }

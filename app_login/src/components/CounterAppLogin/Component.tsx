@@ -25,6 +25,8 @@ import { login } from "@mimo/authentication";
 // types
 import type { LoginRequest } from "@mimo/authentication";
 
+import cx from 'classnames';
+
 export default function Login() {
   const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
   const data = useLoaderData();
@@ -104,7 +106,7 @@ export default function Login() {
 
 
   return <>
-    <div className="alert-section">
+    <div className={styles.alertSection}>
       {alertMessage && (
         <Alert intent={!data ? "success" : "error"}>
           {alertMessage}
@@ -121,7 +123,6 @@ export default function Login() {
       >
         <Input
           size="large"
-          className={styles.input}
           contentBefore={<PersonRegular onClick={() => console.log('a')} />}
           id={usernameId}
           name="username"
@@ -150,7 +151,7 @@ export default function Login() {
       >Login</Button>
     </form>
 
-    <div className="box register">
+    <div className={cx(styles.box, styles.register)}>
       <Link href="./login">
         Forgot Password?
       </Link>

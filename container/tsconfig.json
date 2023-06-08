@@ -15,7 +15,7 @@
     "allowUnusedLabels": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
-    "noPropertyAccessFromIndexSignature": true,
+    // "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -26,7 +26,16 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "isolatedModules": true,
-    "lib": ["es2019", "dom", "dom.iterable"]
+    "lib": ["es2019", "dom", "dom.iterable"],
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "classnameTransform": "camelCase",
+          "customMatcher": "\\.module\\.(c|le|sa|sc)ss$",
+        }
+      }
+    ]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
