@@ -17,6 +17,7 @@ import {
 
 import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
+import styles from './styles.module.scss';
 
 // APIs
 import { login } from "@mimo/authentication";
@@ -57,7 +58,7 @@ export default function Login() {
       username: formData.get("username") as string,
       password: formData.get("password") as string,
     };
-
+    console.log(formJson)
 
     const { data, error, errorMessage } = await login(formJson);
 
@@ -115,10 +116,13 @@ export default function Login() {
         size="large"
         label="Username"
         validationState="error"
-        validationMessage="This is an error message.">
+        validationMessage="This is an error message."
+        required
+      >
         <Input
           size="large"
-          contentBefore={<PersonRegular />}
+          className={styles.input}
+          contentBefore={<PersonRegular onClick={() => console.log('a')} />}
           id={usernameId}
           name="username"
         />
@@ -126,8 +130,9 @@ export default function Login() {
       <Field
         size="large"
         label="Password"
-        validationState="success"
+        validationState="error"
         validationMessage="This is a success message."
+        required
       >
         <Input
           size="large"
