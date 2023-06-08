@@ -4,13 +4,15 @@ import { getUser } from "@mimo/authentication";
 
 export function getToken() {
   const cookieString = document.cookie; // Get cookie string
-
-  const token = cookieString
-    .split(";")
-    .map((cookie) => cookie.trim())
-    .find((cookie) => cookie.startsWith("token="))
-    ?.split("=")[1]; // Extract token value from cookie string
-  return token;
+  console.log(cookieString);
+  // const token = cookieString
+  //   .split(";")
+  //   .map((cookie) => cookie.trim())
+  //   .find((cookie) => cookie.startsWith("token="))
+  //   ?.split("=")[1]; // Extract token value from cookie string
+  // console.log(token);
+  // debugger;
+  return cookieString;
 }
 
 export function createLoader(remoteEntry: () => Promise<any>) {
@@ -32,13 +34,14 @@ export function createProtectedLoader(remoteEntry: () => Promise<any>) {
     //save user last path in session
     sessionStorage.setItem("lastVisitedPage", currentPath);
 
-    if (!data?.username && !isLoginPage) {
+    // const data = localStorage.getItem("user");
+    if (!data && !isLoginPage) {
       return redirect("/login");
     }
 
     const loaderData = await loader();
 
-    return { ...data, ...loaderData };
+    return { data, ...loaderData };
   };
 }
 
@@ -49,17 +52,18 @@ async function request<T>(
   config?: RequestInit
 ): Promise<Response<T>> {
   try {
-    const token = getToken();
+    // const token = getToken();
     const response = await fetch(url, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        // ...(token && { Authorization: `Bearer ${token}` }),
       },
       method,
       ...(requestPayload && { body: JSON.stringify(requestPayload) }),
       ...config,
     });
+
     if (response.status === 200) {
       const data = (await response.json()) as T;
       return {
