@@ -16,7 +16,7 @@ export async function login(payload: LoginRequest) {
   return api.post<LoginResponse>("/api/auth/login", payload);
 }
 
-export async function register(payload: RegisterRequest) {
+export async function registerUser(payload: RegisterRequest) {
   return api.post<RegisterResponse>("/api/auth/register", payload);
 }
 

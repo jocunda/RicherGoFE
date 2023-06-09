@@ -18,10 +18,29 @@ import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
 
 // APIs
-import { register } from "@mimo/authentication";
+import { registerUser } from "@mimo/authentication";
 
 // types
 import type { RegisterRequest } from "@mimo/authentication";
+
+//form validation
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const schema = yup.object({
+  username: yup.string()
+    .min(3, 'Username must be at least 3 characters long')
+    .max(10, 'Username must be below at 10 characters long')
+    .required(),
+  email: yup.string()
+    .email('Invalid email')
+    .required(),
+  password: yup.string()
+    .min(6, 'Passsword must be at least 6 characters long')
+    .max(12, 'Username must be below at 12 characters long')
+    .required(),
+}).required();
 
 export default function Register() {
   const [alertMessage, setAlertMessage] = useState<string | undefined>("");
@@ -34,13 +53,11 @@ export default function Register() {
     setType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (event) => {
     // Prevent the browser from reloading the page
-    e.preventDefault();
+    event.preventDefault();
     // Read the form data
-    const form = e.target as HTMLFormElement;
+    const form = event.target as HTMLFormElement;
     //e: React.FormEvent<HTMLFormElement>
     const formData = new FormData(form);
 
@@ -50,7 +67,7 @@ export default function Register() {
       password: formData.get("password") as string,
     };
 
-    const { data, error, errorMessage } = await register(formJson);
+    const { data, error, errorMessage } = await registerUser(formJson);
 
     if (error) {
       const obj = JSON.parse(JSON.stringify(errorMessage));
@@ -79,6 +96,10 @@ export default function Register() {
     };
   }, [alertMessage]);
 
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
   return <>
     <div className="alert-section">
       {alertMessage && (
@@ -87,47 +108,47 @@ export default function Register() {
         </Alert>
       )}
     </div>
-    <form method="post" onSubmit={handleSubmit}>
+    <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <Field
         size="large"
         label="Username"
-        validationState="success"
-        validationMessage="This is a success message."
+        validationState={errors.username ? "error" : "none"}
+        validationMessage={errors.username ? `${errors.username.message}` : null}
         required
       >
         <Input
           size="large"
-          name="username"
           contentBefore={<PersonRegular />}
+          {...register("username")}
         />
       </Field>
 
       <Field
         size="large"
         label="Email"
-        validationState="success"
-        validationMessage="This is a success message."
+        validationState={errors.email ? "error" : "none"}
+        validationMessage={errors.email ? `${errors.email.message}` : null}
         required
       >
         <Input
           size="large"
-          name="email"
           contentBefore={<Mail24Regular />}
+          {...register("email")}
         />
       </Field>
 
       <Field
         size="large"
         label="Password"
-        validationState="success"
-        validationMessage="This is a success message."
+        validationState={errors.password ? "error" : "none"}
+        validationMessage={errors.password ? `${errors.password.message}` : null}
         required
       >
         <Input
           size="large"
-          name="password"
           type={type}
           contentAfter={type === "password" ? <EyeOff24Regular onClick={togglePasswordVisibility} /> : <Eye24Regular onClick={togglePasswordVisibility} />}
+          {...register("password")}
         />
       </Field>
 

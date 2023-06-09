@@ -18,6 +18,7 @@ import {
 import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
+import cx from 'classnames';
 
 // APIs
 import { login } from "@mimo/authentication";
@@ -25,14 +26,33 @@ import { login } from "@mimo/authentication";
 // types
 import type { LoginRequest } from "@mimo/authentication";
 
-import cx from 'classnames';
+//form validation
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const schema = yup.object({
+  username: yup.string()
+    .min(3, 'Username must be at least 3 characters long')
+    .max(10, 'Username must be below at 10 characters long')
+    .required(),
+  password: yup.string()
+    .min(6, 'Passsword must be at least 6 characters long')
+    .max(12, 'Username must be below at 12 characters long')
+    .required(),
+}).required();
+
 
 export default function Login() {
+  //alert message
   const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
-  const data = useLoaderData();
-  console.log(data);
-  const navigate = useNavigate();
+  //input value
+  // const [value, setValue] = useState<string>("");
 
+  //router things
+  const data = useLoaderData();
+  console.log(data, "data");
+  const navigate = useNavigate();
 
   //for style
   const usernameId = useId("username");
@@ -43,14 +63,15 @@ export default function Login() {
     setType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  //handle submit
+  // const onSubmit: React.FormEventHandler<HTMLFormElement> = async (
+  //   e: React.FormEvent<HTMLFormElement>
+  // ) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (event) => {
     // Prevent the browser from reloading the page
-    e.preventDefault();
+    event.preventDefault();
     // Read the form data
-    const form = e.target as HTMLFormElement;
+    const form = event.target as HTMLFormElement;
     //e: React.FormEvent<HTMLFormElement>
     const formData = new FormData(form);
     // Or you can work with it as a plain object:
@@ -60,11 +81,10 @@ export default function Login() {
       username: formData.get("username") as string,
       password: formData.get("password") as string,
     };
-    console.log(formJson)
 
     const { data, error, errorMessage } = await login(formJson);
 
-
+    //show alert
     if (error) {
       const obj = JSON.parse(JSON.stringify(errorMessage));
       setAlertMessage(obj.message);
@@ -72,13 +92,10 @@ export default function Login() {
 
     if (data) {
       const { message, user } = data;
-      // const expirationDate = new Date(expiration);
       setAlertMessage(`${message}, ${user}`);
       sessionStorage.setItem("user", data.user)
-      // Convert expiration date to UTC string
-      // const expirationString = expirationDate.toUTCString();
-      // Set cookie with token and expiration
-      // document.cookie = `token=${token}; expires=${expirationString}; path=/;`;
+
+      //Store last visited page
       const lastVisitedPage = sessionStorage.getItem('lastVisitedPage');
       if (lastVisitedPage) {
         navigate(lastVisitedPage);
@@ -104,6 +121,10 @@ export default function Login() {
     };
   }, [alertMessage]);
 
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  });
+
 
   return <>
     <div className={styles.alertSection}>
@@ -113,26 +134,28 @@ export default function Login() {
         </Alert>
       )}
     </div>
-    <form method="post" onSubmit={handleSubmit}>
+
+    <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <Field
         size="large"
         label="Username"
-        validationState="error"
-        validationMessage="This is an error message."
+        validationState={errors.username ? "error" : "none"}
+        validationMessage={errors.username ? `${errors.username.message}` : null}
         required
       >
         <Input
           size="large"
-          contentBefore={<PersonRegular onClick={() => console.log('a')} />}
+          contentBefore={<PersonRegular />}
           id={usernameId}
-          name="username"
+          {...register("username")}
         />
       </Field>
+
       <Field
         size="large"
         label="Password"
-        validationState="error"
-        validationMessage="This is a success message."
+        validationState={errors.password ? "error" : "none"}
+        validationMessage={errors.password ? `${errors.password.message}` : null}
         required
       >
         <Input
@@ -140,7 +163,7 @@ export default function Login() {
           type={type}
           contentAfter={type === "password" ? <EyeOff24Regular onClick={togglePasswordVisibility} /> : <Eye24Regular onClick={togglePasswordVisibility} />}
           id={passwordId}
-          name="password"
+          {...register("password")}
         />
       </Field>
 
