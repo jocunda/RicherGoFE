@@ -28,18 +28,27 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
+
+const getCharacterValidationError = (str: string) => {
+  return `Your password must have at least 1 ${str} character`;
+};
+
 const schema = yup.object({
   username: yup.string()
     .min(3, 'Username must be at least 3 characters long')
-    .max(10, 'Username must be below at 10 characters long')
-    .required(),
+    .max(10, 'Username must be below 10 characters')
+    .required('Please Enter your Username'),
   email: yup.string()
     .email('Invalid email')
-    .required(),
+    .required('Please Enter your Email'),
   password: yup.string()
     .min(6, 'Passsword must be at least 6 characters long')
-    .max(12, 'Username must be below at 12 characters long')
-    .required(),
+    .max(12, 'Passsword be below 12 characters')
+    .matches(/[0-9]/, getCharacterValidationError("digit"))
+    .matches(/[a-z]/, getCharacterValidationError("lowercase"))
+    .matches(/[A-Z]/, getCharacterValidationError("uppercase"))
+    .matches(/[^\w]/, getCharacterValidationError("symbol"))
+    .required('Please Enter your Password'),
 }).required();
 
 export default function Register() {
