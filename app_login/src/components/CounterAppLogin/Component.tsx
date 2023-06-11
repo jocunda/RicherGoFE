@@ -39,7 +39,7 @@ const schema = yup.object({
   username: yup.string()
     .min(3, 'Username must be at least 3 characters long')
     .max(10, 'Username must be below 10 characters')
-    .required('Please Enter your Username'),
+    .required('Please enter your Username'),
   password: yup.string()
     .min(6, 'Passsword must be at least 6 characters long')
     .max(12, 'Passsword must be below 12 characters')
@@ -47,7 +47,7 @@ const schema = yup.object({
     .matches(/[a-z]/, getCharacterValidationError("lowercase"))
     .matches(/[A-Z]/, getCharacterValidationError("uppercase"))
     .matches(/[^\w]/, getCharacterValidationError("symbol"))
-    .required('Please Enter your Password'),
+    .required('Please enter your Password'),
 }).required();
 
 
@@ -129,10 +129,18 @@ export default function Login() {
     };
   }, [alertMessage]);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register,
+    handleSubmit,
+    trigger,
+    formState: { errors, touchedFields }
+  } = useForm({
     resolver: yupResolver(schema)
   });
 
+  const handleInputChange = async (fieldName: string) => {
+    await trigger(fieldName);
+    console.log(touchedFields.fieldName)
+  };
 
   return <>
     <div className={styles.alertSection}>
@@ -148,14 +156,17 @@ export default function Login() {
         size="large"
         label="Username"
         validationState={errors.username ? "error" : "none"}
-        validationMessage={errors.username ? `${errors.username.message}` : null}
+        validationMessage={
+          errors.username ? `${errors.username?.message}` : null}
         required
       >
+        {touchedFields.username ? "touched" : ""}
         <Input
           size="large"
           contentBefore={<PersonRegular />}
           id={usernameId}
           {...register("username")}
+          onChange={() => handleInputChange("username")}
         />
       </Field>
 
@@ -163,7 +174,8 @@ export default function Login() {
         size="large"
         label="Password"
         validationState={errors.password ? "error" : "none"}
-        validationMessage={errors.password ? `${errors.password.message}` : null}
+        validationMessage={
+          errors.password ? `${errors.password?.message}` : null}
         required
       >
         <Input
@@ -172,6 +184,7 @@ export default function Login() {
           contentAfter={type === "password" ? <EyeOff24Regular onClick={togglePasswordVisibility} /> : <Eye24Regular onClick={togglePasswordVisibility} />}
           id={passwordId}
           {...register("password")}
+          onChange={() => handleInputChange("password")}
         />
       </Field>
 
