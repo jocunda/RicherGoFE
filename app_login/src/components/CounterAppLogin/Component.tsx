@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigate
+} from "react-router-dom";
 
 //styles
 import {
@@ -39,7 +42,7 @@ const schema = yup.object({
   username: yup.string()
     .min(3, 'Username must be at least 3 characters long')
     .max(10, 'Username must be below 10 characters')
-    .required('Please enter your Username'),
+    .required('Please Enter your Username'),
   password: yup.string()
     .min(6, 'Passsword must be at least 6 characters long')
     .max(12, 'Passsword must be below 12 characters')
@@ -47,15 +50,14 @@ const schema = yup.object({
     .matches(/[a-z]/, getCharacterValidationError("lowercase"))
     .matches(/[A-Z]/, getCharacterValidationError("uppercase"))
     .matches(/[^\w]/, getCharacterValidationError("symbol"))
-    .required('Please enter your Password'),
+    .required('Please Enter your Password'),
 }).required();
 
 
 export default function Login() {
   //alert message
   const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
-  //input value
-  // const [value, setValue] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>()
 
   //router things
   const data = useLoaderData();
@@ -71,36 +73,60 @@ export default function Login() {
     setType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
+  //react-hook-form
+  const { register,
+    handleSubmit,
+    trigger,
+    formState: { errors, isDirty, isValid }
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
+
+  const handleInputBlur = async (fieldName: string) => {
+    await trigger(fieldName);
+  };
+
+  const convertToLoginRequest = (dataInput: FieldValues): LoginRequest => {
+    const { username, password } = dataInput;
+    return {
+      username: username as string,
+      password: password as string,
+    };
+  };
+
   //handle submit
   // const onSubmit: React.FormEventHandler<HTMLFormElement> = async (
   //   e: React.FormEvent<HTMLFormElement>
   // ) => {
-  const onSubmit: SubmitHandler<FieldValues> = async (event) => {
-    // Prevent the browser from reloading the page
-    event.preventDefault();
+  const onSubmit: SubmitHandler<FieldValues> = async (dataInput, event?: React.BaseSyntheticEvent) => {
+    // // Prevent the browser from reloading the page
+    event?.preventDefault();
     // Read the form data
-    const form = event.target as HTMLFormElement;
-    //e: React.FormEvent<HTMLFormElement>
-    const formData = new FormData(form);
-    // Or you can work with it as a plain object:
-    // const formJson = Object.fromEntries(formData.entries()) as LoginRequest;
+    // const form = event?.target as HTMLFormElement;
+    // //e: React.FormEvent<HTMLFormElement>
+    // const formData = new FormData(form);
+    // // Or you can work with it as a plain object:
+    // // const formJson = Object.fromEntries(formDataJson.entries()) as LoginRequest;
 
-    const formJson: LoginRequest = {
-      username: formData.get("username") as string,
-      password: formData.get("password") as string,
-    };
-
-    const { data, error, errorMessage } = await login(formJson);
-
+    // const formJson: LoginRequest = {
+    //   username: formData.get("username") as string,
+    //   password: formData.get("password") as string,
+    // };
+    // console.log(formJson)
+    const loginRequest = convertToLoginRequest(dataInput);
+    console.log(dataInput)
+    const { data, error, errorMessage } = await login(loginRequest);
     //show alert
     if (error) {
       const obj = JSON.parse(JSON.stringify(errorMessage));
       setAlertMessage(obj.message);
+      setIsError(true)
     }
 
     if (data) {
       const { message, user } = data;
       setAlertMessage(`${message}, ${user}`);
+      setIsError(false)
       sessionStorage.setItem("user", data.user)
 
       //Store last visited page
@@ -129,23 +155,11 @@ export default function Login() {
     };
   }, [alertMessage]);
 
-  const { register,
-    handleSubmit,
-    trigger,
-    formState: { errors, touchedFields }
-  } = useForm({
-    resolver: yupResolver(schema)
-  });
-
-  const handleInputChange = async (fieldName: string) => {
-    await trigger(fieldName);
-    console.log(touchedFields.fieldName)
-  };
 
   return <>
     <div className={styles.alertSection}>
       {alertMessage && (
-        <Alert intent={!data ? "success" : "error"}>
+        <Alert intent={isError ? "error" : "success"}>
           {alertMessage}
         </Alert>
       )}
@@ -160,13 +174,12 @@ export default function Login() {
           errors.username ? `${errors.username?.message}` : null}
         required
       >
-        {touchedFields.username ? "touched" : ""}
         <Input
           size="large"
           contentBefore={<PersonRegular />}
           id={usernameId}
           {...register("username")}
-          onChange={() => handleInputChange("username")}
+          onBlur={() => handleInputBlur("username")}
         />
       </Field>
 
@@ -184,7 +197,7 @@ export default function Login() {
           contentAfter={type === "password" ? <EyeOff24Regular onClick={togglePasswordVisibility} /> : <Eye24Regular onClick={togglePasswordVisibility} />}
           id={passwordId}
           {...register("password")}
-          onChange={() => handleInputChange("password")}
+          onBlur={() => handleInputBlur("password")}
         />
       </Field>
 
@@ -192,6 +205,7 @@ export default function Login() {
         appearance="primary"
         type="submit"
         size="large"
+        disabled={!isDirty && !isValid}
       >Login</Button>
     </form>
 

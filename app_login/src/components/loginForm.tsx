@@ -40,7 +40,6 @@ function LoginForm() {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (
     e: React.FormEvent<HTMLFormElement>
   ) => {
-    debugger;
     // Prevent the browser from reloading the page
     e.preventDefault();
 

@@ -52,7 +52,11 @@ const schema = yup.object({
 }).required();
 
 export default function Register() {
+  //alert message
   const [alertMessage, setAlertMessage] = useState<string | undefined>("");
+  const [isError, setIsError] = useState<boolean>()
+
+  //router things
   const data = useLoaderData();
   console.log(data);
 
@@ -62,30 +66,45 @@ export default function Register() {
     setType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async (event) => {
-    // Prevent the browser from reloading the page
-    event.preventDefault();
-    // Read the form data
-    const form = event.target as HTMLFormElement;
-    //e: React.FormEvent<HTMLFormElement>
-    const formData = new FormData(form);
+  //react-hook-form
+  const { register,
+    handleSubmit,
+    trigger,
+    formState: { errors, isDirty, isValid }
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
 
-    const formJson: RegisterRequest = {
-      username: formData.get("username") as string,
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
+  const handleInputBlur = async (fieldName: string) => {
+    await trigger(fieldName);
+  };
+
+  const convertToRegisterRequest = (dataInput: FieldValues): RegisterRequest => {
+    const { username, email, password } = dataInput;
+    return {
+      username: username as string,
+      email: email as string,
+      password: password as string,
     };
+  };
 
-    const { data, error, errorMessage } = await registerUser(formJson);
+  const onSubmit: SubmitHandler<FieldValues> = async (dataInput, event?: React.BaseSyntheticEvent) => {
+    // Prevent the browser from reloading the page
+    event?.preventDefault();
+
+    const registerRequest = convertToRegisterRequest(dataInput);
+    const { data, error, errorMessage } = await registerUser(registerRequest);
 
     if (error) {
       const obj = JSON.parse(JSON.stringify(errorMessage));
       setAlertMessage(obj.message);
+      setIsError(true)
     }
 
     if (data) {
       const { message } = data;
       setAlertMessage(message);
+      setIsError(false)
     }
 
   }
@@ -105,18 +124,16 @@ export default function Register() {
     };
   }, [alertMessage]);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
-  });
 
   return <>
     <div className="alert-section">
       {alertMessage && (
-        <Alert intent={!data ? "success" : "error"}>
+        <Alert intent={isError ? "error" : "success"}>
           {alertMessage}
         </Alert>
       )}
     </div>
+
     <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <Field
         size="large"
@@ -129,6 +146,7 @@ export default function Register() {
           size="large"
           contentBefore={<PersonRegular />}
           {...register("username")}
+          onBlur={() => handleInputBlur("username")}
         />
       </Field>
 
@@ -143,6 +161,7 @@ export default function Register() {
           size="large"
           contentBefore={<Mail24Regular />}
           {...register("email")}
+          onBlur={() => handleInputBlur("email")}
         />
       </Field>
 
@@ -158,6 +177,7 @@ export default function Register() {
           type={type}
           contentAfter={type === "password" ? <EyeOff24Regular onClick={togglePasswordVisibility} /> : <Eye24Regular onClick={togglePasswordVisibility} />}
           {...register("password")}
+          onBlur={() => handleInputBlur("password")}
         />
       </Field>
 
@@ -165,6 +185,7 @@ export default function Register() {
         appearance="primary"
         type="submit"
         size="large"
+        disabled={!isDirty && !isValid}
       >Register</Button>
     </form>
 
