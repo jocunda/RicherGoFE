@@ -118,8 +118,9 @@ export default function Login() {
     const { data, error, errorMessage } = await login(loginRequest);
     //show alert
     if (error) {
-      const obj = JSON.parse(JSON.stringify(errorMessage));
-      setAlertMessage(obj.message);
+      const obj = JSON.stringify(errorMessage);
+      const errMessage = JSON.parse(obj)
+      setAlertMessage(errMessage.message);
       setIsError(true)
     }
 

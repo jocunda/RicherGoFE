@@ -4,6 +4,8 @@ import type {
   RegisterResponse,
   LoginRequest,
   LoginResponse,
+  ResetPassRequest,
+  ResetPassResponse,
   GetUserResponse,
 } from "./types";
 
@@ -18,6 +20,10 @@ export async function login(payload: LoginRequest) {
 
 export async function registerUser(payload: RegisterRequest) {
   return api.post<RegisterResponse>("/api/auth/register", payload);
+}
+
+export async function resetPassword(payload: ResetPassRequest) {
+  return api.post<ResetPassResponse>("/api/auth/changePassword", payload);
 }
 
 // export async function getUser() {

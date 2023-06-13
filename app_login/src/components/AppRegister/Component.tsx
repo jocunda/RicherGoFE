@@ -96,8 +96,9 @@ export default function Register() {
     const { data, error, errorMessage } = await registerUser(registerRequest);
 
     if (error) {
-      const obj = JSON.parse(JSON.stringify(errorMessage));
-      setAlertMessage(obj.message);
+      const obj = JSON.stringify(errorMessage);
+      const errMessage = JSON.parse(obj)
+      setAlertMessage(errMessage.message);
       setIsError(true)
     }
 
