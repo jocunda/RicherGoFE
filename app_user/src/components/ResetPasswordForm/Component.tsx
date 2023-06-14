@@ -254,26 +254,5 @@ export default function ResetPasswordForm() {
       >Change Password</Button>
     </form>
 
-    {/* <h2>Change Password</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="currentPassword">Current Password:</label>
-        <input
-          type="password"
-          id="currentPassword"
-          value={oldPassword}
-          onChange={handleChangeCurrentPassword}
-        />
-        <br />
-        <label htmlFor="newPassword">New Password:</label>
-        <input
-          type="password"
-          id="newPassword"
-          value={newPassword}
-          onChange={handleChangeNewPassword}
-        />
-        <br />
-        <button type="submit">Change Password</button>
-      </form> */}
-
   </>
 };

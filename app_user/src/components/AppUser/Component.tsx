@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useLoaderData } from "react-router-dom";
+
 //styles
 import {
   Image,
@@ -22,7 +24,8 @@ import {
   Key24Regular,
   Key24Filled,
   Settings24Regular,
-  SignOut24Regular
+  SignOut24Regular,
+  Warning24Regular
 } from "@fluentui/react-icons";
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
@@ -30,6 +33,9 @@ import styles from './styles.module.scss';
 export default function AppUser() {
   const user = sessionStorage.getItem("user")
 
+  //router things
+  const data = useLoaderData();
+  console.log('user: ', data);
 
   const handleLogout = () => {
     console.log("logout")
@@ -50,20 +56,17 @@ export default function AppUser() {
         <Tab icon={<Settings24Regular />} value="tab3">
           Setting
         </Tab>
-
         <Divider />
-
         <Dialog modalType="alert">
           <DialogTrigger disableButtonEnhancement>
             <Button size="large"
               appearance="subtle"
               icon={<SignOut24Regular />}
             >Logout</Button>
-
           </DialogTrigger>
           <DialogSurface>
             <DialogBody>
-              <DialogTitle>Warning</DialogTitle>
+              <DialogTitle><Warning24Regular /></DialogTitle>
               <DialogContent>
                 Proceed to logout?
               </DialogContent>
@@ -76,33 +79,31 @@ export default function AppUser() {
             </DialogBody>
           </DialogSurface>
         </Dialog>
-
       </>
     );
   }
 
-  return (
-    <>
-
-      <div className={styles.userHeader}>
-        <Image
-          alt="Amanda's avatar"
-          shape="rounded"
-          src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/AmandaBrady.jpg"
-          height={200}
-          width={200}
-        />
-        {user}
+  return <>
+    <div className={styles.userHeader}>
+      <Image
+        alt="Amanda's avatar"
+        shape="rounded"
+        src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/AmandaBrady.jpg"
+        height={200}
+        width={200}
+      />
+      {user}
+    </div>
+    <div className={styles.container}>
+      <TabList defaultSelectedValue="tab1" vertical>
+        {renderTabs()}
+      </TabList>
+      <div className={styles.userContainer}>
+        black
       </div>
-      <div className={styles.container}>
-        <TabList defaultSelectedValue="tab1" vertical>
-          {renderTabs()}
-        </TabList>
-        <div className={styles.userContainer}>
-          black
-        </div>
-      </div>
+    </div>
 
 
-    </>)
+
+  </>;
 }; 
