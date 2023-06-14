@@ -1,0 +1,17 @@
+.userHeader{
+  display: flex;
+  gap:8;
+}
+
+.container{
+  display:flex;
+  flex-direction: row;
+  gap:50px;
+
+
+
+  .userContainer{
+  background-color: aqua;
+}
+
+}
