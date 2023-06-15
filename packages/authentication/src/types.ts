@@ -28,6 +28,10 @@ export type ResetPassResponse = {
   message: string;
 };
 
+export type LogoutResponse = {
+  message: string;
+};
+
 export type GetUserResponse = {
   username: string;
 };

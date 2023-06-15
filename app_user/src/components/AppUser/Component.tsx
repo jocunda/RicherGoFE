@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 //styles
 import {
@@ -27,18 +27,42 @@ import {
   SignOut24Regular,
   Warning24Regular
 } from "@fluentui/react-icons";
+import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
+
+
+// APIs
+import { logoutUser } from "@mimo/authentication";
 
 export default function AppUser() {
   const user = sessionStorage.getItem("user")
 
+  //alert message
+  const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
+  const [isError, setIsError] = useState<boolean>()
+
   //router things
   const data = useLoaderData();
   console.log('user: ', data);
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log("logout")
+    sessionStorage.clear();
+    const { data, error, errorMessage } = await logoutUser();
+    if (error) {
+      const obj = JSON.stringify(errorMessage);
+      const errMessage = JSON.parse(obj)
+      setAlertMessage(errMessage.message);
+      setIsError(true)
+    }
+    if (data) {
+      const { message } = data;
+      setAlertMessage(message);
+      setIsError(false)
+    }
+    navigate("/");
   }
 
   //for style
@@ -83,7 +107,30 @@ export default function AppUser() {
     );
   }
 
+  //for alert animation
+  useEffect(() => {
+    let timeoutId: any;
+
+    if (alertMessage) {
+      timeoutId = setTimeout(() => {
+        setAlertMessage('');
+      }, 8000);
+    }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [alertMessage]);
+
   return <>
+    <div className={styles.alertSection}>
+      {alertMessage && (
+        <Alert intent={isError ? "error" : "success"}>
+          {alertMessage}
+        </Alert>
+      )}
+    </div>
+
     <div className={styles.userHeader}>
       <Image
         alt="Amanda's avatar"

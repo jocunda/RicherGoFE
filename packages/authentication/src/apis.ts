@@ -6,6 +6,7 @@ import type {
   LoginResponse,
   ResetPassRequest,
   ResetPassResponse,
+  LogoutResponse,
   GetUserResponse,
 } from "./types";
 
@@ -24,6 +25,10 @@ export async function registerUser(payload: RegisterRequest) {
 
 export async function resetPassword(payload: ResetPassRequest) {
   return api.post<ResetPassResponse>("/api/auth/changePassword", payload);
+}
+
+export async function logoutUser() {
+  return api.delete<LogoutResponse>("/api/auth/logout");
 }
 
 // export async function getUser() {
