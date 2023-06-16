@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate, useParams } from "react-router-dom";
 
 //styles
 import {
@@ -16,6 +16,8 @@ import {
   DialogContent,
   DialogBody,
   DialogActions,
+  SelectTabData,
+  SelectTabEvent,
 } from "@fluentui/react-components";
 import {
   bundleIcon,
@@ -35,6 +37,10 @@ import styles from './styles.module.scss';
 // APIs
 import { logoutUser } from "@mimo/authentication";
 
+
+//other component
+// import ResetPasswordForm from "../ResetPasswordForm/Component";
+
 export default function AppUser() {
   const user = sessionStorage.getItem("user")
 
@@ -46,6 +52,7 @@ export default function AppUser() {
   const data = useLoaderData();
   console.log('user: ', data);
   const navigate = useNavigate();
+  const { tab } = useParams();
 
   const handleLogout = async () => {
     console.log("logout")
@@ -71,13 +78,16 @@ export default function AppUser() {
   const renderTabs = () => {
     return (
       <>
-        <Tab icon={<Person />} value="tab1">
+        <Tab icon={<Person />}
+          value="profile">
           User Profile
         </Tab>
-        <Tab icon={<Key />} value="tab2">
+        <Tab icon={<Key />}
+          value="reset">
           Change Password
         </Tab>
-        <Tab icon={<Settings24Regular />} value="tab3">
+        <Tab icon={<Settings24Regular />}
+          value="setting">
           Setting
         </Tab>
         <Divider />
@@ -107,6 +117,13 @@ export default function AppUser() {
     );
   }
 
+  const handleTabClick = (_event: SelectTabEvent, data: SelectTabData) => {
+    navigate(`/user/${data.value}`);
+  };
+
+  // const [selectedValue, setSelectedValue] = useState<TabValue>("conditions");
+
+
   //for alert animation
   useEffect(() => {
     let timeoutId: any;
@@ -123,6 +140,7 @@ export default function AppUser() {
   }, [alertMessage]);
 
   return <>
+
     <div className={styles.alertSection}>
       {alertMessage && (
         <Alert intent={isError ? "error" : "success"}>
@@ -142,15 +160,22 @@ export default function AppUser() {
       {user}
     </div>
     <div className={styles.container}>
-      <TabList defaultSelectedValue="tab1" vertical>
+      <TabList
+        defaultSelectedValue="profile"
+        vertical
+        onTabSelect={handleTabClick}
+        selectedValue={tab}>
         {renderTabs()}
       </TabList>
+
       <div className={styles.userContainer}>
-        black
+        {/* <div >
+          {tab === "user" && <h1>User profile</h1>}
+          {tab === "key" && <ResetPasswordForm />}
+          {tab === "setting" && <h1>Setting</h1>}
+        </div> */}
+        <Outlet />
       </div>
     </div>
-
-
-
   </>;
 }; 

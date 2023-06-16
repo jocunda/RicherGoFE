@@ -32,6 +32,20 @@ const router = createBrowserRouter([
             ),
             lazy: () => import("app_user/ResetPasswordForm"),
           },
+          {
+            path: "profile",
+            loader: createProtectedLoader(
+              () => import("app_user/ResetPasswordForm")
+            ),
+            lazy: () => import("app_user/ResetPasswordForm"),
+          },
+          {
+            path: "setting",
+            loader: createProtectedLoader(
+              () => import("app_login/AppRegister")
+            ),
+            lazy: () => import("app_login/AppRegister"),
+          },
         ],
       },
       {

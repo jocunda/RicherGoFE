@@ -1,6 +1,5 @@
 import { redirect } from "react-router-dom";
 import type { Response } from "./types";
-import { getUser } from "@mimo/authentication";
 
 export function getToken() {
   const cookieString = document.cookie; // Get cookie string
@@ -25,7 +24,7 @@ export function createLoader(remoteEntry: () => Promise<any>) {
 export function createProtectedLoader(remoteEntry: () => Promise<any>) {
   return async function () {
     let { loader } = await remoteEntry();
-    const { data } = await getUser();
+    const user = sessionStorage.getItem("user");
 
     // Exclude /login path from being recorded as last visited page
     const currentPath = window.location.pathname;
@@ -35,13 +34,13 @@ export function createProtectedLoader(remoteEntry: () => Promise<any>) {
     sessionStorage.setItem("lastVisitedPage", currentPath);
 
     // const data = localStorage.getItem("user");
-    if (!data && !isLoginPage) {
+    if (!user && !isLoginPage) {
       return redirect("/login");
     }
 
     const loaderData = await loader();
 
-    return { data, ...loaderData };
+    return { user, ...loaderData };
   };
 }
 
