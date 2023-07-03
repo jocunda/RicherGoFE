@@ -157,7 +157,7 @@ export default function AppUser() {
         height={200}
         width={200}
       />
-      {user}
+      <p>{user}</p>
     </div>
     <div className={styles.container}>
       <TabList

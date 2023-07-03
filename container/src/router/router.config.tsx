@@ -24,27 +24,29 @@ const router = createBrowserRouter([
             path: "",
             loader: createProtectedLoader(() => import("app_user/AppUser")),
             lazy: () => import("app_user/AppUser"),
-          },
-          {
-            path: "reset",
-            loader: createProtectedLoader(
-              () => import("app_user/ResetPasswordForm")
-            ),
-            lazy: () => import("app_user/ResetPasswordForm"),
-          },
-          {
-            path: "profile",
-            loader: createProtectedLoader(
-              () => import("app_user/ResetPasswordForm")
-            ),
-            lazy: () => import("app_user/ResetPasswordForm"),
-          },
-          {
-            path: "setting",
-            loader: createProtectedLoader(
-              () => import("app_login/AppRegister")
-            ),
-            lazy: () => import("app_login/AppRegister"),
+            children: [
+              {
+                path: "reset",
+                loader: createProtectedLoader(
+                  () => import("app_user/ResetPasswordForm")
+                ),
+                lazy: () => import("app_user/ResetPasswordForm"),
+              },
+              {
+                path: "profile",
+                loader: createProtectedLoader(
+                  () => import("app_user/ResetPasswordForm")
+                ),
+                lazy: () => import("app_user/ResetPasswordForm"),
+              },
+              {
+                path: "setting",
+                loader: createProtectedLoader(
+                  () => import("app_login/AppRegister")
+                ),
+                lazy: () => import("app_login/AppRegister"),
+              },
+            ]
           },
         ],
       },
