@@ -11,6 +11,11 @@ import {
   Button,
   Field,
   Link,
+  ToastTitle,
+  Toast,
+  useToastController,
+  Toaster,
+  ToastIntent,
 } from "@fluentui/react-components";
 import {
   PersonRegular,
@@ -73,6 +78,28 @@ export default function Login() {
     setType((prevType) => (prevType === "password" ? "text" : "password"));
   };
 
+  //toaster fluent
+  const toasterId = useId("toaster");
+  const { dispatchToast } = useToastController(toasterId);
+  const [intent, setIntent] = React.useState<
+    ToastIntent | "progress" | "avatar"
+  >("info");
+  const notify = (message: string) => {
+    switch (intent) {
+      case "error":
+      case "info":
+      case "success":
+      case "warning":
+        dispatchToast(
+          <Toast>
+            <ToastTitle>{message}</ToastTitle>
+          </Toast>,
+          { position: "top-end", intent }
+        );
+        break;
+    }
+  };
+
   //react-hook-form
   const { register,
     handleSubmit,
@@ -116,18 +143,26 @@ export default function Login() {
     const loginRequest = convertToLoginRequest(dataInput);
     console.log(dataInput)
     const { data, error, errorMessage } = await login(loginRequest);
+
     //show alert
     if (error) {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
       setAlertMessage(errMessage.message);
       setIsError(true)
+      setIntent("error")
+      notify(errMessage.message)
+
     }
 
     if (data) {
       const { message, user } = data;
       setAlertMessage(`${message}, ${user}`);
       setIsError(false)
+      setIntent("success")
+      notify(`${message}, ${user}`)
+
+
       sessionStorage.setItem("user", data.user)
 
       //Store last visited page
@@ -165,6 +200,8 @@ export default function Login() {
         </Alert>
       )}
     </div>
+
+    <Toaster toasterId={toasterId} />
 
     <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <Field

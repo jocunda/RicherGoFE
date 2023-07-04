@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React,
+{
+  // useEffect,
+  // useState
+} from "react";
 
 import { Outlet, useLoaderData, useNavigate, useParams } from "react-router-dom";
 
@@ -18,6 +22,13 @@ import {
   DialogActions,
   SelectTabData,
   SelectTabEvent,
+  Text,
+  useId,
+  ToastTitle,
+  Toast,
+  useToastController,
+  Toaster,
+  ToastIntent,
 } from "@fluentui/react-components";
 import {
   bundleIcon,
@@ -29,7 +40,7 @@ import {
   SignOut24Regular,
   Warning24Regular
 } from "@fluentui/react-icons";
-import { Alert } from "@fluentui/react-components/unstable";
+// import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
 
@@ -44,9 +55,31 @@ import { logoutUser } from "@mimo/authentication";
 export default function AppUser() {
   const user = sessionStorage.getItem("user")
 
+  //toaster fluent
+  const toasterId = useId("toaster");
+  const { dispatchToast } = useToastController(toasterId);
+  const [intent, setIntent] = React.useState<
+    ToastIntent | "progress" | "avatar"
+  >("info");
+  const notify = (message: string) => {
+    switch (intent) {
+      case "error":
+      case "info":
+      case "success":
+      case "warning":
+        dispatchToast(
+          <Toast>
+            <ToastTitle>{message}</ToastTitle>
+          </Toast>,
+          { position: "top-end", intent }
+        );
+        break;
+    }
+  };
+
   //alert message
-  const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
-  const [isError, setIsError] = useState<boolean>()
+  // const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
+  // const [isError, setIsError] = useState<boolean>()
 
   //router things
   const data = useLoaderData();
@@ -61,13 +94,19 @@ export default function AppUser() {
     if (error) {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
-      setAlertMessage(errMessage.message);
-      setIsError(true)
+      // setAlertMessage(errMessage.message);
+      // setIsError(true)
+
+      setIntent("error")
+      notify(errMessage.message)
     }
     if (data) {
       const { message } = data;
-      setAlertMessage(message);
-      setIsError(false)
+      // setAlertMessage(message);
+      // setIsError(false)
+
+      setIntent("success")
+      notify(message)
     }
     navigate("/");
   }
@@ -79,7 +118,7 @@ export default function AppUser() {
     return (
       <>
         <Tab icon={<Person />}
-          value="profile">
+          value="">
           User Profile
         </Tab>
         <Tab icon={<Key />}
@@ -90,7 +129,9 @@ export default function AppUser() {
           value="setting">
           Setting
         </Tab>
+
         <Divider />
+
         <Dialog modalType="alert">
           <DialogTrigger disableButtonEnhancement>
             <Button size="large"
@@ -121,59 +162,59 @@ export default function AppUser() {
     navigate(`/user/${data.value}`);
   };
 
-  // const [selectedValue, setSelectedValue] = useState<TabValue>("conditions");
+
 
 
   //for alert animation
-  useEffect(() => {
-    let timeoutId: any;
+  // useEffect(() => {
+  //   let timeoutId: any;
 
-    if (alertMessage) {
-      timeoutId = setTimeout(() => {
-        setAlertMessage('');
-      }, 8000);
-    }
+  //   if (alertMessage) {
+  //     timeoutId = setTimeout(() => {
+  //       setAlertMessage('');
+  //     }, 8000);
+  //   }
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [alertMessage]);
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [alertMessage]);
 
   return <>
+    <Toaster toasterId={toasterId} />
 
-    <div className={styles.alertSection}>
+    {/* <div className={styles.alertSection}>
       {alertMessage && (
         <Alert intent={isError ? "error" : "success"}>
           {alertMessage}
         </Alert>
       )}
+
+    </div> */}
+
+    <div className={styles.headerContainer} >
+      <div className={styles.userHeader}>
+        <Image
+          alt="Amanda's avatar"
+          shape="rounded"
+          src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/AmandaBrady.jpg"
+          height={200}
+          width={200}
+        />
+        <Text size={900}>{user}</Text>
+      </div>
     </div>
 
-    <div className={styles.userHeader}>
-      <Image
-        alt="Amanda's avatar"
-        shape="rounded"
-        src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/AmandaBrady.jpg"
-        height={200}
-        width={200}
-      />
-      <p>{user}</p>
-    </div>
-    <div className={styles.container}>
+    <div className={styles.userListContainer}>
       <TabList
-        defaultSelectedValue="profile"
+        defaultSelectedValue=""
         vertical
         onTabSelect={handleTabClick}
         selectedValue={tab}>
         {renderTabs()}
       </TabList>
 
-      <div className={styles.userContainer}>
-        {/* <div >
-          {tab === "user" && <h1>User profile</h1>}
-          {tab === "key" && <ResetPasswordForm />}
-          {tab === "setting" && <h1>Setting</h1>}
-        </div> */}
+      <div className={styles.outletContainer}>
         <Outlet />
       </div>
     </div>
