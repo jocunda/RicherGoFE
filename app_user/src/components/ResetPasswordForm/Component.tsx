@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useLoaderData } from "react-router-dom";
 
@@ -7,15 +7,20 @@ import {
   Input,
   Button,
   Field,
+  useId,
+  ToastTitle,
+  Toast,
+  useToastController,
+  Toaster,
+  ToastIntent,
 } from "@fluentui/react-components";
 import {
   Eye24Regular,
   EyeOff24Regular
 } from "@fluentui/react-icons";
 
-import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
-import styles from './styles.module.scss';
+// import styles from './styles.module.scss';
 
 // APIs
 import { ResetPassRequest, resetPassword } from "@mimo/authentication";
@@ -53,16 +58,29 @@ const schema = yup.object({
 }).required();
 
 export default function ResetPasswordForm() {
-  //alert message
-  const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
-  const [isError, setIsError] = useState<boolean>()
+
+  //toaster fluent
+  const toasterId = useId("toaster");
+  const { dispatchToast } = useToastController(toasterId);
+  const [intent, setIntent] = useState<ToastIntent>("success");
+  const notify = (message: string) => {
+    switch (intent) {
+      case "error":
+      case "success":
+        dispatchToast(
+          <Toast>
+            <ToastTitle>{message}</ToastTitle>
+          </Toast>,
+          { position: "top-end", intent }
+        );
+        break;
+    }
+  };
 
   //router things
   const data = useLoaderData();
   console.log('ResetPasswordForm data: ', data);
 
-  // const [oldPassword, setOldPassword] = useState("");
-  // const [newPassword, setNewPassword] = useState("");
 
   //for password style
   type InputTypes = {
@@ -118,18 +136,7 @@ export default function ResetPasswordForm() {
     event?.preventDefault();
 
 
-    // // Call backend API for password change logic
-    // const response = await fetch("/api/Authenticate/changePassword", {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
 
-    //   },
-    //   body: JSON.stringify({
-    //     oldPassword,
-    //     newPassword,
-    //   }),
-    // });
     const username = sessionStorage.getItem("user") ?? ""
     const resetRequest = convertToResetRequest(dataInput, username);
     const { data, error, errorMessage } = await resetPassword(resetRequest);
@@ -137,52 +144,22 @@ export default function ResetPasswordForm() {
     if (error) {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
-      setAlertMessage(errMessage.message);
-      setIsError(true)
+
+      setIntent("error")
+      notify(errMessage.message)
     }
     if (data) {
       const { message } = data;
-      setAlertMessage(message);
-      setIsError(false)
+
+      setIntent("success")
+      notify(message)
     }
-    // if (dataInput) {
-    //   // Password changed successfully, do something
-    //   alert('Password changed successfully');
-    // } else {
-    //   // Handle error response from API
-    //   alert('Failed to change password:');
-    // }
 
-
-    // Clear form fields after submission
-    // setOldPassword("");
-    // setNewPassword("");
   };
 
-  //for alert animation
-  useEffect(() => {
-    let timeoutId: any;
-
-    if (alertMessage) {
-      timeoutId = setTimeout(() => {
-        setAlertMessage('');
-      }, 8000);
-    }
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [alertMessage]);
 
   return <>
-
-    <div className={styles.alertSection}>
-      {alertMessage && (
-        <Alert intent={isError ? "error" : "success"}>
-          {alertMessage}
-        </Alert>
-      )}
-    </div>
+    <Toaster toasterId={toasterId} />
 
 
     <form method="post" onSubmit={handleSubmit(onSubmit)}>

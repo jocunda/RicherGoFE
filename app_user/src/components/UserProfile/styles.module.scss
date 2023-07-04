@@ -1,0 +1,17 @@
+.infoContainer{
+  display: flex;
+  flex-direction: column;
+  text-align:left;
+  min-width: 100%;
+
+  .infoDetail{
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    justify-content:space-between;
+  
+    .editButton{
+      width: 25px;
+    }
+  }
+}
