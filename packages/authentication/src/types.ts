@@ -34,4 +34,5 @@ export type LogoutResponse = {
 
 export type GetUserResponse = {
   username: string;
+  email: string;
 };

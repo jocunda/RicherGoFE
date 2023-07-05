@@ -1,17 +1,28 @@
-.infoContainer{
+.infoContainer {
   display: flex;
   flex-direction: column;
-  text-align:left;
+  text-align: left;
   min-width: 100%;
+  padding-bottom: 20px;
 
-  .infoDetail{
+  .infoDetail {
     display: flex;
     flex-direction: row;
-    flex: auto;
-    justify-content:space-between;
-  
-    .editButton{
-      width: 25px;
+
+    .detailLeft {
+      width: 200px;
+      padding-right: 20px;
+      font-weight: 500;
+    }
+
+    .detailCenter {
+      width: calc(80% - 200px);
+      overflow-wrap: break-word;
+    }
+
+    .detailRight {
+      width: 20%;
+      justify-content: right;
     }
   }
 }

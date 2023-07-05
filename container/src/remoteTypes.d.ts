@@ -27,6 +27,10 @@ declare module "app_user/UserProfile" {
   const Component: React.ComponentType;
   const loader: () => {};
 }
+declare module "app_user/UserSetting" {
+  const Component: React.ComponentType;
+  const loader: () => {};
+}
 declare module "app_header/Header" {
   const Component: React.ComponentType;
   const loader: () => {};

@@ -36,6 +36,5 @@ export async function logoutUser() {
 // }
 
 export async function getUser() {
-  console.log("GET USER");
   return api.get<GetUserResponse>("/api/auth/username");
 }

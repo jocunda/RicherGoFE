@@ -42,9 +42,9 @@ const router = createBrowserRouter([
               {
                 path: "setting",
                 loader: createProtectedLoader(
-                  () => import("app_login/AppRegister")
+                  () => import("app_user/UserSetting")
                 ),
-                lazy: () => import("app_login/AppRegister"),
+                lazy: () => import("app_user/UserSetting"),
               },
             ]
           },

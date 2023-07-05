@@ -65,6 +65,7 @@ module.exports = {
             "./AppUser": "./src/components/AppUser",
             "./ResetPasswordForm": "./src/components/ResetPasswordForm",
             "./UserProfile": "./src/components/UserProfile",
+            "./UserSetting": "./src/components/UserSetting",
           },
           shared: {
             ...deps,

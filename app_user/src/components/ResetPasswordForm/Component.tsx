@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 //styles
 import {
@@ -80,6 +80,7 @@ export default function ResetPasswordForm() {
   //router things
   const data = useLoaderData();
   console.log('ResetPasswordForm data: ', data);
+  const navigate = useNavigate();
 
 
   //for password style
@@ -123,19 +124,9 @@ export default function ResetPasswordForm() {
     };
   };
 
-  // const handleChangeCurrentPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setOldPassword(event.target.value);
-  // };
-
-  // const handleChangeNewPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setNewPassword(event.target.value);
-  // };
-
   //handle submit
   const onSubmit: SubmitHandler<FieldValues> = async (dataInput, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
-
-
 
     const username = sessionStorage.getItem("user") ?? ""
     const resetRequest = convertToResetRequest(dataInput, username);
@@ -153,6 +144,9 @@ export default function ResetPasswordForm() {
 
       setIntent("success")
       notify(message)
+      setTimeout(() => {
+        navigate("/user");
+      }, 1500);
     }
 
   };
