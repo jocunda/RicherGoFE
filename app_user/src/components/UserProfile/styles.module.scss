@@ -1,13 +1,19 @@
+@import '../../styles/mediaquery';
+
 .infoContainer {
   display: flex;
   flex-direction: column;
   text-align: left;
   min-width: 100%;
   padding-bottom: 20px;
-
+  
   .infoDetail {
     display: flex;
     flex-direction: row;
+    
+    @include respond(medium) {
+        flex-direction: column;
+      }
 
     .detailLeft {
       width: 200px;

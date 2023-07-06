@@ -1,0 +1,29 @@
+.navbarContainer{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 5px;
+  padding-left: 50px;
+
+
+  .headerIconContainer {
+      display: flex;
+      gap: 25px;
+      justify-content:flex-end;
+      padding-right: 100px;
+
+
+      .avatarWithBadge{
+        display: flex;
+        flex-direction: row;
+        width:50px;
+      }
+    }
+
+}

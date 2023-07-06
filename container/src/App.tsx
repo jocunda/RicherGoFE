@@ -1,10 +1,11 @@
+import MainContainer from "./components/MainContainer/Component";
 import "./styles/index.scss";
 import React from "react";
 
 const App = () => {
   return (
     <>
-      <h1>This is container</h1>
+      <MainContainer />
     </>
   );
 };

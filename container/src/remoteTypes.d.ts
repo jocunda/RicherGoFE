@@ -31,11 +31,18 @@ declare module "app_user/UserSetting" {
   const Component: React.ComponentType;
   const loader: () => {};
 }
-declare module "app_header/Header" {
-  const Component: React.ComponentType;
-  const loader: () => {};
-}
+// declare module "app_header/Header" {
+//   const Component: React.ComponentType;
+//   const loader: () => {};
+// }
 
+type AppHeaderProps = {
+  count: number;
+  onClear: () => void;
+};
+declare module "app_header/AppHeader" {
+  const AppHeader: React.ComponentType<AppHeaderProps>;
+}
 declare module "app_error/AppError" {
   const AppError: React.ComponentType;
   //export default AppError;

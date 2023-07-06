@@ -62,7 +62,7 @@ module.exports = {
           filename: "remoteEntry.js",
           exposes: {
             // expose each component
-            "./Header": "./src/components/Header",
+            "./AppHeader": "./src/components/AppHeader",
           },
           shared: {
             ...deps,
