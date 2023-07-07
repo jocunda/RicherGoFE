@@ -7,17 +7,26 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #f1f1f1;
-  padding: 5px;
-  padding-left: 50px;
+  background-color: #d6d6d6;
+  padding: 5px 50px;
 
+  .headerSearchContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap:30px;
+
+    .searchInputHeader{
+      height: 15px;
+    }
+  }
 
   .headerIconContainer {
       display: flex;
-      gap: 25px;
+      align-items: center;
+      gap: 15px;
       justify-content:flex-end;
-      padding-right: 100px;
-
+      padding-right: 80px;
 
       .avatarWithBadge{
         display: flex;

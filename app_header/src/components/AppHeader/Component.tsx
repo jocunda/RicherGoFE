@@ -11,14 +11,13 @@ import {
   MenuList,
   MenuItem,
   MenuPopover,
+  Popover,
+  PopoverTrigger,
+  PopoverSurface,
+  Input,
 } from "@fluentui/react-components";
 import {
   Dismiss24Filled,
-  BriefcaseRegular,
-  CalendarLtrRegular,
-  ConferenceRoomRegular,
-  PeopleTeamRegular,
-  PersonCallRegular,
   bundleIcon,
   ClipboardPasteRegular,
   ClipboardPasteFilled,
@@ -34,7 +33,7 @@ import {
   BoxMultiple24Filled,
   Person24Regular,
   Cart24Regular,
-
+  Search24Regular,
 } from "@fluentui/react-icons";
 import styles from './styles.module.scss';
 
@@ -57,14 +56,28 @@ export function AppHeader({ count, onClear }: HeaderProps) {
   return (
     <>
       <div className={styles.navbarContainer}>
-        <h1>Logo</h1>
+        <div className={styles.headerSearchContainer}>
+          <h1>Logo</h1>
+          <Input
+            className={styles.searchInputHeader}
+            size="large"
+            placeholder="Search item or inventory"
+            aria-label="Search item or inventory"
+            contentBefore={<Search24Regular />} />
+        </div>
 
 
-        <div>
-          <Button appearance="subtle" icon={<HomeIcon />}>Home</Button>
+        <div className={styles.headerIconContainer}>
+          <Button
+            appearance="subtle"
+            shape="circular"
+            icon={<HomeIcon />}>Home</Button>
           <Menu>
             <MenuTrigger disableButtonEnhancement>
-              <Button appearance="subtle" icon={<BoxIcon />}>Item</Button>
+              <Button
+                appearance="subtle"
+                shape="circular"
+                icon={<BoxIcon />}>Item</Button>
             </MenuTrigger>
 
             <MenuPopover>
@@ -86,7 +99,10 @@ export function AppHeader({ count, onClear }: HeaderProps) {
 
           <Menu>
             <MenuTrigger disableButtonEnhancement>
-              <Button appearance="subtle" icon={<BoxMultipleIcon />}>Inventory</Button>
+              <Button
+                appearance="subtle"
+                shape="circular"
+                icon={<BoxMultipleIcon />}>Inventory</Button>
             </MenuTrigger>
 
             <MenuPopover>
@@ -103,31 +119,39 @@ export function AppHeader({ count, onClear }: HeaderProps) {
               </MenuList>
             </MenuPopover>
           </Menu>
-        </div>
 
-        <div className={styles.headerIconContainer}>
-          <div className={styles.avatarWithBadge}>
-            <Avatar size={36}
-              active="active"
-              icon={<Cart24Regular />}
-              aria-label="Guest" />
-            <CounterBadge
-              count={count}
-              size="large"
-              shape="circular" />
+          <div >
+            <Popover withArrow>
+              <PopoverTrigger disableButtonEnhancement>
+                <div className={styles.avatarWithBadge}>
+                  <Avatar size={36}
+
+                    active={count > 0 ? "active" : "unset"}
+                    icon={<Cart24Regular />} />
+                  <CounterBadge
+                    count={count}
+                    size="large"
+                    shape="circular" />
+                </div>
+              </PopoverTrigger>
+
+              <PopoverSurface>
+                <div>Your cart is empty</div>
+                <Button
+                  appearance="primary"
+                  shape="circular"
+                  icon={<Cart24Regular />}>Go to Cart</Button>
+              </PopoverSurface>
+            </Popover>
           </div>
 
           <Avatar
-            icon={<Person24Regular />}
-            aria-label="Group" />
-          <Avatar icon={<PeopleTeamRegular />} shape="square" aria-label="Team" />
-          <Avatar icon={<PersonCallRegular />} aria-label="Phone Contact" />
-          <Avatar icon={<CalendarLtrRegular />} aria-label="Meeting" />
-          <Avatar icon={<BriefcaseRegular />} shape="square" aria-label="Tenant" />
-          <Avatar icon={<ConferenceRoomRegular />} shape="square" aria-label="Room" />
+
+            icon={<Person24Regular />} size={36} />
+
         </div>
       </div>
-      <h1>This is Header</h1>
+
 
       <Button
         icon={<Dismiss24Filled />}
