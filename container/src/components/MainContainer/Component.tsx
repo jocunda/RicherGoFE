@@ -16,7 +16,6 @@ export default function MainContainer() {
   const [count, setCount] = useState<number>(0);
   return (
     <>
-      <h1>Main Container</h1>
       <React.Suspense fallback={<div>Loading...</div>}>
         <AppHeader count={count} onClear={() => setCount(0)} />
       </React.Suspense>

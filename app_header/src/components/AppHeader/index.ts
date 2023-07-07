@@ -1,4 +1,4 @@
 import { AppHeader } from "./Component";
-// import loader from "./loader";
+import loader from "./loader";
 
-export { AppHeader }; // IndexRouteObject
+export { loader, AppHeader }; // IndexRouteObject

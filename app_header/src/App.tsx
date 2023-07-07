@@ -1,6 +1,6 @@
 import "./styles/index.scss";
 import React from "react";
-// import Header from "./components/Header/Component";
+// import AppHeader from "./components/AppHeader";
 
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
         <section>
           <h1>Header</h1>
         </section>
-        {/* <Header count={0} onClear={function (): void { }} /> */}
+        {/* <AppHeader count={0} onClear={function (): void { }} /> */}
       </main>
     </>
   );

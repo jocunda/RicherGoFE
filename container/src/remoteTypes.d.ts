@@ -42,6 +42,7 @@ type AppHeaderProps = {
 };
 declare module "app_header/AppHeader" {
   const AppHeader: React.ComponentType<AppHeaderProps>;
+  const loader: () => {};
 }
 declare module "app_error/AppError" {
   const AppError: React.ComponentType;

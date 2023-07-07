@@ -1,5 +1,10 @@
 import React from "react";
 
+//router
+import {
+  Outlet,
+  useNavigate,
+} from "react-router-dom";
 
 //styles
 import {
@@ -51,7 +56,7 @@ const BoxIcon = bundleIcon(Box24Filled, Box24Regular);
 const BoxMultipleIcon = bundleIcon(BoxMultiple24Filled, BoxMultiple24Regular);
 
 export function AppHeader({ count, onClear }: HeaderProps) {
-
+  const navigate = useNavigate();
 
   return (
     <>
@@ -71,6 +76,7 @@ export function AppHeader({ count, onClear }: HeaderProps) {
           <Button
             appearance="subtle"
             shape="circular"
+            onClick={() => navigate("/")}
             icon={<HomeIcon />}>Home</Button>
           <Menu>
             <MenuTrigger disableButtonEnhancement>
@@ -146,9 +152,8 @@ export function AppHeader({ count, onClear }: HeaderProps) {
           </div>
 
           <Avatar
-
+            onClick={() => navigate("/user")}
             icon={<Person24Regular />} size={36} />
-
         </div>
       </div>
 
@@ -159,7 +164,7 @@ export function AppHeader({ count, onClear }: HeaderProps) {
         size="large"
       >Clear Cart</Button>
 
-
+      <Outlet />
     </>
   );
 };
