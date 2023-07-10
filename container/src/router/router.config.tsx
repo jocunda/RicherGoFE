@@ -64,6 +64,35 @@ const router = createBrowserRouter([
         lazy: () => import("app_login/AppRegister"),
         errorElement: <AppError />,
       },
+      {
+        path: "items",
+        children: [
+          {
+            path: "",
+            loader: createProtectedLoader(() => import("app_items/AppItems")),
+            lazy: () => import("app_items/AppItems"),
+            children: [
+              {
+                path: "item",
+                loader: createProtectedLoader(
+                  () => import("app_user/ResetPasswordForm")
+                ),
+                lazy: () => import("app_user/ResetPasswordForm"),
+              },
+            ]
+          },
+        ],
+      },
+      {
+        path: "cart",
+        children: [
+          {
+            path: "",
+            loader: createProtectedLoader(() => import("app_cart/AppCart")),
+            lazy: () => import("app_cart/AppCart"),
+          },
+        ],
+      }
     ],
   },
 ]);

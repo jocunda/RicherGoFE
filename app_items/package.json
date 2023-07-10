@@ -1,0 +1,45 @@
+{
+  "name": "app_items",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "webpack serve",
+    "start": "cross-env IS_MICRO_FE=true webpack serve",
+    "build": "cross-env NODE_ENV=production webpack",
+    "build-dev": "webpack",
+    "serve": "serve dist -p 3006",
+    "clean": "del /S /Q dist"
+  },
+  "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "http-proxy-middleware": "^2.0.6",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.2.3",
+    "react-refresh": "^0.14.0",
+    "react-refresh-typescript": "^2.0.9",
+    "sass": "^1.60.0",
+    "sass-loader": "^13.2.2",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.3",
+    "webpack": "^5.77.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.13.2"
+  },
+  "dependencies": {
+    "@fluentui/react-components": "^9.25.1",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@types/http-proxy-middleware": "^1.0.0",
+    "classnames": "^2.3.2",
+    "postcss-preset-env": "^8.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.10.0",
+    "serve": "^14.2.0"
+  }
+}

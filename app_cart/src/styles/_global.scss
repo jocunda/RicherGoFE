@@ -1,0 +1,22 @@
+@use "variables";
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+// main {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     min-height: 100vh;
+// }
+
+// button {
+//     font-size: 1.5rem;
+// }

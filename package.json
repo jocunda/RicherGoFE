@@ -18,6 +18,8 @@
     "packages": [
       "app_home",
       "app_login",
+      "app_items",
+      "app_cart",
       "app_header",
       "app_user",
       "app_error",

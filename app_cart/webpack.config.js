@@ -1,15 +1,16 @@
 const path = require("path");
 const webpack = require("webpack");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const ReactRefreshTypeScript = require("react-refresh-typescript");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { ModuleFederationPlugin } = webpack.container;
-const deps = require("./package.json").dependencies;
-require("dotenv").config({ path: "./.env" });
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshTypeScript = require("react-refresh-typescript");
+const proxy = require("http-proxy-middleware");
 
+const deps = require("./package.json").dependencies;
 const isDevelopment = process.env.NODE_ENV !== "production";
+const isMicroFE = process.env.IS_MICRO_FE === "true";
 
 module.exports = {
   mode: isDevelopment ? "development" : "production",
@@ -36,65 +37,63 @@ module.exports = {
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: require.resolve("ts-loader"),
-            options: {
-              getCustomTransformers: () => ({
-                before: [isDevelopment && ReactRefreshTypeScript()].filter(
-                  Boolean
-                ),
-              }),
-              transpileOnly: isDevelopment,
-            },
-          },
-        ],
+        use: isMicroFE
+          ? "ts-loader"
+          : [
+              {
+                loader: require.resolve("ts-loader"),
+                options: {
+                  getCustomTransformers: () => ({
+                    before: [isDevelopment && ReactRefreshTypeScript()].filter(
+                      Boolean
+                    ),
+                  }),
+                  transpileOnly: isDevelopment,
+                },
+              },
+            ],
       },
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    isMicroFE
+      ? new ModuleFederationPlugin({
+          name: "app_cart",
+          filename: "remoteEntry.js",
+          exposes: {
+            // expose each component
+            "./AppCart": "./src/components/AppCart",
+          },
+          shared: {
+            ...deps,
+            react: {
+              singleton: true,
+              requiredVersion: deps.react,
+            },
+            "react-dom": {
+              singleton: true,
+              requiredVersion: deps["react-dom"],
+            },
+            "react-router-dom": {
+              singleton: true,
+              requiredVersion: deps["react-router-dom"],
+            },
+          },
+        })
+      : isDevelopment && new ReactRefreshWebpackPlugin(),
+    ,
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    new ModuleFederationPlugin({
-      name: "container",
-      remotes: {
-        app_home: process.env.DEV_APPHOME,
-        app_login: process.env.DEV_APPLOGIN,
-        app_items: process.env.DEV_APPITEMS,
-        app_cart: process.env.DEV_APPCART,
-        app_user: process.env.DEV_APPUSER,
-        app_error: process.env.DEV_APPERROR,
-        app_header: process.env.DEV_APPHEADER,
-      },
-      shared: {
-        ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
-        },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
-        "react-router-dom": {
-          singleton: true,
-          requiredVersion: deps["react-router-dom"],
-        },
-      },
-    }),
-    new CleanWebpackPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     assetModuleFilename: "images/[hash][ext][query]",
-    publicPath: "/",
   },
   devtool: "source-map",
   devServer: {
@@ -105,11 +104,11 @@ module.exports = {
         secure: false,
       },
     },
-    port: 3000,
+    port: 3007,
     static: "./dist",
+    hot: !isMicroFE,
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
-    historyApiFallback: true,
   },
 };

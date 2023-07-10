@@ -35,6 +35,14 @@ declare module "app_user/UserSetting" {
 //   const Component: React.ComponentType;
 //   const loader: () => {};
 // }
+declare module "app_items/AppItems" {
+  const Component: React.ComponentType;
+  const loader: () => {};
+}
+declare module "app_cart/AppCart" {
+  const Component: React.ComponentType;
+  const loader: () => {};
+}
 
 type AppHeaderProps = {
   count: number;

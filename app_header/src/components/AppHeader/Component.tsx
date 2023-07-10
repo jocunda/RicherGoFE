@@ -26,8 +26,6 @@ import {
   bundleIcon,
   ClipboardPasteRegular,
   ClipboardPasteFilled,
-  CutRegular,
-  CutFilled,
   CopyRegular,
   CopyFilled,
   Home24Regular,
@@ -39,6 +37,13 @@ import {
   Person24Regular,
   Cart24Regular,
   Search24Regular,
+  AppsList24Regular,
+  AppsList24Filled,
+  DocumentAdd24Regular,
+  DocumentAdd24Filled,
+  FolderAdd24Regular,
+  FolderAdd24Filled
+
 } from "@fluentui/react-icons";
 import styles from './styles.module.scss';
 
@@ -50,10 +55,12 @@ interface HeaderProps {
 //for icon style
 const PasteIcon = bundleIcon(ClipboardPasteFilled, ClipboardPasteRegular);
 const CopyIcon = bundleIcon(CopyFilled, CopyRegular);
-const CutIcon = bundleIcon(CutFilled, CutRegular);
 const HomeIcon = bundleIcon(Home24Filled, Home24Regular);
 const BoxIcon = bundleIcon(Box24Filled, Box24Regular);
 const BoxMultipleIcon = bundleIcon(BoxMultiple24Filled, BoxMultiple24Regular);
+const AppListIcon = bundleIcon(AppsList24Filled, AppsList24Regular);
+const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
+const FolderAddIcon = bundleIcon(FolderAdd24Filled, FolderAdd24Regular);
 
 export function AppHeader({ count, onClear }: HeaderProps) {
   const navigate = useNavigate();
@@ -89,15 +96,16 @@ export function AppHeader({ count, onClear }: HeaderProps) {
             <MenuPopover>
               <MenuList>
                 <MenuItem
-                  icon={<CutIcon />}>
-                  Cut
+                  onClick={() => navigate("/items")}
+                  icon={<AppListIcon />}>
+                  Item List
                 </MenuItem>
                 <MenuItem
-                  icon={<CopyIcon />}>
-                  Copy
+                  icon={<DocumentAddIcon />}>
+                  Add Item
                 </MenuItem>
-                <MenuItem icon={<PasteIcon />}>
-                  Paste
+                <MenuItem icon={<FolderAddIcon />}>
+                  Add from folder
                 </MenuItem>
               </MenuList>
             </MenuPopover>
@@ -113,8 +121,8 @@ export function AppHeader({ count, onClear }: HeaderProps) {
 
             <MenuPopover>
               <MenuList>
-                <MenuItem icon={<CutIcon />}>
-                  Cut
+                <MenuItem icon={<AppListIcon />}>
+                  Inventory List
                 </MenuItem>
                 <MenuItem icon={<CopyIcon />}>
                   Copy
@@ -146,6 +154,7 @@ export function AppHeader({ count, onClear }: HeaderProps) {
                 <Button
                   appearance="primary"
                   shape="circular"
+                  onClick={() => navigate("/cart")}
                   icon={<Cart24Regular />}>Go to Cart</Button>
               </PopoverSurface>
             </Popover>
