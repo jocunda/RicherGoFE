@@ -4,8 +4,6 @@ import React from "react";
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
 import {
-  PresenceBadgeStatus,
-  Avatar,
   DataGridBody,
   DataGridRow,
   DataGrid,
@@ -16,6 +14,10 @@ import {
   TableColumnDefinition,
   createTableColumn,
   Button,
+  // Avatar,
+  AvatarGroupPopover,
+  AvatarGroup,
+  AvatarGroupItem,
 } from "@fluentui/react-components";
 import {
   FolderRegular,
@@ -31,42 +33,38 @@ type FileCell = {
   icon: JSX.Element;
 };
 
-type LastUpdatedCell = {
-  label: string;
-  timestamp: number;
-};
-
-type AuthorCell = {
-  label: string;
-  status: PresenceBadgeStatus;
-};
 
 type Item = {
   file: FileCell;
-  author: AuthorCell;
-  lastUpdated: LastUpdatedCell;
+  code: string;
+  value: string;
+  description: string;
 };
 
 const items: Item[] = [
   {
     file: { label: "Meeting notes", icon: <DocumentRegular /> },
-    author: { label: "Max Mustermann", status: "available" },
-    lastUpdated: { label: "7h ago", timestamp: 1 },
+    code: "345Red",
+    value: "DR01雙色膠套",
+    description: "#成品#光榮",
   },
   {
     file: { label: "Thursday presentation", icon: <FolderRegular /> },
-    author: { label: "Erika Mustermann", status: "busy" },
-    lastUpdated: { label: "Yesterday at 1:45 PM", timestamp: 2 },
+    code: "123Red",
+    value: "DR01雙色膠套",
+    description: "#成品#光榮",
   },
   {
     file: { label: "Training recording", icon: <VideoRegular /> },
-    author: { label: "John Doe", status: "away" },
-    lastUpdated: { label: "Yesterday at 1:45 PM", timestamp: 2 },
+    code: "122Red",
+    value: "DR01雙色膠套",
+    description: "#成品#光榮",
   },
   {
     file: { label: "Purchase order", icon: <DocumentPdfRegular /> },
-    author: { label: "Jane Doe", status: "offline" },
-    lastUpdated: { label: "Tue at 9:30 AM", timestamp: 3 },
+    code: "121Red",
+    value: "DR01雙色膠套",
+    description: "#成品#Green#BLue#tyui",
   },
 ];
 
@@ -87,43 +85,75 @@ const columns: TableColumnDefinition<Item>[] = [
       );
     },
   }),
-  createTableColumn<Item>({
-    columnId: "author",
-    compare: (a, b) => {
-      return a.author.label.localeCompare(b.author.label);
-    },
-    renderHeaderCell: () => {
-      return "Author";
-    },
-    renderCell: (item) => {
-      return (
-        <TableCellLayout
-          media={
-            <Avatar
-              aria-label={item.author.label}
-              name={item.author.label}
-              badge={{ status: item.author.status }}
-            />
-          }
-        >
-          {item.author.label}
-        </TableCellLayout>
-      );
-    },
-  }),
-  createTableColumn<Item>({
-    columnId: "lastUpdated",
-    compare: (a, b) => {
-      return a.lastUpdated.timestamp - b.lastUpdated.timestamp;
-    },
-    renderHeaderCell: () => {
-      return "Last updated";
-    },
 
+  createTableColumn<Item>({
+    columnId: "code",
+    compare: (a, b) => {
+      return a.code.localeCompare(b.code);
+    },
+    renderHeaderCell: () => {
+      return "Code";
+    },
     renderCell: (item) => {
-      return item.lastUpdated.label;
+      return item.code;
     },
   }),
+
+  createTableColumn<Item>({
+    columnId: "value",
+    compare: (a, b) => {
+      return a.value.localeCompare(b.value);
+    },
+    renderHeaderCell: () => {
+      return "Value";
+    },
+    renderCell: (item) => {
+      return item.value;
+    },
+  }),
+
+  createTableColumn<Item>({
+    columnId: "description",
+    compare: (a, b) => {
+      return a.description.localeCompare(b.description);
+    },
+    renderHeaderCell: () => {
+      return "Classification";
+    },
+    renderCell: (item) => {
+      const arraySplit = item.description.split("#").filter(Boolean)
+      console.log(arraySplit)
+      return <>
+        <TableCellLayout>
+          {/* {arraySplit.map((classify: string) =>
+            // <Button
+            //   color="colorful"
+            //   idForColor="id-123"
+            //   className={styles.classButton}
+            //   aria-label="Class"
+            //   appearance="primary">{classify}</Button>
+            
+            // <Avatar color="colorful" name={classify} />
+          )} */}
+
+          <AvatarGroup>
+            {arraySplit.map((name) => (
+              <AvatarGroupItem name={name} key={name} />
+            ))}
+            {arraySplit && (
+              <AvatarGroupPopover>
+                {arraySplit.map((name) => (
+                  <AvatarGroupItem name={name} key={name} />
+                ))}
+              </AvatarGroupPopover>
+            )}
+          </AvatarGroup>
+        </TableCellLayout>
+
+      </>
+    },
+  }),
+
   createTableColumn<Item>({
     columnId: "actions",
     renderHeaderCell: () => {
@@ -132,8 +162,14 @@ const columns: TableColumnDefinition<Item>[] = [
     renderCell: () => {
       return (
         <>
-          <Button aria-label="Edit" icon={<EditRegular />} />
-          <Button aria-label="Delete" icon={<DeleteRegular />} />
+          <Button
+            aria-label="Edit"
+            appearance="transparent"
+            icon={<EditRegular />} >Edit</Button>
+          <Button
+            aria-label="Delete"
+            appearance="transparent"
+            icon={<DeleteRegular />} >Delete</Button >
         </>
       );
     },
@@ -148,12 +184,11 @@ export default function AppItems() {
         items={items}
         columns={columns}
         sortable
-        selectionMode="multiselect"
         getRowId={(item) => item.file.label}
         onSelectionChange={(_event, data) => console.log(data)}
       >
         <DataGridHeader>
-          <DataGridRow selectionCell={{ "aria-label": "Select all rows" }}>
+          <DataGridRow>
             {({ renderHeaderCell }) => (
               <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
             )}
@@ -161,10 +196,7 @@ export default function AppItems() {
         </DataGridHeader>
         <DataGridBody<Item>>
           {({ item, rowId }) => (
-            <DataGridRow<Item>
-              key={rowId}
-              selectionCell={{ "aria-label": "Select row" }}
-            >
+            <DataGridRow<Item> key={rowId}>
               {({ renderCell }) => (
                 <DataGridCell focusMode="group">{renderCell(item)}</DataGridCell>
               )}
