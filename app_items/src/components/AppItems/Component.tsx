@@ -1,90 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //styles
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
 import {
-  DataGridBody,
-  DataGridRow,
-  DataGrid,
-  DataGridHeader,
-  DataGridHeaderCell,
-  DataGridCell,
-  TableCellLayout,
   TableColumnDefinition,
   createTableColumn,
   Button,
-  // Avatar,
-  AvatarGroupPopover,
-  AvatarGroup,
-  AvatarGroupItem,
+  useScrollbarWidth,
+  useFluent,
+  TableCellLayout,
+  Badge,
 } from "@fluentui/react-components";
 import {
-  FolderRegular,
   EditRegular,
-  DocumentRegular,
-  DocumentPdfRegular,
-  VideoRegular,
   DeleteRegular,
 } from "@fluentui/react-icons";
 
-type FileCell = {
-  label: string;
-  icon: JSX.Element;
-};
+import {
+  DataGridBody,
+  DataGrid,
+  DataGridRow,
+  DataGridHeader,
+  DataGridCell,
+  DataGridHeaderCell,
+  RowRenderer,
+} from '@fluentui-contrib/react-data-grid-react-window';
 
+// APIs
+import { getItem } from "@mimo/items";
+// types
+import type { Item, GetItemsResponse } from "@mimo/items";
 
-type Item = {
-  file: FileCell;
-  code: string;
-  value: string;
-  description: string;
-};
-
-const items: Item[] = [
-  {
-    file: { label: "Meeting notes", icon: <DocumentRegular /> },
-    code: "345Red",
-    value: "DR01雙色膠套",
-    description: "#成品#光榮",
-  },
-  {
-    file: { label: "Thursday presentation", icon: <FolderRegular /> },
-    code: "123Red",
-    value: "DR01雙色膠套",
-    description: "#成品#光榮",
-  },
-  {
-    file: { label: "Training recording", icon: <VideoRegular /> },
-    code: "122Red",
-    value: "DR01雙色膠套",
-    description: "#成品#光榮",
-  },
-  {
-    file: { label: "Purchase order", icon: <DocumentPdfRegular /> },
-    code: "121Red",
-    value: "DR01雙色膠套",
-    description: "#成品#Green#BLue#tyui",
-  },
-];
 
 const columns: TableColumnDefinition<Item>[] = [
-  createTableColumn<Item>({
-    columnId: "file",
-    compare: (a, b) => {
-      return a.file.label.localeCompare(b.file.label);
-    },
-    renderHeaderCell: () => {
-      return "File";
-    },
-    renderCell: (item) => {
-      return (
-        <TableCellLayout media={item.file.icon}>
-          {item.file.label}
-        </TableCellLayout>
-      );
-    },
-  }),
 
   createTableColumn<Item>({
     columnId: "code",
@@ -122,34 +71,14 @@ const columns: TableColumnDefinition<Item>[] = [
     },
     renderCell: (item) => {
       const arraySplit = item.description.split("#").filter(Boolean)
-      console.log(arraySplit)
       return <>
-        <TableCellLayout>
-          {/* {arraySplit.map((classify: string) =>
-            // <Button
-            //   color="colorful"
-            //   idForColor="id-123"
-            //   className={styles.classButton}
-            //   aria-label="Class"
-            //   appearance="primary">{classify}</Button>
-            
-            // <Avatar color="colorful" name={classify} />
-          )} */}
-
-          <AvatarGroup>
-            {arraySplit.map((name) => (
-              <AvatarGroupItem name={name} key={name} />
-            ))}
-            {arraySplit && (
-              <AvatarGroupPopover>
-                {arraySplit.map((name) => (
-                  <AvatarGroupItem name={name} key={name} />
-                ))}
-              </AvatarGroupPopover>
-            )}
-          </AvatarGroup>
+        <TableCellLayout className={styles.descriptionContainer}>
+          {arraySplit.map((classify: string) =>
+            <Badge
+              appearance="tint"
+              className={styles.classBadge}>{classify}</Badge>
+          )}
         </TableCellLayout>
-
       </>
     },
   }),
@@ -159,51 +88,108 @@ const columns: TableColumnDefinition<Item>[] = [
     renderHeaderCell: () => {
       return "Actions";
     },
-    renderCell: () => {
+    renderCell: (item) => {
       return (
         <>
-          <Button
-            aria-label="Edit"
-            appearance="transparent"
-            icon={<EditRegular />} >Edit</Button>
-          <Button
-            aria-label="Delete"
-            appearance="transparent"
-            icon={<DeleteRegular />} >Delete</Button >
+          <div className={styles.actionsContainer}>
+            <Button
+              aria-label="Edit"
+              appearance="subtle"
+              icon={<EditRegular />} >Edit</Button>
+            {item.deleteable ?
+              <Button
+                aria-label="Delete"
+                appearance="subtle"
+                icon={<DeleteRegular />} >Delete</Button > : ""}
+          </div>
         </>
       );
     },
   }),
 ];
 
+const renderRow: RowRenderer<GetItemsResponse> = ({ item, rowId }, style) => (
+  <DataGridRow<GetItemsResponse> key={rowId} style={style}>
+    {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
+  </DataGridRow>
+);
+
+
 export default function AppItems() {
+  const { targetDocument } = useFluent();
+  const scrollbarWidth = useScrollbarWidth({ targetDocument });
+
+  const [itemData, setItemData] = useState<GetItemsResponse>([]);
+  //retrieve item data
+  useEffect(() => {
+    itemDataGet();
+  }, []);
+
+  const itemDataGet = async () => {
+    const { data, error, errorMessage } = await getItem();
+
+    if (error) {
+      const obj = JSON.stringify(errorMessage);
+      const errMessage = JSON.parse(obj)
+      console.log(errMessage);
+    }
+    if (data) {
+      setItemData(data);
+    }
+  }
+  console.log(itemData)
+
+  // const items: GetItemsResponse[] = [
+  //   {
+  //     id: "01ab",
+  //     code: "JS-00172-28018-v1",
+  //     value: "DR01雙色膠套",
+  //     description: "#成品#光榮",
+  //     deleteable: true,
+  //   },
+  //   {
+  //     id: "02ab",
+  //     code: "123Red",
+  //     value: "DR01雙色膠套",
+  //     description: "#成品#光榮",
+  //     deleteable: true,
+  //   },
+  //   {
+  //     id: "03ab",
+  //     code: "122Red",
+  //     value: "052-11雙片夾底座 黑(MM) 052-11MO-LA-000-0",
+  //     description: "#成品#光榮",
+  //     deleteable: false,
+  //   },
+
+  // ];
+
+  // console.log(items)
 
   return <>
     <div className={styles.itemsContainer}>
-      <DataGrid
-        items={items}
-        columns={columns}
-        sortable
-        getRowId={(item) => item.file.label}
-        onSelectionChange={(_event, data) => console.log(data)}
-      >
-        <DataGridHeader>
-          <DataGridRow>
-            {({ renderHeaderCell }) => (
-              <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
-            )}
-          </DataGridRow>
-        </DataGridHeader>
-        <DataGridBody<Item>>
-          {({ item, rowId }) => (
-            <DataGridRow<Item> key={rowId}>
-              {({ renderCell }) => (
-                <DataGridCell focusMode="group">{renderCell(item)}</DataGridCell>
+      <h2>Item List</h2>
+      {itemData && (
+        <DataGrid
+          items={itemData}
+          columns={columns}
+          focusMode="cell"
+          sortable
+          onSelectionChange={(_event, data) => console.log(data)}
+        >
+          <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
+            <DataGridRow>
+              {({ renderHeaderCell }) => (
+                <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
               )}
             </DataGridRow>
-          )}
-        </DataGridBody>
-      </DataGrid>
+          </DataGridHeader>
+          <DataGridBody<GetItemsResponse> itemSize={60} height={700}>
+            {renderRow}
+          </DataGridBody>
+        </DataGrid>)
+      }
+
     </div>
   </>;
 }

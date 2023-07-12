@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import {
-  Button,
-} from "@fluentui/react-components";
-import {
-  AddCircle24Regular,
+// import {
+//   Button,
+// } from "@fluentui/react-components";
+// import {
+//   AddCircle24Regular,
 
-} from "@fluentui/react-icons";
+// } from "@fluentui/react-icons";
 
 
 
@@ -19,14 +19,14 @@ export default function MainContainer() {
       <React.Suspense fallback={<div>Loading...</div>}>
         <AppHeader count={count} onClear={() => setCount(0)} />
       </React.Suspense>
-      <div>Count: {count}</div>
+      {/* <div>Count: {count}</div>
       <div>
         <Button
           icon={<AddCircle24Regular />}
           size="large"
           onClick={() => setCount(count + 1)}
         >Add to Cart</Button>
-      </div>
+      </div> */}
     </>
   );
 }; 

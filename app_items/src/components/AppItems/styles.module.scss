@@ -1,7 +1,19 @@
 .itemsContainer{
-  width:100%;
+  min-width:983px;
 }
 
-.classButton{
-  height: 25px;
+.descriptionContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
+  
+  .classBadge{
+    margin: 0 2px;
+  }
+}
+
+.actionsContainer{
+  display: flex;
+  flex-direction: row;
 }

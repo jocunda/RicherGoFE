@@ -22,7 +22,7 @@ import {
   Input,
 } from "@fluentui/react-components";
 import {
-  Dismiss24Filled,
+  // Dismiss24Filled,
   bundleIcon,
   ClipboardPasteRegular,
   ClipboardPasteFilled,
@@ -49,7 +49,7 @@ import styles from './styles.module.scss';
 
 interface HeaderProps {
   count: number;
-  onClear: () => void;
+  // onClear: () => void;
 }
 
 //for icon style
@@ -62,7 +62,9 @@ const AppListIcon = bundleIcon(AppsList24Filled, AppsList24Regular);
 const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
 const FolderAddIcon = bundleIcon(FolderAdd24Filled, FolderAdd24Regular);
 
-export function AppHeader({ count, onClear }: HeaderProps) {
+export function AppHeader({ count,
+  // onClear
+}: HeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -167,11 +169,11 @@ export function AppHeader({ count, onClear }: HeaderProps) {
       </div>
 
 
-      <Button
+      {/* <Button
         icon={<Dismiss24Filled />}
         onClick={onClear}
         size="large"
-      >Clear Cart</Button>
+      >Clear Cart</Button> */}
 
       <Outlet />
     </>
