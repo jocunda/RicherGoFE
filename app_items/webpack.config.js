@@ -63,6 +63,7 @@ module.exports = {
           exposes: {
             // expose each component
             "./AppItems": "./src/components/AppItems",
+            "./AppItemSingle": "./src/components/AppItemSingle",
           },
           shared: {
             ...deps,

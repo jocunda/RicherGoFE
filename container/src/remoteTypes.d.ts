@@ -39,6 +39,10 @@ declare module "app_items/AppItems" {
   const Component: React.ComponentType;
   const loader: () => {};
 }
+declare module "app_items/AppItemSingle" {
+  const Component: React.ComponentType;
+  const loader: () => {};
+}
 declare module "app_cart/AppCart" {
   const Component: React.ComponentType;
   const loader: () => {};

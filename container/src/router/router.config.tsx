@@ -7,7 +7,6 @@ import App from "../App";
 const AppError = React.lazy(() => import("app_error/AppError").then(({ AppError }) => ({ default: AppError }))); // export  { AppError };
 //const AppError = React.lazy(() => import("app_error/AppError")); // export  { AppError };/
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -69,15 +68,25 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            loader: createProtectedLoader(() => import("app_items/AppItems")),
-            lazy: () => import("app_items/AppItems"),
             children: [
               {
-                path: "item",
+                path: "",
+                loader: createProtectedLoader(() => import("app_items/AppItems")),
+                lazy: () => import("app_items/AppItems"),
+              },
+              {
+                path: ":itemId",
                 loader: createProtectedLoader(
-                  () => import("app_user/ResetPasswordForm")
+                  () => import("app_items/AppItemSingle")
                 ),
-                lazy: () => import("app_user/ResetPasswordForm"),
+                lazy: () => import("app_items/AppItemSingle"),
+              },
+              {
+                path: "test",
+                loader: createProtectedLoader(
+                  () => import("app_cart/AppCart")
+                ),
+                lazy: () => import("app_cart/AppCart"),
               },
             ]
           },

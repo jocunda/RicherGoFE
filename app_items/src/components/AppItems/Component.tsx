@@ -91,19 +91,17 @@ const columns: TableColumnDefinition<Item>[] = [
     },
     renderCell: (item) => {
       return (
-        <>
-          <div className={styles.actionsContainer}>
+        <div className={styles.actionsContainer}>
+          <Button
+            aria-label="Edit"
+            appearance="subtle"
+            icon={<EditRegular />} >Edit</Button>
+          {item.deleteable ?
             <Button
-              aria-label="Edit"
+              aria-label="Delete"
               appearance="subtle"
-              icon={<EditRegular />} >Edit</Button>
-            {item.deleteable ?
-              <Button
-                aria-label="Delete"
-                appearance="subtle"
-                icon={<DeleteRegular />} >Delete</Button > : ""}
-          </div>
-        </>
+              icon={<DeleteRegular />} >Delete</Button > : ""}
+        </div>
       );
     },
   }),
