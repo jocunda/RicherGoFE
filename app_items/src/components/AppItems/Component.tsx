@@ -31,8 +31,9 @@ import {
 import { getItem } from "@mimo/items";
 // types
 import type { Item, GetItemsResponse } from "@mimo/items";
+import { useNavigate } from "react-router-dom";
 
-
+//datagrid fluentUI
 const columns: TableColumnDefinition<Item>[] = [
 
   createTableColumn<Item>({
@@ -108,16 +109,21 @@ const columns: TableColumnDefinition<Item>[] = [
   }),
 ];
 
+//datagrid fluentUI
 const renderRow: RowRenderer<GetItemsResponse> = ({ item, rowId }, style) => (
-  <DataGridRow<GetItemsResponse> key={rowId} style={style}>
+  <DataGridRow<GetItemsResponse> key={rowId} style={style} >
     {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
   </DataGridRow>
 );
 
 
 export default function AppItems() {
+  //datagrid fluentUI
   const { targetDocument } = useFluent();
   const scrollbarWidth = useScrollbarWidth({ targetDocument });
+
+  //router
+  const navigate = useNavigate();
 
   const [itemData, setItemData] = useState<GetItemsResponse>([]);
   //retrieve item data
@@ -137,59 +143,36 @@ export default function AppItems() {
       setItemData(data);
     }
   }
-  console.log(itemData)
-
-  // const items: GetItemsResponse[] = [
-  //   {
-  //     id: "01ab",
-  //     code: "JS-00172-28018-v1",
-  //     value: "DR01雙色膠套",
-  //     description: "#成品#光榮",
-  //     deleteable: true,
-  //   },
-  //   {
-  //     id: "02ab",
-  //     code: "123Red",
-  //     value: "DR01雙色膠套",
-  //     description: "#成品#光榮",
-  //     deleteable: true,
-  //   },
-  //   {
-  //     id: "03ab",
-  //     code: "122Red",
-  //     value: "052-11雙片夾底座 黑(MM) 052-11MO-LA-000-0",
-  //     description: "#成品#光榮",
-  //     deleteable: false,
-  //   },
-
-  // ];
-
-  // console.log(items)
 
   return <>
     <div className={styles.itemsContainer}>
       <h2>Item List</h2>
-      {itemData && (
-        <DataGrid
-          items={itemData}
-          columns={columns}
-          focusMode="cell"
-          sortable
-          onSelectionChange={(_event, data) => console.log(data)}
-        >
-          <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
-            <DataGridRow>
-              {({ renderHeaderCell }) => (
-                <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
-              )}
-            </DataGridRow>
-          </DataGridHeader>
-          <DataGridBody<GetItemsResponse> itemSize={60} height={700}>
-            {renderRow}
-          </DataGridBody>
-        </DataGrid>)
-      }
+      <DataGrid
+        items={itemData}
+        columns={columns}
+        getRowId={(item) => item.id}
+        sortable
+        selectionMode="single"
+        onSelectionChange={(_e, data) => {
+          const selectedArray = Array.from(data.selectedItems);
+          const selectedString = selectedArray[0];
+          navigate(`/items/${selectedString}`);
+        }}
+      >
+        <DataGridHeader style={{ paddingRight: scrollbarWidth }}>
+          <DataGridRow>
+            {({ renderHeaderCell }) => (
+              <DataGridHeaderCell>{renderHeaderCell()}</DataGridHeaderCell>
+            )}
+          </DataGridRow>
+        </DataGridHeader>
+        <DataGridBody<GetItemsResponse>
+          itemSize={60}
+          height={700}>
+          {renderRow}
+        </DataGridBody>
+      </DataGrid>
 
-    </div>
+    </div >
   </>;
 }
