@@ -1,3 +1,17 @@
 .itemContainer{
-  background-color: bisque;
+  display: flex;
+  align-items: center;
 }
+
+.classBadge {
+  margin: 0 5px;
+}
+
+      .tabList{
+        width: 150px;
+      }
+
+
+    .panels{
+      min-height: 390px;
+    }

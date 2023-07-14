@@ -8,3 +8,13 @@ export type Item = {
 };
 
 export type GetItemsResponse = Item[];
+
+export type Inventory = {
+  id: string;
+  no: string;
+  value: string;
+  code: string;
+  description: string;
+  photo?: string;
+  deleteable: boolean;
+};
