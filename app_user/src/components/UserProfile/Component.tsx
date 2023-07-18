@@ -20,7 +20,7 @@ import "../../styles/index.scss"
 import styles from './styles.module.scss';
 
 // APIs
-import { getUser } from "@mimo/authentication";
+import { getUser } from "../../../../packages/authentication/src/apis";
 
 
 

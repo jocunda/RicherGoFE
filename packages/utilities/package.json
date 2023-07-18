@@ -1,8 +1,5 @@
 {
   "name": "@mimo/utilities",
   "version": "1.0.0",
-  "main": "src/index.ts",
-  "dependencies": {
-    "@mimo/items": "^1.0.0"
-  }
+  "main": "src/index.ts"
 }

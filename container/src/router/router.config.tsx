@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { createLoader, createProtectedLoader } from "@mimo/utilities";
+import { createLoader, createProtectedLoader } from "../../../packages/utilities";
 import React from "react";
 import App from "../App";
 

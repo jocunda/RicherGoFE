@@ -67,9 +67,9 @@ const History24 = bundleIcon(History24Filled, History24Regular);
 const Bookmark24 = bundleIcon(Bookmark24Filled, Bookmark24Regular);
 
 // APIs
-import { getItemSingle } from "@mimo/items";
+import { getItemSingle } from "../../../../packages/items/src/apis";
 // types
-import type { Item } from "@mimo/items";
+import type { Item } from "../../../../packages/items/src/types";
 
 //datagrid fluentUI
 const columns: TableColumnDefinition<Item>[] = [

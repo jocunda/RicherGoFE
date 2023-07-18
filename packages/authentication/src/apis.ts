@@ -1,4 +1,4 @@
-import { api } from "@mimo/utilities";
+import { api } from "../../utilities";
 import type {
   RegisterRequest,
   RegisterResponse,

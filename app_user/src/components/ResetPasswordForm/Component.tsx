@@ -23,7 +23,7 @@ import "../../styles/index.scss"
 // import styles from './styles.module.scss';
 
 // APIs
-import { ResetPassRequest, resetPassword } from "@mimo/authentication";
+import { ResetPassRequest, resetPassword } from "../../../../packages/authentication";
 
 //form validation
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
