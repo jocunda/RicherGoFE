@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack serve",
     "start": "cross-env IS_MICRO_FE=true webpack serve",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack -config build/webpack.config.js",
     "build-dev": "webpack",
     "serve": "serve dist -p 3002",
     "clean": "del /S /Q dist"
@@ -15,6 +15,7 @@
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "clean-webpack-plugin": "^4.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.0",
     "http-proxy-middleware": "^2.0.6",
