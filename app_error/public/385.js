@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkapp_error=self.webpackChunkapp_error||[]).push([[385],{385:function(e,r,t){t.r(r);var n=t(378),l=t(634),a=document.getElementById("root");(0,l.s)(a).render(n.createElement(n.StrictMode,null,n.createElement((function(){return n.createElement(n.Fragment,null,n.createElement("section",{className:"hero"}),n.createElement("main",null,n.createElement("section",null,n.createElement("h1",null,"Error Area"))))}),null)))}}]);
-//# sourceMappingURL=385.js.map

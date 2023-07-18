@@ -93,7 +93,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, "dist"),
     assetModuleFilename: "images/[hash][ext][query]",
   },
   devtool: "source-map",
