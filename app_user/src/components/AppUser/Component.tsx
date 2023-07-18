@@ -46,7 +46,7 @@ import styles from './styles.module.scss';
 
 
 // APIs
-import { logoutUser } from "../../../../packages/authentication/src/apis";
+import { logoutUser } from "@mimo/authentication";
 
 
 //other component

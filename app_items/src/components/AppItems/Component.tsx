@@ -28,9 +28,9 @@ import {
 } from '@fluentui-contrib/react-data-grid-react-window';
 
 // APIs
-import { getItem } from "../../../../packages/items/src/apis";
+import { getItem } from "@mimo/items";
 // types
-import type { Item, GetItemsResponse } from "../../../../packages/items/src/types";
+import type { Item, GetItemsResponse } from "@mimo/items";
 import { useNavigate } from "react-router-dom";
 
 //datagrid fluentUI

@@ -18,10 +18,10 @@ import { Alert } from "@fluentui/react-components/unstable";
 import "../../styles/index.scss"
 
 // APIs
-import { registerUser } from "../../../../packages/authentication/src/apis";
+import { registerUser } from "@mimo/authentication";
 
 // types
-import type { RegisterRequest } from "../../../../packages/authentication/src/types";
+import type { RegisterRequest } from "@mimo/authentication";
 
 //form validation
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";

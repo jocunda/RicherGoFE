@@ -29,10 +29,10 @@ import styles from './styles.module.scss';
 import cx from 'classnames';
 
 // APIs
-import { login } from "../../../../packages/authentication/src/apis";
+import { login } from "@mimo/authentication";
 
 // types
-import type { LoginRequest } from "../../../../packages/authentication/src/types";
+import type { LoginRequest } from "@mimo/authentication";
 
 //form validation
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";

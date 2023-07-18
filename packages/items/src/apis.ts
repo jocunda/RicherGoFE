@@ -1,4 +1,4 @@
-import { api } from "../../utilities";
+import { api } from "@mimo/utilities";
 import type { GetItemsResponse, Item } from "./types";
 
 export async function getItem() {
