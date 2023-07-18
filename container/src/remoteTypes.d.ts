@@ -56,7 +56,7 @@ declare module "app_header/AppHeader" {
   const AppHeader: React.ComponentType<AppHeaderProps>;
   const loader: () => {};
 }
-declare module "app_error/AppError" {
+declare module "app_errhandling/AppError" {
   const AppError: React.ComponentType;
   //export default AppError;
 }

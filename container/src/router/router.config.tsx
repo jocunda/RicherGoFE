@@ -4,8 +4,8 @@ import React from "react";
 import App from "../App";
 
 
-const AppError = React.lazy(() => import("app_error/AppError").then(({ AppError }) => ({ default: AppError }))); // export  { AppError };
-//const AppError = React.lazy(() => import("app_error/AppError")); // export  { AppError };/
+const AppError = React.lazy(() => import("app_errhandling/AppError").then(({ AppError }) => ({ default: AppError }))); // export  { AppError };
+//const AppError = React.lazy(() => import("app_errhandling/AppError")); // export  { AppError };/
 
 const router = createBrowserRouter([
   {

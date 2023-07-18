@@ -5,11 +5,10 @@
     "build": "lerna run build",
     "serve": "lerna run --parallel serve",
     "clean": "lerna run --parallel clean",
-    "prepare": "lerna run yarn",
-    "bootstrap": "lerna bootstrap"
+    "prepare": "lerna run yarn"
   },
   "devDependencies": {
-    "lerna": "^6.6.1",
+    "lerna": "^7.1.4",
     "webpack": "^5.78.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.2"
@@ -22,7 +21,7 @@
       "app_cart",
       "app_header",
       "app_user",
-      "app_error",
+      "app_errhandling",
       "container",
       "packages/*"
     ]

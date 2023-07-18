@@ -58,7 +58,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     isMicroFE
       ? new ModuleFederationPlugin({
-          name: "app_error",
+          name: "app_errhandling",
           filename: "remoteEntry.js",
           exposes: {
             // expose each component
