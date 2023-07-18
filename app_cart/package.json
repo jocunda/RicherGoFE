@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "webpack serve",
     "start": "cross-env IS_MICRO_FE=true webpack serve",
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "build-dev": "webpack",
     "serve": "serve dist -p 3007",
     "clean": "del /S /Q dist"
