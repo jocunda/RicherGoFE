@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkapp_home=self.webpackChunkapp_home||[]).push([[385],{385:function(e,t,n){n.r(t);var l=n(378),r=n(634),c=document.getElementById("root");(0,r.s)(c).render(l.createElement(l.StrictMode,null,l.createElement((function(){return l.createElement(l.Fragment,null,l.createElement("section",{className:"hero"}),l.createElement("main",null,l.createElement("section",null,l.createElement("h1",null,"Hi, App_Home123"))))}),null)))}}]);
+//# sourceMappingURL=385.js.map
