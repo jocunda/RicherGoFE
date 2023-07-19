@@ -11,10 +11,10 @@ jobs:
     steps:
     - name: Checkout Monorepo Code
       uses: actions/checkout@v3
-    - name: Yarn Bootstrap
-      uses: borales/actions-yarn@v3.0.0
+    - name: Run install
+      uses: borales/actions-yarn@v4
       with:
-        cmd: bootstrap:ci # will run `yarn bootstrap:ci` command
+        cmd: install # will run `yarn install` command
 
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v1.1
