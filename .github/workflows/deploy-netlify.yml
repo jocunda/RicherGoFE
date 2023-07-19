@@ -17,9 +17,9 @@ jobs:
         cmd: install # will run `yarn install` command
 
     - name: Deploy to Netlify
-      uses: nwtgck/actions-netlify@v1.1
+      uses: nwtgck/actions-netlify@v2.0
       with:
-        publish-dir: './packages/react-webapp/build'
+        publish-dir: './dist'
         production-branch: main
         github-token: ${{ secrets.MY_GITHUB_SECRET }}
         deploy-message: "Deploy from GitHub Actions"
