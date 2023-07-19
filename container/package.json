@@ -6,7 +6,8 @@
     "watch": "webpack --watch",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "build-dev": "webpack",
-    "serve": "serve dist -p 3000"
+    "serve": "serve dist -p 3000",
+    "yarn": "yarn install"
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
