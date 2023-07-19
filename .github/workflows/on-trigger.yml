@@ -1,6 +1,0 @@
-name: CI/CD Deploy Netlify Webapp Dev
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
