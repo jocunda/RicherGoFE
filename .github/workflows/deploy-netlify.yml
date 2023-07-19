@@ -15,11 +15,16 @@ jobs:
       uses: borales/actions-yarn@v4
       with:
         cmd: install # will run `yarn install` command
+    - name: Run build in sub-folder
+      uses: borales/actions-yarn@v4
+      with:
+          cmd: build
+          dir: 'container'
 
     - name: Deploy to Netlify
       uses: nwtgck/actions-netlify@v2.0
       with:
-        publish-dir: '/home/runner/work/RicherGoFE/RicherGoFE/container/dist'
+        publish-dir: 'container/dist'
         production-branch: main
         github-token: ${{ secrets.MY_GITHUB_SECRET }}
         deploy-message: "Deploy from GitHub Actions"
