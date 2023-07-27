@@ -100,7 +100,8 @@ module.exports = {
   devServer: {
     proxy: {
       "/api/*": {
-        target: "https://express-be-api.vercel.app/",
+        // target: "https://express-be-api.vercel.app/",
+        target: "http://localhost:4001/",
         changeOrigin: true,
         secure: false,
       },

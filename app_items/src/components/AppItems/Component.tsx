@@ -124,6 +124,7 @@ export default function AppItems() {
   const navigate = useNavigate();
 
   const [itemData, setItemData] = useState<GetItemsResponse>([]);
+
   //retrieve item data
   useEffect(() => {
     itemDataGet();
@@ -131,7 +132,6 @@ export default function AppItems() {
 
   const itemDataGet = async () => {
     const { data, error, errorMessage } = await getItem();
-
     if (error) {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
@@ -144,7 +144,7 @@ export default function AppItems() {
 
   return <>
     <div className={styles.itemsContainer}>
-      <h2>Item List</h2>
+      <h2>Item List Total:{itemData.length}</h2>
       <DataGrid
         items={itemData}
         columns={columns}
