@@ -166,7 +166,7 @@ export default function AppItem() {
           </div>
         </CardPreview>
 
-        <CardFooter>
+        <CardFooter className={styles.buttonContainer}>
           <Button icon={<Edit24Regular />}>Edit</Button>
           <Button icon={<AppsAddIn24Regular />}>Add Formula</Button>
           <Button icon={<DocumentAdd24Regular />}>Add Inventory</Button>

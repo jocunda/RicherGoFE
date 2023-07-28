@@ -1,6 +1,12 @@
 .itemContainer{
   display: flex;
   align-items: center;
+
+  .card{
+    width: 1250px;
+    height: 85vh;
+    margin-top: 50px;
+  }
 }
 
 .classBadge {
@@ -13,5 +19,10 @@
 
 
     .panels{
-      min-height: 390px;
+      min-height: 470px;
     }
+
+
+.buttonContainer{
+  
+}

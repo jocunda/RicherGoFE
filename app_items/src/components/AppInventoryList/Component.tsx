@@ -8,27 +8,10 @@ import "../../styles/index.scss"
 import styles from './styles.module.scss';
 import { useParams } from "react-router-dom";
 import {
-  // bundleIcon,
-  // ArrowCircleLeft24Regular,
-  // ArrowCircleLeft24Filled,
-  // DocumentBulletList24Regular
   EditRegular,
   DeleteRegular,
-  // Edit24Regular,
-  // AppsAddIn24Regular,
-  // DocumentAdd24Regular,
-  // DrawerAdd24Regular,
-  // Print24Regular,
-  // DocumentTableArrowRight24Regular,
-  // DeleteDismiss24Regular,
-  // CalendarMonthRegular,
-  // CalendarMonthFilled,
-  // BoxMultiple24Regular,
-  // BoxMultiple24Filled,
-  // History24Regular,
-  // History24Filled,
-  // Bookmark24Regular,
-  // Bookmark24Filled
+  Cart24Regular,
+  TagSearch24Regular
 } from "@fluentui/react-icons";
 
 import {
@@ -37,6 +20,7 @@ import {
   Button,
   useScrollbarWidth,
   useFluent,
+  Input,
 } from "@fluentui/react-components";
 
 import {
@@ -49,11 +33,6 @@ import {
   RowRenderer,
 } from '@fluentui-contrib/react-data-grid-react-window';
 
-// const ArrowCircleLeft = bundleIcon(ArrowCircleLeft24Filled, ArrowCircleLeft24Regular);
-// const CalendarMonth = bundleIcon(CalendarMonthFilled, CalendarMonthRegular);
-// const BoxMultiple24 = bundleIcon(BoxMultiple24Filled, BoxMultiple24Regular);
-// const History24 = bundleIcon(History24Filled, History24Regular);
-// const Bookmark24 = bundleIcon(Bookmark24Filled, Bookmark24Regular);
 
 // APIs
 import { getInventoryList } from "@mimo/items";
@@ -150,13 +129,14 @@ const columns: TableColumnDefinition<Inventory>[] = [
       return (
         <div className={styles.actionsContainer}>
           <Button
+            aria-label="Withdraw"
+            icon={<Cart24Regular />} />
+          <Button
             aria-label="Edit"
-            appearance="subtle"
-            icon={<EditRegular />} >Edit</Button>
+            icon={<EditRegular />} />
           <Button
             aria-label="Delete"
-            appearance="subtle"
-            icon={<DeleteRegular />} >Delete</Button >
+            icon={<DeleteRegular />} />
         </div>
       );
     },
@@ -169,57 +149,6 @@ const renderRow: RowRenderer<Inventory[]> = ({ item, rowId }, style) => (
     {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
   </DataGridRow>
 );
-
-// const item: Item[] = [
-//   {
-//     id: "01",
-//     value: "gdfdvv",
-//     code: "4573rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: true,
-//   },
-//   {
-//     id: "02",
-//     value: "gdfdvcbvcbvv",
-//     code: "457bvvn3rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: true,
-//   },
-//   {
-//     id: "02",
-//     value: "gdfdvcbvcbvv",
-//     code: "457bvvn3rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: true,
-//   },
-//   {
-//     id: "02",
-//     value: "gdfdvcbvcbvv",
-//     code: "457bvvn3rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: true,
-//   },
-//   {
-//     id: "02",
-//     value: "gdfdvcbvcbvv",
-//     code: "457bvvn3rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: true,
-//   },
-//   {
-//     id: "02",
-//     value: "gdfdvcbvcbvv",
-//     code: "457bvvn3rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: true,
-//   },
-//   {
-//     id: "03",
-//     value: "gdfresrsdvv",
-//     code: "457bcvbcb3rdfgdgdg",
-//     description: "#rete5#gfdgdg",
-//     deleteable: false,
-//   }];
 
 export default function AppInventoryList() {
 
@@ -252,6 +181,9 @@ export default function AppInventoryList() {
   }
 
   return <>
+    <Input
+      className={styles.inputFilter}
+      contentBefore={<TagSearch24Regular />} />
     <DataGrid
       items={inventories}
       columns={columns}
@@ -268,7 +200,7 @@ export default function AppInventoryList() {
       </DataGridHeader>
       <DataGridBody<Inventory[]>
         itemSize={60}
-        height={350}>
+        height={360}>
         {renderRow}
       </DataGridBody>
     </DataGrid>

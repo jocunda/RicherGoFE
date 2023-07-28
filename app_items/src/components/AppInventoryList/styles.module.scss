@@ -1,17 +1,9 @@
-.itemContainer{
+.actionsContainer{
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.classBadge {
-  margin: 0 5px;
+.inputFilter{
+  margin:20px;
 }
-
-      .tabList{
-        width: 150px;
-      }
-
-
-    .panels{
-      min-height: 390px;
-    }
