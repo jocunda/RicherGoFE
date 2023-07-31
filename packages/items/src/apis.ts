@@ -5,6 +5,7 @@ import type {
   Item,
   AddItemRequest,
   AddItemResponse,
+  DeleteItemResponse,
 } from "./types";
 
 export async function getItem() {
@@ -17,6 +18,10 @@ export async function getItemSingle(itemId: string | undefined) {
 
 export async function addItem(payload: AddItemRequest) {
   return api.post<AddItemResponse>("/api/items/addItem", payload);
+}
+
+export async function deleteItem(itemId: string | undefined) {
+  return api.delete<DeleteItemResponse>(`/api/items/delete/${itemId}`);
 }
 
 export async function getInventoryList(itemId: string | undefined) {

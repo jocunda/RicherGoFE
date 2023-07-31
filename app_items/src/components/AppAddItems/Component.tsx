@@ -2,6 +2,7 @@ import React, {
   useState
 } from "react";
 
+
 //styles
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
@@ -19,6 +20,11 @@ import {
   Field,
   Image,
   Textarea,
+  Toaster,
+  Toast,
+  ToastTitle,
+  useToastController,
+  useId,
 } from "@fluentui/react-components";
 import {
   bundleIcon,
@@ -63,11 +69,32 @@ const schema = yup.object({
 
 
 
-export default function AppAddItems() {
+export default function AppAddItems({ onItemAddSuccess }: { onItemAddSuccess: () => void }) {
 
-  //alert message
-  const [alertMessage, setAlertMessage] = useState<string | undefined>("");
+  const [open, setOpen] = useState<boolean>(false);
 
+
+  //toaster fluent
+  const toasterId = useId("toaster");
+  const { dispatchToast } = useToastController(toasterId);
+
+  const errorNotify = (message: string) => {
+    dispatchToast(
+      <Toast>
+        <ToastTitle>{message}</ToastTitle>
+      </Toast>,
+      { position: "top-end", intent: "error" }
+    );
+  };
+
+  const successNotify = (message: string) => {
+    dispatchToast(
+      <Toast>
+        <ToastTitle>{message}</ToastTitle>
+      </Toast>,
+      { position: "top-end", intent: "success" }
+    );
+  };
 
   //react-hook-form
   const { register,
@@ -101,20 +128,21 @@ export default function AppAddItems() {
     if (error) {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
-      setAlertMessage(errMessage.message);
-      console.log(errMessage.message)
+      errorNotify(errMessage.message)
     }
 
     if (data) {
       const { message } = data;
-      setAlertMessage(message);
-      console.log(message)
+      successNotify(message);
+      setOpen(false);
+      onItemAddSuccess();
     }
   }
 
   return <>
-    {alertMessage}
-    <Dialog modalType="modal" >
+    <Toaster toasterId={toasterId} />
+
+    <Dialog modalType="modal" open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
       <DialogTrigger disableButtonEnhancement>
         <Button
           appearance="primary"

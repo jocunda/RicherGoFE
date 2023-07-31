@@ -12,11 +12,10 @@ import {
   TableCellLayout,
   Badge,
   Input,
-
+  Link
 } from "@fluentui/react-components";
 import {
   EditRegular,
-  DeleteRegular,
   BoxSearch24Regular,
 } from "@fluentui/react-icons";
 
@@ -35,88 +34,10 @@ import { getItem } from "@mimo/items";
 // types
 import type { Item, GetItemsResponse } from "@mimo/items";
 import { useNavigate } from "react-router-dom";
+
+//Other Components
 import AppAddItems from "../AppAddItems/Component";
-
-//datagrid fluentUI
-const columns: TableColumnDefinition<Item>[] = [
-
-  createTableColumn<Item>({
-    columnId: "code",
-    compare: (a, b) => {
-      return a.code.localeCompare(b.code);
-    },
-    renderHeaderCell: () => {
-      return "Code";
-    },
-    renderCell: (item) => {
-      return item.code;
-    },
-  }),
-
-  createTableColumn<Item>({
-    columnId: "value",
-    compare: (a, b) => {
-      return a.value.localeCompare(b.value);
-    },
-    renderHeaderCell: () => {
-      return "Value";
-    },
-    renderCell: (item) => {
-      return item.value;
-    },
-  }),
-
-  createTableColumn<Item>({
-    columnId: "description",
-    compare: (a, b) => {
-      return a.description.localeCompare(b.description);
-    },
-    renderHeaderCell: () => {
-      return "Classification";
-    },
-    renderCell: (item) => {
-      const arraySplit = item.description.split("#").filter(Boolean)
-      return <>
-        <TableCellLayout className={styles.descriptionContainer}>
-          {arraySplit.map((classify: string) =>
-            <Badge
-              appearance="tint"
-              className={styles.classBadge}>{classify}</Badge>
-          )}
-        </TableCellLayout>
-      </>
-    },
-  }),
-
-  createTableColumn<Item>({
-    columnId: "actions",
-    renderHeaderCell: () => {
-      return "Actions";
-    },
-    renderCell: (item) => {
-      return (
-        <div className={styles.actionsContainer}>
-          <Button
-            aria-label="Edit"
-            appearance="subtle"
-            icon={<EditRegular />} >Edit</Button>
-          {item.deleteable ?
-            <Button
-              aria-label="Delete"
-              appearance="subtle"
-              icon={<DeleteRegular />} >Delete</Button > : ""}
-        </div>
-      );
-    },
-  }),
-];
-
-//datagrid fluentUI
-const renderRow: RowRenderer<GetItemsResponse> = ({ item, rowId }, style) => (
-  <DataGridRow<GetItemsResponse> key={rowId} style={style} >
-    {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
-  </DataGridRow>
-);
+import AppDeleteItems from "../AppDeleteItems/Component";
 
 
 export default function AppItems() {
@@ -124,15 +45,17 @@ export default function AppItems() {
   const { targetDocument } = useFluent();
   const scrollbarWidth = useScrollbarWidth({ targetDocument });
 
-  //router
-  const navigate = useNavigate();
-
   const [itemData, setItemData] = useState<GetItemsResponse>([]);
 
   //retrieve item data
   useEffect(() => {
     itemDataGet();
   }, []);
+
+  const handleItemCallBack = async () => {
+    // Call the function to retrieve the updated item data
+    await itemDataGet();
+  };
 
   const itemDataGet = async () => {
     const { data, error, errorMessage } = await getItem();
@@ -146,6 +69,91 @@ export default function AppItems() {
     }
   }
 
+  //router
+  const navigate = useNavigate();
+
+  //datagrid fluentUI
+  const columns: TableColumnDefinition<Item>[] = [
+
+    createTableColumn<Item>({
+      columnId: "code",
+      compare: (a, b) => {
+        return a.code.localeCompare(b.code);
+      },
+      renderHeaderCell: () => {
+        return "Code";
+      },
+      renderCell: (item) => {
+        return item.code;
+      },
+    }),
+
+    createTableColumn<Item>({
+      columnId: "value",
+      compare: (a, b) => {
+        return a.value.localeCompare(b.value);
+      },
+      renderHeaderCell: () => {
+        return "Value";
+      },
+      renderCell: (item) => {
+        return <>
+          <Link onClick={() => navigate(`/items/${item.id}`)}>
+            {item.value}
+          </Link>
+        </>
+      },
+    }),
+
+    createTableColumn<Item>({
+      columnId: "description",
+      compare: (a, b) => {
+        return a.description.localeCompare(b.description);
+      },
+      renderHeaderCell: () => {
+        return "Classification";
+      },
+      renderCell: (item) => {
+        const arraySplit = item.description.split("#").filter(Boolean)
+        return <>
+          <TableCellLayout className={styles.descriptionContainer}>
+            {arraySplit.map((classify: string) =>
+              <Badge
+                appearance="tint"
+                className={styles.classBadge}>{classify}</Badge>
+            )}
+          </TableCellLayout>
+        </>
+      },
+    }),
+
+    createTableColumn<Item>({
+      columnId: "actions",
+      renderHeaderCell: () => {
+        return "Actions";
+      },
+      renderCell: (item) => {
+        return (
+          <div className={styles.actionsContainer}>
+            <Button
+              aria-label="Edit"
+              appearance="subtle"
+              icon={<EditRegular />} >Edit</Button>
+
+            <AppDeleteItems onItemDeleteSuccess={handleItemCallBack} itemId={item.id} />
+          </div>
+        );
+      },
+    }),
+  ];
+
+  //datagrid fluentUI
+  const renderRow: RowRenderer<GetItemsResponse> = ({ item, rowId }, style) => (
+    <DataGridRow<GetItemsResponse> key={rowId} style={style} >
+      {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
+    </DataGridRow>
+  );
+
   return <>
 
     <div className={styles.itemsContainer}>
@@ -155,7 +163,7 @@ export default function AppItems() {
           contentBefore={<BoxSearch24Regular />} />
         <h2>Item List Total:{itemData.length}</h2>
         <div>
-          <AppAddItems />
+          <AppAddItems onItemAddSuccess={handleItemCallBack} />
         </div>
 
       </div>
@@ -163,14 +171,14 @@ export default function AppItems() {
       <DataGrid
         items={itemData}
         columns={columns}
-        getRowId={(item) => item.id}
+        // getRowId={(item) => item.id}
         sortable
         selectionMode="single"
-        onSelectionChange={(_e, data) => {
-          const selectedArray = Array.from(data.selectedItems);
-          const selectedString = selectedArray[0];
-          navigate(`/items/${selectedString}`);
-        }}
+        // onSelectionChange={(_e, data) => {
+        //   const selectedArray = Array.from(data.selectedItems);
+        //   const selectedString = selectedArray[0];
+        //   navigate(`/items/${selectedString}`);
+        // }}
         className={styles.itemsListContainer}
       >
         <DataGridHeader style={{ paddingRight: scrollbarWidth }}>

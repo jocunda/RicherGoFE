@@ -33,3 +33,7 @@ export type AddItemRequest = {
 export type AddItemResponse = {
   message: string;
 };
+
+export type DeleteItemResponse = {
+  message: string;
+};
