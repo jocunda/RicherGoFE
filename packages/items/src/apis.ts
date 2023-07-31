@@ -1,5 +1,11 @@
 import { api } from "@mimo/utilities";
-import type { GetItemsResponse, Inventory, Item } from "./types";
+import type {
+  GetItemsResponse,
+  Inventory,
+  Item,
+  AddItemRequest,
+  AddItemResponse,
+} from "./types";
 
 export async function getItem() {
   return api.get<GetItemsResponse>("/api/items/itemList");
@@ -9,9 +15,14 @@ export async function getItemSingle(itemId: string | undefined) {
   return api.get<Item>(`/api/items/${itemId}`);
 }
 
+export async function addItem(payload: AddItemRequest) {
+  return api.post<AddItemResponse>("/api/items/addItem", payload);
+}
+
 export async function getInventoryList(itemId: string | undefined) {
   return api.get<Inventory[]>(`/api/inventories/inventorieslist/${itemId}`);
 }
+
 //payload,
 // anyLike: filter
 // itemId: ec013409-5913-458b-958e-d5fca8034b67

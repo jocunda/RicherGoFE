@@ -23,3 +23,13 @@ export type Inventory = {
   positionPreOwnerId: string;
   positionStartDate: string;
 };
+
+export type AddItemRequest = {
+  value: string;
+  code: string;
+  description?: string;
+};
+
+export type AddItemResponse = {
+  message: string;
+};

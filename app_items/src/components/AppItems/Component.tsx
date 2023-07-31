@@ -7,33 +7,17 @@ import {
   TableColumnDefinition,
   createTableColumn,
   Button,
-  CompoundButton,
   useScrollbarWidth,
   useFluent,
   TableCellLayout,
   Badge,
   Input,
-  Dialog,
-  DialogTrigger,
-  DialogSurface,
-  DialogTitle,
-  DialogBody,
-  DialogActions,
-  DialogContent,
-  Field,
-  Image
+
 } from "@fluentui/react-components";
 import {
-  bundleIcon,
   EditRegular,
   DeleteRegular,
-  DocumentAdd24Filled,
-  DocumentAdd24Regular,
-  FolderAdd24Filled,
-  FolderAdd24Regular,
   BoxSearch24Regular,
-  AddCircle24Regular,
-  DismissCircle24Regular
 } from "@fluentui/react-icons";
 
 import {
@@ -46,17 +30,12 @@ import {
   RowRenderer,
 } from '@fluentui-contrib/react-data-grid-react-window';
 
-//assets
-import plus from "../../images/plusIcon.svg"
-
 // APIs
 import { getItem } from "@mimo/items";
 // types
 import type { Item, GetItemsResponse } from "@mimo/items";
 import { useNavigate } from "react-router-dom";
-
-const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
-const FolderAddIcon = bundleIcon(FolderAdd24Filled, FolderAdd24Regular);
+import AppAddItems from "../AppAddItems/Component";
 
 //datagrid fluentUI
 const columns: TableColumnDefinition<Item>[] = [
@@ -168,6 +147,7 @@ export default function AppItems() {
   }
 
   return <>
+
     <div className={styles.itemsContainer}>
       <div className={styles.itemsHeaderContainer}>
         <Input
@@ -175,68 +155,7 @@ export default function AppItems() {
           contentBefore={<BoxSearch24Regular />} />
         <h2>Item List Total:{itemData.length}</h2>
         <div>
-          <Dialog modalType="modal">
-            <DialogTrigger disableButtonEnhancement>
-              <Button
-                appearance="primary"
-                icon={<DocumentAddIcon />}>Add Item</Button>
-            </DialogTrigger>
-            <DialogSurface>
-              <DialogBody>
-                <DialogTitle>Add Item</DialogTitle>
-                <DialogContent>
-                  <form method="post">
-                    <Image
-                      alt="add Image"
-                      shape="circular"
-                      src={plus}
-                      height={200}
-                      width={200}
-                      onClick={() => console.log("clickable")}
-                    />
-                    <Field
-                      size="large"
-                      label="Name"
-                      required
-                    >
-                      <Input
-                        size="large"
-                      />
-                    </Field>
-                    <Field
-                      size="large"
-                      label="Code"
-                      required
-                    >
-                      <Input
-                        size="large"
-                      />
-                    </Field>
-                    <Field
-                      size="large"
-                      label="Description"
-                      required
-                    >
-                      <Input
-                        size="large"
-                      />
-                    </Field>
-                  </form>
-                </DialogContent>
-                <DialogActions>
-                  <Button appearance="primary" icon={<AddCircle24Regular />}>Add</Button>
-                  <DialogTrigger disableButtonEnhancement>
-                    <Button appearance="secondary" icon={<DismissCircle24Regular />}>Cancel</Button>
-                  </DialogTrigger>
-                </DialogActions>
-              </DialogBody>
-            </DialogSurface>
-          </Dialog>
-
-          <CompoundButton
-            appearance="secondary"
-            secondaryContent="From Folder"
-            icon={<FolderAddIcon />}>Add Item</CompoundButton>
+          <AppAddItems />
         </div>
 
       </div>
