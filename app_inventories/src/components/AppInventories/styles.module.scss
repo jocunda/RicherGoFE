@@ -1,0 +1,44 @@
+.itemsContainer{
+  min-width:983px;
+
+  .itemsHeaderContainer{
+    position: fixed;
+    top:60px;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    gap:50px;
+    justify-content: space-between;
+    width: 1180px;
+    // border: 1px solid black;
+    align-items: center;
+    button{
+      width: 150px;
+      margin: 0 10px;
+      height: 50px;
+    }
+
+  }
+
+  .itemsListContainer{
+    width:1250px;
+    margin-top: 130px;
+  }
+}
+
+
+.descriptionContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
+  
+  .classBadge{
+    margin: 0 2px;
+  }
+}
+
+.actionsContainer{
+  display: flex;
+  flex-direction: row;
+}

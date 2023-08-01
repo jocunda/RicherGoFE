@@ -20,6 +20,7 @@
       "app_home",
       "app_login",
       "app_items",
+      "app_inventories",
       "app_cart",
       "app_header",
       "app_user",

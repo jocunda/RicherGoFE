@@ -1,8 +1,11 @@
 import App from "./App"
 import React from "react";
-
+import {
+    RouterProvider,
+    createBrowserRouter
+} from "react-router-dom";
 import { createRoot } from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { FluentProvider, teamsLightTheme } from '@fluentui/react-components';
 
 const domNode = document.getElementById('root') as HTMLElement;
 const root = createRoot(domNode);
@@ -16,6 +19,8 @@ const router = createBrowserRouter([
 
 root.render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <FluentProvider theme={teamsLightTheme}>
+            <RouterProvider router={router} />
+        </FluentProvider>
     </React.StrictMode>
 );

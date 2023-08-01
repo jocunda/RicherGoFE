@@ -6,6 +6,8 @@ import type {
   AddItemRequest,
   AddItemResponse,
   DeleteItemResponse,
+  EditItemRequest,
+  EditItemResponse,
 } from "./types";
 
 export async function getItem() {
@@ -22,6 +24,13 @@ export async function addItem(payload: AddItemRequest) {
 
 export async function deleteItem(itemId: string | undefined) {
   return api.delete<DeleteItemResponse>(`/api/items/delete/${itemId}`);
+}
+
+export async function editItem(
+  itemId: string | undefined,
+  payload: EditItemRequest
+) {
+  return api.put<EditItemResponse>(`/api/items/edit/${itemId}`, payload);
 }
 
 export async function getInventoryList(itemId: string | undefined) {

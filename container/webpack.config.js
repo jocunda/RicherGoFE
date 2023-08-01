@@ -65,8 +65,9 @@ module.exports = {
         app_items: process.env.DEV_APPITEMS,
         app_cart: process.env.DEV_APPCART,
         app_user: process.env.DEV_APPUSER,
-        app_errhandling: process.env.DEV_APPERROR,
+        app_errhandling: process.env.DEV_APPERRORHANDLING,
         app_header: process.env.DEV_APPHEADER,
+        app_inventories: process.env.DEV_APPINVENTORIES,
       },
       shared: {
         ...deps,

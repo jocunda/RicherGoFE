@@ -16,8 +16,6 @@ import {
   Print24Regular,
   DocumentTableArrowRight24Regular,
   DeleteDismiss24Regular,
-  // CalendarMonthRegular,
-  // CalendarMonthFilled,
   BoxMultiple24Regular,
   BoxMultiple24Filled,
   History24Regular,
@@ -48,7 +46,6 @@ import {
 import AppInventoryList from "../AppInventoryList/Component";
 
 const ArrowCircleLeft = bundleIcon(ArrowCircleLeft24Filled, ArrowCircleLeft24Regular);
-// const CalendarMonth = bundleIcon(CalendarMonthFilled, CalendarMonthRegular);
 const BoxMultiple24 = bundleIcon(BoxMultiple24Filled, BoxMultiple24Regular);
 const History24 = bundleIcon(History24Filled, History24Regular);
 const Bookmark24 = bundleIcon(Bookmark24Filled, Bookmark24Regular);

@@ -89,7 +89,7 @@ export const api = {
     request<ResponseData>(url, "POST", requestPayload),
   put: <ResponseData>(url: string, requestPayload: any) =>
     request<ResponseData>(url, "PUT", requestPayload),
-  batch: <ResponseData>(url: string, requestPayload: any) =>
-    request<ResponseData>(url, "BATCH", requestPayload),
+  patch: <ResponseData>(url: string, requestPayload: any) =>
+    request<ResponseData>(url, "PATCH", requestPayload),
   delete: <ResponseData>(url: string) => request<ResponseData>(url, "DELETE"),
 };

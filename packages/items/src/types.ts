@@ -37,3 +37,13 @@ export type AddItemResponse = {
 export type DeleteItemResponse = {
   message: string;
 };
+
+export type EditItemRequest = {
+  value: string;
+  code: string;
+  description?: string;
+};
+
+export type EditItemResponse = {
+  message: string;
+};

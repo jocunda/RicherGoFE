@@ -6,7 +6,6 @@ import styles from './styles.module.scss';
 import {
   TableColumnDefinition,
   createTableColumn,
-  Button,
   useScrollbarWidth,
   useFluent,
   TableCellLayout,
@@ -15,7 +14,6 @@ import {
   Link
 } from "@fluentui/react-components";
 import {
-  EditRegular,
   BoxSearch24Regular,
 } from "@fluentui/react-icons";
 
@@ -38,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 //Other Components
 import AppAddItems from "../AppAddItems/Component";
 import AppDeleteItems from "../AppDeleteItems/Component";
+import AppEditItems from "../AppEditItems/Component";
 
 
 export default function AppItems() {
@@ -135,11 +134,7 @@ export default function AppItems() {
       renderCell: (item) => {
         return (
           <div className={styles.actionsContainer}>
-            <Button
-              aria-label="Edit"
-              appearance="subtle"
-              icon={<EditRegular />} >Edit</Button>
-
+            <AppEditItems onItemEditSuccess={handleItemCallBack} itemId={item.id} itemDataForForm={item} />
             <AppDeleteItems onItemDeleteSuccess={handleItemCallBack} itemId={item.id} />
           </div>
         );
