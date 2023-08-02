@@ -109,11 +109,6 @@ const router = createBrowserRouter([
             path: "",
             children: [
               {
-                path: "",
-                loader: createProtectedLoader(() => import("app_inventories/AppInventories")),
-                lazy: () => import("app_inventories/AppInventories"),
-              },
-              {
                 path: ":inventoriesId",
                 loader: createProtectedLoader(
                   () => import("app_inventories/AppInventories")

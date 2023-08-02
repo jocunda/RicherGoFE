@@ -6,7 +6,7 @@ import React, {
 //styles
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   EditRegular,
   DeleteRegular,
@@ -21,6 +21,7 @@ import {
   useScrollbarWidth,
   useFluent,
   Input,
+  Link
 } from "@fluentui/react-components";
 
 import {
@@ -39,118 +40,129 @@ import { getInventoryList } from "@mimo/items";
 // types
 import type { Inventory } from "@mimo/items";
 
-//datagrid fluentUI
-const columns: TableColumnDefinition<Inventory>[] = [
 
-  createTableColumn<Inventory>({
-    columnId: "code",
-    compare: (a, b) => {
-      return a.no.localeCompare(b.no);
-    },
-    renderHeaderCell: () => {
-      return "Code";
-    },
-    renderCell: (item) => {
-      return item.no;
-    },
-  }),
-
-  createTableColumn<Inventory>({
-    columnId: "quantity",
-    compare: (a, b) => {
-      return a.qty - b.qty;
-    },
-    renderHeaderCell: () => {
-      return "Quantity";
-    },
-    renderCell: (item) => {
-      return item.qty;
-    },
-  }),
-
-  createTableColumn<Inventory>({
-    columnId: "position",
-    compare: (a, b) => {
-      return a.positionTargetId.localeCompare(b.positionTargetId);
-    },
-    renderHeaderCell: () => {
-      return "Position";
-    },
-    renderCell: (item) => {
-      return item.positionTargetId;
-    },
-  }),
-
-  createTableColumn<Inventory>({
-    columnId: "source",
-    compare: (a, b) => {
-      return a.positionPreOwnerId.localeCompare(b.positionPreOwnerId);
-    },
-    renderHeaderCell: () => {
-      return "Source";
-    },
-    renderCell: (item) => {
-      return item.positionPreOwnerId;
-    },
-  }),
-
-  createTableColumn<Inventory>({
-    columnId: "createdBy",
-    compare: (a, b) => {
-      return a.employeeName.localeCompare(b.employeeName);
-    },
-    renderHeaderCell: () => {
-      return "Created By";
-    },
-    renderCell: (item) => {
-      return item.employeeName;
-    },
-  }),
-
-  createTableColumn<Inventory>({
-    columnId: "timestamp",
-    compare: (a, b) => {
-      return a.positionStartDate.localeCompare(b.positionStartDate);
-    },
-    renderHeaderCell: () => {
-      return "Timestamp";
-    },
-    renderCell: (item) => {
-      return item.positionStartDate;
-    },
-  }),
-
-  createTableColumn<Inventory>({
-    columnId: "actions",
-    renderHeaderCell: () => {
-      return "Actions";
-    },
-    renderCell: () => {
-      return (
-        <div className={styles.actionsContainer}>
-          <Button
-            aria-label="Withdraw"
-            icon={<Cart24Regular />} />
-          <Button
-            aria-label="Edit"
-            icon={<EditRegular />} />
-          <Button
-            aria-label="Delete"
-            icon={<DeleteRegular />} />
-        </div>
-      );
-    },
-  }),
-];
-
-//datagrid fluentUI
-const renderRow: RowRenderer<Inventory[]> = ({ item, rowId }, style) => (
-  <DataGridRow<Inventory[]> key={rowId} style={style} >
-    {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
-  </DataGridRow>
-);
 
 export default function AppInventoryList() {
+
+  //router
+  const navigate = useNavigate();
+
+  //datagrid fluentUI
+  const columns: TableColumnDefinition<Inventory>[] = [
+
+    createTableColumn<Inventory>({
+      columnId: "code",
+      compare: (a, b) => {
+        return a.no.localeCompare(b.no);
+      },
+      renderHeaderCell: () => {
+        return "Code";
+      },
+      renderCell: (item) => {
+        return <>
+          <Link onClick={() => navigate(`/inventories/${item.id}`)}>
+            {item.no}
+          </Link>
+        </>
+      },
+    }),
+
+    createTableColumn<Inventory>({
+      columnId: "quantity",
+      compare: (a, b) => {
+        return a.qty - b.qty;
+      },
+      renderHeaderCell: () => {
+        return "Quantity";
+      },
+      renderCell: (item) => {
+        return item.qty;
+      },
+    }),
+
+    createTableColumn<Inventory>({
+      columnId: "position",
+      compare: (a, b) => {
+        return a.positionTargetId.localeCompare(b.positionTargetId);
+      },
+      renderHeaderCell: () => {
+        return "Position";
+      },
+      renderCell: (item) => {
+        return item.positionTargetId;
+      },
+    }),
+
+    createTableColumn<Inventory>({
+      columnId: "source",
+      compare: (a, b) => {
+        return a.positionPreOwnerId.localeCompare(b.positionPreOwnerId);
+      },
+      renderHeaderCell: () => {
+        return "Source";
+      },
+      renderCell: (item) => {
+        return item.positionPreOwnerId;
+      },
+    }),
+
+    createTableColumn<Inventory>({
+      columnId: "createdBy",
+      compare: (a, b) => {
+        return a.employeeName.localeCompare(b.employeeName);
+      },
+      renderHeaderCell: () => {
+        return "Created By";
+      },
+      renderCell: (item) => {
+        return item.employeeName;
+      },
+    }),
+
+    createTableColumn<Inventory>({
+      columnId: "timestamp",
+      compare: (a, b) => {
+        return a.positionStartDate.localeCompare(b.positionStartDate);
+      },
+      renderHeaderCell: () => {
+        return "Timestamp";
+      },
+      renderCell: (item) => {
+        return item.positionStartDate;
+      },
+    }),
+
+    createTableColumn<Inventory>({
+      columnId: "actions",
+      renderHeaderCell: () => {
+        return "Actions";
+      },
+      renderCell: () => {
+        return (
+          <div className={styles.actionsContainer}>
+            <Button
+              aria-label="Withdraw"
+              icon={<Cart24Regular />} />
+            <Button
+              aria-label="Edit"
+              icon={<EditRegular />} />
+            <Button
+              aria-label="Delete"
+              icon={<DeleteRegular />} />
+          </div>
+        );
+      },
+    }),
+  ];
+
+  //datagrid fluentUI
+  const renderRow: RowRenderer<Inventory[]> = ({ item, rowId }, style) => (
+    <DataGridRow<Inventory[]> key={rowId} style={style} >
+      {({ renderCell }) => <DataGridCell>{renderCell(item)}</DataGridCell>}
+    </DataGridRow>
+  );
+
+
 
   //react-router
   const { itemId } = useParams();
