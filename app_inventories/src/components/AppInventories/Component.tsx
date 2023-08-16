@@ -1,5 +1,11 @@
 import React from "react";
 
+// Hooks
+import {
+  useNavigate,
+  // useParams
+} from "react-router-dom";
+
 //styles
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
@@ -24,7 +30,8 @@ import {
   // Bookmark24Filled,
   MoreHorizontal20Filled,
   QrCode24Regular,
-  Location24Regular
+  Location24Regular,
+  Notepad24Regular
 } from "@fluentui/react-icons";
 
 import {
@@ -51,6 +58,13 @@ const ArrowCircleLeft = bundleIcon(ArrowCircleLeft24Filled, ArrowCircleLeft24Reg
 // const Bookmark24 = bundleIcon(Bookmark24Filled, Bookmark24Regular);
 
 export default function AppInventories() {
+
+  //react-router
+  // const { itemId } = useParams();
+  let navigate = useNavigate();
+  function handleBack() {
+    navigate(`/items/`)
+  }
 
   return <>
     <div className={styles.itemContainer}>
@@ -80,7 +94,7 @@ export default function AppInventories() {
             </Caption1>
           }
           action={
-            <Button appearance="outline" icon={<ArrowCircleLeft />}>
+            <Button onClick={handleBack} appearance="outline" icon={<ArrowCircleLeft />}>
               Back
             </Button>
           }
@@ -101,23 +115,7 @@ export default function AppInventories() {
         </CardFooter>
       </Card>
 
-      <Card className={styles.card} size="small" role="listitem">
-        <CardHeader
-          image={<Location24Regular />}
-          header={<Text weight="semibold">Position</Text>}
-          description={
-            <Caption1 className={styles.caption}>
-              Koklok
-            </Caption1>
-          }
-          action={
-            <Button
-              appearance="transparent"
-              icon={<MoreHorizontal20Filled />}
-            />
-          }
-        />
-      </Card>
+
 
       <Card className={styles.card} size="small" role="listitem">
         <CardHeader
@@ -149,6 +147,25 @@ export default function AppInventories() {
           }
         />
       </Card>
+
+      <Card className={styles.card} size="small" role="listitem">
+        <CardHeader
+          image={<Notepad24Regular />}
+          header={<Text weight="semibold">Memo</Text>}
+          description={
+            <Caption1 className={styles.caption}>
+              Koklok
+            </Caption1>
+          }
+          action={
+            <Button
+              appearance="transparent"
+              icon={<MoreHorizontal20Filled />}
+            />
+          }
+        />
+      </Card>
+
     </div >
   </>;
 }

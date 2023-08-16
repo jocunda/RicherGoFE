@@ -135,7 +135,7 @@ export default function AppItems() {
         return (
           <div className={styles.actionsContainer}>
             <AppEditItems onItemEditSuccess={handleItemCallBack} itemId={item.id} itemDataForForm={item} />
-            <AppDeleteItems onItemDeleteSuccess={handleItemCallBack} itemId={item.id} />
+            {item.deleteable ? <AppDeleteItems onItemDeleteSuccess={handleItemCallBack} itemId={item.id} /> : ""}
           </div>
         );
       },

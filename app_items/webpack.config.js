@@ -60,6 +60,9 @@ module.exports = {
       ? new ModuleFederationPlugin({
           name: "app_items",
           filename: "remoteEntry.js",
+          remotes: {
+            app_inventories: process.env.DEV_APPINVENTORIES,
+          },
           exposes: {
             // expose each component
             "./AppItems": "./src/components/AppItems",

@@ -1,0 +1,19 @@
+.addImageIcon{
+  cursor: pointer;
+  align-self: center;
+}
+
+
+.dialogBodyContainer{
+  width: 100%;
+
+  .dialogContentContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  button{
+    width: 150px;
+  }
+}

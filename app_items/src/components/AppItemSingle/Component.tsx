@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 //styles
 import "../../styles/index.scss"
 import styles from './styles.module.scss';
-import { useNavigate, useParams } from "react-router-dom";
 import {
   bundleIcon,
   ArrowCircleLeft24Regular,
   ArrowCircleLeft24Filled,
   // DocumentBulletList24Regular
-  Edit24Regular,
-  AppsAddIn24Regular,
-  DocumentAdd24Regular,
-  DrawerAdd24Regular,
-  Print24Regular,
-  DocumentTableArrowRight24Regular,
-  DeleteDismiss24Regular,
   BoxMultiple24Regular,
   BoxMultiple24Filled,
   History24Regular,
@@ -54,6 +47,12 @@ const Bookmark24 = bundleIcon(Bookmark24Filled, Bookmark24Regular);
 import { getItemSingle } from "@mimo/items";
 // types
 import type { Item } from "@mimo/items";
+
+
+
+const InventoriesTool = React.lazy(
+  () => import("app_inventories/InventoriesTool")
+    .then(({ InventoriesTool }) => ({ default: InventoriesTool })));
 
 export default function AppItem() {
 
@@ -164,13 +163,9 @@ export default function AppItem() {
         </CardPreview>
 
         <CardFooter className={styles.buttonContainer}>
-          <Button icon={<Edit24Regular />}>Edit</Button>
-          <Button icon={<AppsAddIn24Regular />}>Add Formula</Button>
-          <Button icon={<DocumentAdd24Regular />}>Add Inventory</Button>
-          <Button icon={<DrawerAdd24Regular />}>Bulk Add Inventory</Button>
-          <Button icon={<Print24Regular />}>Print All Inventory</Button>
-          <Button icon={<DocumentTableArrowRight24Regular />}>Export Result</Button>
-          <Button icon={<DeleteDismiss24Regular />}>Delete</Button>
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <InventoriesTool count={0} />
+          </React.Suspense>
         </CardFooter>
       </Card>
     </div >

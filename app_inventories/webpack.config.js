@@ -63,6 +63,8 @@ module.exports = {
           exposes: {
             // expose each component
             "./AppInventories": "./src/components/AppInventories",
+            "./AppAddInventory": "./src/components/AppAddInventory",
+            "./InventoriesTool": "./src/components/InventoriesTool",
           },
           shared: {
             ...deps,

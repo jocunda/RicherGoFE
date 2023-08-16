@@ -27,6 +27,6 @@
     "isolatedModules": true,
     "lib": ["es2019", "dom", "dom.iterable"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "remoteTypes.d.ts"],
   "exclude": ["node_modules"]
 }
