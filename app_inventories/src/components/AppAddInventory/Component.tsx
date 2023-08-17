@@ -5,7 +5,6 @@ import React, {
 // Components
 import {
   Button,
-  CompoundButton,
   Input,
   Dialog,
   DialogTrigger,
@@ -15,7 +14,6 @@ import {
   DialogActions,
   DialogContent,
   Field,
-  Image,
   Textarea,
   Toaster,
   Toast,
@@ -27,17 +25,11 @@ import {
   bundleIcon,
   DocumentAdd24Filled,
   DocumentAdd24Regular,
-  FolderAdd24Filled,
-  FolderAdd24Regular,
   AddCircle24Regular,
   DismissCircle24Regular
 } from "@fluentui/react-icons";
 
 const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
-const FolderAddIcon = bundleIcon(FolderAdd24Filled, FolderAdd24Regular);
-
-// Assets
-import plus from "../../images/plusIcon.svg"
 
 // APIs
 import { addItem } from "@mimo/items";
@@ -56,21 +48,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const schema = yup.object({
-  value: yup.string()
-    .min(3, 'Item name must be at least 3 characters long')
-    .max(40, 'Item name must be below 40 characters')
-    .required('Please Enter Item Name'),
   code: yup.string()
     .min(4, 'Code must be at least 6 characters long')
     .required('Please Enter Item Code'),
-  description: yup.string()
+  quantity: yup.number()
+    .min(1)
+    .max(1000000),
+  memo: yup.string()
     .notRequired()
-    .matches(/#[^\s#]/, 'Description must match "#...#..." format without space')
 }).required();
 
 
 
-export default function AppAddIinventory({ onItemAddSuccess }: { onItemAddSuccess: () => void }) {
+export default function AppAddInventory({ onInventoryAddSuccess }: { onInventoryAddSuccess: () => void }) {
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -136,7 +126,7 @@ export default function AppAddIinventory({ onItemAddSuccess }: { onItemAddSucces
       const { message } = data;
       successNotify(message);
       setOpen(false);
-      onItemAddSuccess();
+      onInventoryAddSuccess();
     }
   }
 
@@ -145,9 +135,7 @@ export default function AppAddIinventory({ onItemAddSuccess }: { onItemAddSucces
 
     <Dialog modalType="modal" open={open} onOpenChange={(_event, data) => setOpen(data.open)}>
       <DialogTrigger disableButtonEnhancement>
-        <Button
-          appearance="primary"
-          icon={<DocumentAddIcon />}>Add Inventory</Button>
+        <Button icon={<DocumentAddIcon />}>Add Inventory</Button>
       </DialogTrigger>
       <DialogSurface>
         <form
@@ -156,31 +144,24 @@ export default function AppAddIinventory({ onItemAddSuccess }: { onItemAddSucces
           className={styles.dialogBodyContainer}
         >
           <DialogBody >
-            <DialogTitle>Add Item</DialogTitle>
+            <DialogTitle>Add Inventory</DialogTitle>
             <DialogContent className={styles.dialogContentContainer}>
-              <Image
-                className={styles.addImageIcon}
-                alt="add Image"
-                shape="circular"
-                src={plus}
-                height={200}
-                width={200}
-                onClick={() => console.log("clickable")}
-              />
+
               <Field
                 size="large"
-                label="Item Name"
-                validationState={errors.value ? "error" : "none"}
-                validationMessage={
-                  errors.value ? `${errors.value?.message}` : null}
-                required
+                label="Item"
+                orientation="horizontal"
               >
-                <Input
-                  size="large"
-                  {...register("value")}
-                  onBlur={() => handleInputBlur("value")}
-                />
+                <span>Item Name</span>
               </Field>
+              <Field
+                size="large"
+                label="Position"
+                orientation="horizontal"
+              >
+                <span>Location</span>
+              </Field>
+
               <Field
                 size="large"
                 label="Code"
@@ -193,21 +174,34 @@ export default function AppAddIinventory({ onItemAddSuccess }: { onItemAddSucces
                   size="large"
                   {...register("code")}
                   onBlur={() => handleInputBlur("code")}
-                  placeholder="LO-T5-00078-v1"
                 />
               </Field>
               <Field
                 size="large"
-                label="Description"
-                validationState={errors.description ? "error" : "none"}
+                label="Qty"
+                validationState={errors.quantity ? "error" : "none"}
                 validationMessage={
-                  errors.description ? `${errors.description?.message}` : null}
+                  errors.quantity ? `${errors.quantity?.message}` : null}
+              >
+                <Input
+                  size="large"
+                  type="number"
+                  {...register("quantity")}
+                  onBlur={() => handleInputBlur("quantity")}
+                />
+              </Field>
+
+              <Field
+                size="large"
+                label="Memo"
+                validationState={errors.memo ? "error" : "none"}
+                validationMessage={
+                  errors.memo ? `${errors.memo?.message}` : null}
               >
                 <Textarea
-                  {...register("description")}
-                  onBlur={() => handleInputBlur("description")}
-                  resize="none"
-                  placeholder="#...#..." />
+                  {...register("memo")}
+                  onBlur={() => handleInputBlur("memo")}
+                  resize="none" />
               </Field>
 
             </DialogContent>
@@ -225,10 +219,5 @@ export default function AppAddIinventory({ onItemAddSuccess }: { onItemAddSucces
         </form>
       </DialogSurface>
     </Dialog>
-
-    <CompoundButton
-      appearance="secondary"
-      secondaryContent="From Folder"
-      icon={<FolderAddIcon />}>Add Item</CompoundButton>
   </>;
 }

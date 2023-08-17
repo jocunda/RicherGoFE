@@ -33,8 +33,13 @@ export async function editItem(
   return api.put<EditItemResponse>(`/api/items/edit/${itemId}`, payload);
 }
 
+//inventory
 export async function getInventoryList(itemId: string | undefined) {
   return api.get<Inventory[]>(`/api/inventories/inventorieslist/${itemId}`);
+}
+
+export async function addInventory(payload: AddItemRequest) {
+  return api.post<AddItemResponse>("/api/inventories/addInventory", payload);
 }
 
 //payload,

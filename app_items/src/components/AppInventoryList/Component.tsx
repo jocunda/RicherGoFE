@@ -76,7 +76,9 @@ export default function AppInventoryList() {
         return "Quantity";
       },
       renderCell: (item) => {
-        return item.qty;
+        // const itemQuantityFormatted = item.qty.toFixed(2);
+        // console.log(itemQuantityFormatted) why?
+        return item.qty
       },
     }),
 
