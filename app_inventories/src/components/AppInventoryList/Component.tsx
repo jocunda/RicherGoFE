@@ -9,7 +9,6 @@ import styles from './styles.module.scss';
 import { useParams, useNavigate } from "react-router-dom";
 import {
   EditRegular,
-  DeleteRegular,
   Cart24Regular,
   TagSearch24Regular
 } from "@fluentui/react-icons";
@@ -40,9 +39,17 @@ import { getInventoryList } from "@mimo/items";
 // types
 import type { Inventory } from "@mimo/items";
 
+//Component
+import AppDeleteInventory from "../AppDeleteInventory/Component";
+
 
 
 export default function AppInventoryList() {
+
+  const handleInventoryCallBack = async () => {
+    // Call the function to retrieve the updated item data
+    // await itemDataGet();
+  };
 
   //router
   const navigate = useNavigate();
@@ -139,7 +146,7 @@ export default function AppInventoryList() {
       renderHeaderCell: () => {
         return "Actions";
       },
-      renderCell: () => {
+      renderCell: (item) => {
         return (
           <div className={styles.actionsContainer}>
             <Button
@@ -148,9 +155,7 @@ export default function AppInventoryList() {
             <Button
               aria-label="Edit"
               icon={<EditRegular />} />
-            <Button
-              aria-label="Delete"
-              icon={<DeleteRegular />} />
+            <AppDeleteInventory onItemDeleteSuccess={handleInventoryCallBack} inventoryId={item.id} />
           </div>
         );
       },

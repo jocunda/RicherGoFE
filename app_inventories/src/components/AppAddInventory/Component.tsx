@@ -152,14 +152,14 @@ export default function AppAddInventory({ onInventoryAddSuccess }: { onInventory
                 label="Item"
                 orientation="horizontal"
               >
-                <span>Item Name</span>
+                <span>Item Name from ItemId</span>
               </Field>
               <Field
                 size="large"
                 label="Position"
                 orientation="horizontal"
               >
-                <span>Location</span>
+                <span>Position? How</span>
               </Field>
 
               <Field

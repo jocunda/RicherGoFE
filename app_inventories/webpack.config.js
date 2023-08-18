@@ -63,6 +63,7 @@ module.exports = {
           exposes: {
             // expose each component
             "./AppInventories": "./src/components/AppInventories",
+            "./AppInventoryList": "./src/components/AppInventoryList",
             "./AppAddInventory": "./src/components/AppAddInventory",
             "./InventoriesTool": "./src/components/InventoriesTool",
           },

@@ -17,6 +17,9 @@ import {
   Bookmark24Filled
 } from "@fluentui/react-icons";
 
+
+//component
+
 import {
   Badge,
   Image,
@@ -34,9 +37,14 @@ import {
   Caption1,
 } from "@fluentui/react-components";
 
+const InventoriesTool = React.lazy(
+  () => import("app_inventories/InventoriesTool")
+    .then(({ InventoriesTool }) => ({ default: InventoriesTool })));
 
-//component
-import AppInventoryList from "../AppInventoryList/Component";
+const AppInventoryList = React.lazy(
+  () => import("app_inventories/AppInventoryList")
+    .then(({ AppInventoryList }) => ({ default: AppInventoryList })));
+
 
 const ArrowCircleLeft = bundleIcon(ArrowCircleLeft24Filled, ArrowCircleLeft24Regular);
 const BoxMultiple24 = bundleIcon(BoxMultiple24Filled, BoxMultiple24Regular);
@@ -50,9 +58,6 @@ import type { Item } from "@mimo/items";
 
 
 
-const InventoriesTool = React.lazy(
-  () => import("app_inventories/InventoriesTool")
-    .then(({ InventoriesTool }) => ({ default: InventoriesTool })));
 
 export default function AppItem() {
 
