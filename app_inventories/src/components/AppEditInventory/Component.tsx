@@ -17,7 +17,6 @@ import {
   DialogActions,
   DialogContent,
   Field,
-  Image,
   Textarea,
   Toaster,
   Toast,
@@ -31,13 +30,10 @@ import {
 } from "@fluentui/react-icons";
 
 
-//assets
-import plus from "../../images/plusIcon.svg"
-
 // APIs
 import { editItem } from "@mimo/items";
 // types
-import type { Item, AddItemRequest } from "@mimo/items";
+import type { Inventory, AddItemRequest } from "@mimo/items";
 
 
 //form validation
@@ -60,11 +56,11 @@ const schema = yup.object({
 
 type AppEditProps = {
   onItemEditSuccess: () => void;
-  itemId: string;
-  itemDataForForm: Item;
+  inventoryId: string;
+  itemDataForForm: Inventory;
 };
 
-export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForForm }: AppEditProps) {
+export default function AppEditInventory({ onItemEditSuccess, inventoryId, itemDataForForm }: AppEditProps) {
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -117,7 +113,7 @@ export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForFor
     event?.preventDefault();
 
     const editItemRequest = convertToEditRequest(dataInput);
-    const { data, error, errorMessage } = await editItem(itemId, editItemRequest);
+    const { data, error, errorMessage } = await editItem(inventoryId, editItemRequest);
 
     //show alert
     if (error) {
@@ -141,8 +137,7 @@ export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForFor
       <DialogTrigger disableButtonEnhancement>
         <Button
           aria-label="Edit"
-          appearance="subtle"
-          icon={<EditRegular />} >Edit</Button>
+          icon={<EditRegular />} />
       </DialogTrigger>
       <DialogSurface>
         <form
@@ -151,17 +146,9 @@ export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForFor
           className={styles.dialogBodyContainer}
         >
           <DialogBody >
-            <DialogTitle>Edit Item</DialogTitle>
+            <DialogTitle>Edit Inventory</DialogTitle>
             <DialogContent className={styles.dialogContentContainer}>
-              <Image
-                className={styles.addImageIcon}
-                alt="add Image"
-                shape="circular"
-                src={plus}
-                height={200}
-                width={200}
-                onClick={() => console.log("clickable")}
-              />
+
               <Field
                 size="large"
                 label="Item Name"
@@ -174,7 +161,7 @@ export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForFor
                   size="large"
                   {...register("value")}
                   onBlur={() => handleInputBlur("value")}
-                  defaultValue={itemDataForForm.value}
+                  defaultValue={itemDataForForm.no}
                 />
               </Field>
               <Field
@@ -189,7 +176,7 @@ export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForFor
                   size="large"
                   {...register("code")}
                   onBlur={() => handleInputBlur("code")}
-                  defaultValue={itemDataForForm.code}
+                  defaultValue={itemDataForForm.itemValue}
                 />
               </Field>
               <Field
@@ -203,7 +190,7 @@ export default function AppEditItems({ onItemEditSuccess, itemId, itemDataForFor
                   {...register("description")}
                   onBlur={() => handleInputBlur("description")}
                   resize="none"
-                  defaultValue={itemDataForForm.description}
+                  defaultValue={itemDataForForm.memo}
                   placeholder="#...#..." />
               </Field>
 

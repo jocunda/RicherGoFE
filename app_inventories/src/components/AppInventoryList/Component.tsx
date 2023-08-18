@@ -8,7 +8,6 @@ import "../../styles/index.scss"
 import styles from './styles.module.scss';
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  EditRegular,
   Cart24Regular,
   TagSearch24Regular
 } from "@fluentui/react-icons";
@@ -41,6 +40,7 @@ import type { Inventory } from "@mimo/items";
 
 //Component
 import AppDeleteInventory from "../AppDeleteInventory/Component";
+import AppEditInventory from "../AppEditInventory/Component";
 
 
 
@@ -152,9 +152,7 @@ export default function AppInventoryList() {
             <Button
               aria-label="Withdraw"
               icon={<Cart24Regular />} />
-            <Button
-              aria-label="Edit"
-              icon={<EditRegular />} />
+            <AppEditInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
             <AppDeleteInventory onItemDeleteSuccess={handleInventoryCallBack} inventoryId={item.id} />
           </div>
         );
