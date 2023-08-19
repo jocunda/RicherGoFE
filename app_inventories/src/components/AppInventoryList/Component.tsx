@@ -8,14 +8,12 @@ import "../../styles/index.scss"
 import styles from './styles.module.scss';
 import { useParams, useNavigate } from "react-router-dom";
 import {
-  Cart24Regular,
   TagSearch24Regular
 } from "@fluentui/react-icons";
 
 import {
   TableColumnDefinition,
   createTableColumn,
-  Button,
   useScrollbarWidth,
   useFluent,
   Input,
@@ -41,6 +39,7 @@ import type { Inventory } from "@mimo/items";
 //Component
 import AppDeleteInventory from "../AppDeleteInventory/Component";
 import AppEditInventory from "../AppEditInventory/Component";
+import AppWithdrawInventory from "../AppWithdrawInventory/Component";
 
 
 
@@ -149,9 +148,8 @@ export default function AppInventoryList() {
       renderCell: (item) => {
         return (
           <div className={styles.actionsContainer}>
-            <Button
-              aria-label="Withdraw"
-              icon={<Cart24Regular />} />
+
+            <AppWithdrawInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
             <AppEditInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
             <AppDeleteInventory onItemDeleteSuccess={handleInventoryCallBack} inventoryId={item.id} />
           </div>
