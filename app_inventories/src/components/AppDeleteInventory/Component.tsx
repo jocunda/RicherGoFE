@@ -25,14 +25,14 @@ import {
 } from "@fluentui/react-icons";
 
 // APIs
-import { deleteItem } from "@mimo/items";
+import { deleteInventory } from "@mimo/items";
 
 type AppDeleteProps = {
-  onItemDeleteSuccess: () => void;
+  onInventoryDeleteSuccess: () => void;
   inventoryId: string;
 };
 
-export default function AppDeleteInventory({ onItemDeleteSuccess, inventoryId }: AppDeleteProps) {
+export default function AppDeleteInventory({ onInventoryDeleteSuccess, inventoryId }: AppDeleteProps) {
   const [open, setOpen] = useState<boolean>(false);
 
 
@@ -59,7 +59,7 @@ export default function AppDeleteInventory({ onItemDeleteSuccess, inventoryId }:
   };
 
   const deleteItemHandler = async (inventoryId: string) => {
-    const { data, error, errorMessage } = await deleteItem(inventoryId);
+    const { data, error, errorMessage } = await deleteInventory(inventoryId);
 
     //show alert
     if (error) {
@@ -72,7 +72,7 @@ export default function AppDeleteInventory({ onItemDeleteSuccess, inventoryId }:
       const { message } = data;
       successNotify(message);
       setOpen(false);
-      onItemDeleteSuccess();
+      onInventoryDeleteSuccess();
     }
   }
 

@@ -17,7 +17,8 @@ import {
   useScrollbarWidth,
   useFluent,
   Input,
-  Link
+  Link,
+  CardFooter,
 } from "@fluentui/react-components";
 
 import {
@@ -40,14 +41,15 @@ import type { Inventory } from "@mimo/items";
 import AppDeleteInventory from "../AppDeleteInventory/Component";
 import AppEditInventory from "../AppEditInventory/Component";
 import AppWithdrawInventory from "../AppWithdrawInventory/Component";
+import { InventoriesTool } from "../InventoriesTool";
 
 
 
 export default function AppInventoryList() {
 
   const handleInventoryCallBack = async () => {
-    // Call the function to retrieve the updated item data
-    // await itemDataGet();
+    // Call the function to retrieve the updated inventory data
+    await getInventoriesByItem();
   };
 
   //router
@@ -148,10 +150,9 @@ export default function AppInventoryList() {
       renderCell: (item) => {
         return (
           <div className={styles.actionsContainer}>
-
             <AppWithdrawInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
             <AppEditInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
-            <AppDeleteInventory onItemDeleteSuccess={handleInventoryCallBack} inventoryId={item.id} />
+            <AppDeleteInventory onInventoryDeleteSuccess={handleInventoryCallBack} inventoryId={item.id} />
           </div>
         );
       },
@@ -219,5 +220,12 @@ export default function AppInventoryList() {
         {renderRow}
       </DataGridBody>
     </DataGrid>
+
+    <CardFooter className={styles.buttonContainer}>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <InventoriesTool onInventorySuccess={handleInventoryCallBack} count={0} itemWithId={itemId} />
+      </React.Suspense>
+    </CardFooter>
+
   </>;
 }

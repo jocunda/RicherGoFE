@@ -44,7 +44,7 @@ import * as yup from "yup";
 const schema = yup.object({
   value: yup.string()
     .min(3, 'Item name must be at least 3 characters long')
-    .max(40, 'Item name must be below 40 characters')
+    .max(100, 'Item name must be below 100 characters')
     .required('Please Enter Item Name'),
   code: yup.string()
     .min(4, 'Code must be at least 6 characters long')

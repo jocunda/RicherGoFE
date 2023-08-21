@@ -1,3 +1,4 @@
+//item
 export type Item = {
   id: string;
   value: string;
@@ -8,21 +9,6 @@ export type Item = {
 };
 
 export type GetItemsResponse = Item[];
-
-export type Inventory = {
-  id: string;
-  no: string;
-  memo?: string;
-  qty: number;
-  photoId?: string;
-  itemId: string;
-  itemValue: string;
-  positionTargetId: string;
-  positionCreatedById: string;
-  employeeName: string;
-  positionPreOwnerId: string;
-  positionStartDate: string;
-};
 
 export type AddItemRequest = {
   value: string;
@@ -45,5 +31,36 @@ export type EditItemRequest = {
 };
 
 export type EditItemResponse = {
+  message: string;
+};
+
+//inventory
+export type Inventory = {
+  id: string;
+  no: string;
+  memo?: string;
+  qty: number;
+  photoId?: string;
+  itemId: string;
+  itemValue: string;
+  positionTargetId: string;
+  positionCreatedById: string;
+  employeeName: string;
+  positionPreOwnerId: string;
+  positionStartDate: string;
+};
+
+export type AddInventoryRequest = {
+  code: string;
+  quantity: number;
+  memo?: string;
+  itemId: string;
+};
+
+export type AddInventoryResponse = {
+  message: string;
+};
+
+export type DeleteInventoryResponse = {
   message: string;
 };

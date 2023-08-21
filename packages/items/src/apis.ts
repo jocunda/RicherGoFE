@@ -5,7 +5,10 @@ import type {
   Item,
   AddItemRequest,
   AddItemResponse,
+  AddInventoryRequest,
+  AddInventoryResponse,
   DeleteItemResponse,
+  DeleteInventoryResponse,
   EditItemRequest,
   EditItemResponse,
 } from "./types";
@@ -38,8 +41,17 @@ export async function getInventoryList(itemId: string | undefined) {
   return api.get<Inventory[]>(`/api/inventories/inventorieslist/${itemId}`);
 }
 
-export async function addInventory(payload: AddItemRequest) {
-  return api.post<AddItemResponse>("/api/inventories/addInventory", payload);
+export async function addInventory(payload: AddInventoryRequest) {
+  return api.post<AddInventoryResponse>(
+    "/api/inventories/addInventory",
+    payload
+  );
+}
+
+export async function deleteInventory(inventoryId: string | undefined) {
+  return api.delete<DeleteInventoryResponse>(
+    `/api/inventories/delete/${inventoryId}`
+  );
 }
 
 //payload,

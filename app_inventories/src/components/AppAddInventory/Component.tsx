@@ -32,10 +32,10 @@ import {
 const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
 
 // APIs
-import { addItem } from "@mimo/items";
+import { addInventory } from "@mimo/items";
 
 // types
-import type { AddItemRequest } from "@mimo/items";
+import type { AddInventoryRequest } from "@mimo/items";
 
 //styles
 import "../../styles/index.scss"
@@ -58,9 +58,12 @@ const schema = yup.object({
     .notRequired()
 }).required();
 
+type AddInventoryProps = {
+  onInventoryAddSuccess: () => void;
+  itemId: string | undefined;
+}
 
-
-export default function AppAddInventory({ onInventoryAddSuccess }: { onInventoryAddSuccess: () => void }) {
+export default function AppAddInventory({ onInventoryAddSuccess, itemId }: AddInventoryProps) {
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -100,20 +103,24 @@ export default function AppAddInventory({ onInventoryAddSuccess }: { onInventory
     await trigger(fieldName);
   };
 
-  const convertToLoginRequest = (dataInput: FieldValues): AddItemRequest => {
-    const { value, code, description } = dataInput;
+  const convertToLoginRequest = (dataInput: FieldValues): AddInventoryRequest => {
+    const { code, quantity, memo, itemId } = dataInput;
     return {
-      value: value as string,
       code: code as string,
-      description: description as string,
+      quantity: quantity as number,
+      memo: memo as string,
+      itemId: itemId as string,
     };
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (dataInput, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
+    const addInventoryRequest = convertToLoginRequest(dataInput);
+    const { data, error, errorMessage } = await addInventory({
 
-    const addItemRequest = convertToLoginRequest(dataInput);
-    const { data, error, errorMessage } = await addItem(addItemRequest);
+      ...addInventoryRequest,
+      itemId: itemId!,
+    });
 
     //show alert
     if (error) {
@@ -152,7 +159,12 @@ export default function AppAddInventory({ onInventoryAddSuccess }: { onInventory
                 label="Item"
                 orientation="horizontal"
               >
-                <span>Item Name from ItemId</span>
+                {/* <Input
+                  size="large"
+                  {...register("itemId")}
+                  defaultValue={itemId}
+                /> */}
+                <span>{itemId}</span>
               </Field>
               <Field
                 size="large"

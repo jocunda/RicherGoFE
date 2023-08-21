@@ -26,7 +26,6 @@ import {
 } from "@fluentui/react-components";
 import {
   DismissCircle24Regular,
-  EditRegular,
   Cart24Regular
 } from "@fluentui/react-icons";
 
@@ -152,19 +151,20 @@ export default function AppWithdrawInventory({ onItemEditSuccess, inventoryId, i
 
               <Field
                 size="large"
-                label="Item Name"
-                validationState={errors.value ? "error" : "none"}
-                validationMessage={
-                  errors.value ? `${errors.value?.message}` : null}
-                required
+                label="Item"
+                orientation="horizontal"
               >
-                <Input
-                  size="large"
-                  {...register("value")}
-                  onBlur={() => handleInputBlur("value")}
-                  defaultValue={itemDataForForm.no}
-                />
+                <span>{itemDataForForm.no}</span>
               </Field>
+
+              <Field
+                size="large"
+                label="Withdraw From"
+                orientation="horizontal"
+              >
+                <span>{itemDataForForm.positionTargetId}</span>
+              </Field>
+
               <Field
                 size="large"
                 label="Code"
@@ -204,7 +204,7 @@ export default function AppWithdrawInventory({ onItemEditSuccess, inventoryId, i
                 appearance="primary"
                 type="submit"
                 disabled={!isDirty && !isValid}
-                icon={<EditRegular />}>Update</Button>
+                icon={<Cart24Regular />}>Withdraw</Button>
             </DialogActions>
           </DialogBody>
         </form>

@@ -24,7 +24,7 @@ import {
   Badge,
   Image,
   Card,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardPreview,
   Body1,
@@ -37,9 +37,9 @@ import {
   Caption1,
 } from "@fluentui/react-components";
 
-const InventoriesTool = React.lazy(
-  () => import("app_inventories/InventoriesTool")
-    .then(({ InventoriesTool }) => ({ default: InventoriesTool })));
+// const InventoriesTool = React.lazy(
+//   () => import("app_inventories/InventoriesTool")
+//     .then(({ InventoriesTool }) => ({ default: InventoriesTool })));
 
 const AppInventoryList = React.lazy(
   () => import("app_inventories/AppInventoryList")
@@ -90,7 +90,6 @@ export default function AppItem() {
     }
   }
   const arraySplit = itemData?.description.split("#").filter(Boolean)
-
 
   const [selectedValue, setSelectedValue] =
     React.useState<TabValue>("inventory");
@@ -167,11 +166,11 @@ export default function AppItem() {
           </div>
         </CardPreview>
 
-        <CardFooter className={styles.buttonContainer}>
+        {/* <CardFooter className={styles.buttonContainer}>
           <React.Suspense fallback={<div>Loading...</div>}>
-            <InventoriesTool count={0} />
+            <InventoriesTool count={0} itemWithId={itemId} />
           </React.Suspense>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div >
   </>;
