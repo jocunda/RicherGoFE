@@ -64,3 +64,13 @@ export type AddInventoryResponse = {
 export type DeleteInventoryResponse = {
   message: string;
 };
+
+export type EditInventoryRequest = {
+  code: string;
+  quantity: number;
+  memo?: string;
+};
+
+export type EditInventoryResponse = {
+  message: string;
+};

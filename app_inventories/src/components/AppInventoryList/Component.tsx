@@ -86,7 +86,7 @@ export default function AppInventoryList() {
       renderCell: (item) => {
         // const itemQuantityFormatted = item.qty.toFixed(2);
         // console.log(itemQuantityFormatted) why?
-        return item.qty
+        return parseFloat(item.qty.toString());
       },
     }),
 
@@ -205,6 +205,7 @@ export default function AppInventoryList() {
       columns={columns}
       getRowId={(item) => item.id}
       sortable
+      resizableColumns
       selectionMode="multiselect"
     >
       <DataGridHeader style={{ paddingRight: scrollbarWidth }}>

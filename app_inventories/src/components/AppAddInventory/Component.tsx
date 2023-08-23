@@ -103,7 +103,7 @@ export default function AppAddInventory({ onInventoryAddSuccess, itemId }: AddIn
     await trigger(fieldName);
   };
 
-  const convertToLoginRequest = (dataInput: FieldValues): AddInventoryRequest => {
+  const convertToAddInventoryRequest = (dataInput: FieldValues): AddInventoryRequest => {
     const { code, quantity, memo, itemId } = dataInput;
     return {
       code: code as string,
@@ -115,7 +115,7 @@ export default function AppAddInventory({ onInventoryAddSuccess, itemId }: AddIn
 
   const onSubmit: SubmitHandler<FieldValues> = async (dataInput, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
-    const addInventoryRequest = convertToLoginRequest(dataInput);
+    const addInventoryRequest = convertToAddInventoryRequest(dataInput);
     const { data, error, errorMessage } = await addInventory({
 
       ...addInventoryRequest,

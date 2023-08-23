@@ -11,6 +11,8 @@ import type {
   DeleteInventoryResponse,
   EditItemRequest,
   EditItemResponse,
+  EditInventoryRequest,
+  EditInventoryResponse,
 } from "./types";
 
 export async function getItem() {
@@ -51,6 +53,16 @@ export async function addInventory(payload: AddInventoryRequest) {
 export async function deleteInventory(inventoryId: string | undefined) {
   return api.delete<DeleteInventoryResponse>(
     `/api/inventories/delete/${inventoryId}`
+  );
+}
+
+export async function editInventory(
+  inventoryId: string | undefined,
+  payload: EditInventoryRequest
+) {
+  return api.put<EditInventoryResponse>(
+    `/api/inventories/edit/${inventoryId}`,
+    payload
   );
 }
 

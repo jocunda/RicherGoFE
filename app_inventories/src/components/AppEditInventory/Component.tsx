@@ -31,9 +31,9 @@ import {
 
 
 // APIs
-import { editItem } from "@mimo/items";
+import { editInventory } from "@mimo/items";
 // types
-import type { Inventory, AddItemRequest } from "@mimo/items";
+import type { Inventory, EditInventoryRequest } from "@mimo/items";
 
 
 //form validation
@@ -42,16 +42,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const schema = yup.object({
-  value: yup.string()
-    .min(3, 'Item name must be at least 3 characters long')
-    .max(100, 'Item name must be below 100 characters')
-    .required('Please Enter Item Name'),
   code: yup.string()
     .min(4, 'Code must be at least 6 characters long')
     .required('Please Enter Item Code'),
-  description: yup.string()
+  quantity: yup.number()
+    .min(1)
+    .max(1000000),
+  memo: yup.string()
     .notRequired()
-    .matches(/#[^\s#]/, 'Description must match "#...#..." format without space')
 }).required();
 
 type AppEditProps = {
@@ -100,12 +98,12 @@ export default function AppEditInventory({ onItemEditSuccess, inventoryId, itemD
     await trigger(fieldName);
   };
 
-  const convertToEditRequest = (dataInput: FieldValues): AddItemRequest => {
-    const { value, code, description } = dataInput;
+  const convertToEditRequest = (dataInput: FieldValues): EditInventoryRequest => {
+    const { code, quantity, memo } = dataInput;
     return {
-      value: value as string,
       code: code as string,
-      description: description as string,
+      quantity: quantity as number,
+      memo: memo as string,
     };
   };
 
@@ -113,7 +111,7 @@ export default function AppEditInventory({ onItemEditSuccess, inventoryId, itemD
     event?.preventDefault();
 
     const editItemRequest = convertToEditRequest(dataInput);
-    const { data, error, errorMessage } = await editItem(inventoryId, editItemRequest);
+    const { data, error, errorMessage } = await editInventory(inventoryId, editItemRequest);
 
     //show alert
     if (error) {
@@ -151,21 +149,6 @@ export default function AppEditInventory({ onItemEditSuccess, inventoryId, itemD
 
               <Field
                 size="large"
-                label="Item Name"
-                validationState={errors.value ? "error" : "none"}
-                validationMessage={
-                  errors.value ? `${errors.value?.message}` : null}
-                required
-              >
-                <Input
-                  size="large"
-                  {...register("value")}
-                  onBlur={() => handleInputBlur("value")}
-                  defaultValue={itemDataForForm.no}
-                />
-              </Field>
-              <Field
-                size="large"
                 label="Code"
                 validationState={errors.code ? "error" : "none"}
                 validationMessage={
@@ -176,22 +159,37 @@ export default function AppEditInventory({ onItemEditSuccess, inventoryId, itemD
                   size="large"
                   {...register("code")}
                   onBlur={() => handleInputBlur("code")}
-                  defaultValue={itemDataForForm.itemValue}
+                  defaultValue={itemDataForForm.no}
                 />
               </Field>
               <Field
                 size="large"
-                label="Description"
-                validationState={errors.description ? "error" : "none"}
+                label="Quantity"
+                validationState={errors.quantity ? "error" : "none"}
                 validationMessage={
-                  errors.description ? `${errors.description?.message}` : null}
+                  errors.quantity ? `${errors.quantity?.message}` : null}
+                required
+              >
+                <Input
+                  size="large"
+                  type="number"
+                  {...register("quantity")}
+                  onBlur={() => handleInputBlur("quantity")}
+                  defaultValue={parseFloat(itemDataForForm.qty.toString()).toString()}
+                />
+              </Field>
+              <Field
+                size="large"
+                label="Memo"
+                validationState={errors.memo ? "error" : "none"}
+                validationMessage={
+                  errors.memo ? `${errors.memo?.message}` : null}
               >
                 <Textarea
-                  {...register("description")}
-                  onBlur={() => handleInputBlur("description")}
+                  {...register("memo")}
+                  onBlur={() => handleInputBlur("memo")}
                   resize="none"
-                  defaultValue={itemDataForForm.memo}
-                  placeholder="#...#..." />
+                  defaultValue={itemDataForForm.memo} />
               </Field>
 
             </DialogContent>
