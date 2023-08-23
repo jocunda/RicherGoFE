@@ -1,8 +1,3 @@
-.addImageIcon{
-  cursor: pointer;
-  align-self: center;
-}
-
 
 .dialogBodyContainer{
   width: 100%;
@@ -16,4 +11,18 @@
   button{
     width: 150px;
   }
+}
+
+.itemImageContainer{
+  align-self: center;
+  margin-bottom: 25px;
+}
+.inputNumberContainer{
+  justify-self: center;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

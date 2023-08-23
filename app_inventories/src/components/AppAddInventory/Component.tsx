@@ -61,9 +61,10 @@ const schema = yup.object({
 type AddInventoryProps = {
   onInventoryAddSuccess: () => void;
   itemId: string | undefined;
+  itemValue: string | undefined;
 }
 
-export default function AppAddInventory({ onInventoryAddSuccess, itemId }: AddInventoryProps) {
+export default function AppAddInventory({ onInventoryAddSuccess, itemId, itemValue }: AddInventoryProps) {
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -164,7 +165,7 @@ export default function AppAddInventory({ onInventoryAddSuccess, itemId }: AddIn
                   {...register("itemId")}
                   defaultValue={itemId}
                 /> */}
-                <span>{itemId}</span>
+                <span>{itemValue}</span>
               </Field>
               <Field
                 size="large"

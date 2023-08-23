@@ -17,16 +17,23 @@ import {
   DialogActions,
   DialogContent,
   Field,
-  Textarea,
   Toaster,
   Toast,
   ToastTitle,
   useToastController,
   useId,
+  Image
 } from "@fluentui/react-components";
 import {
+  bundleIcon,
   DismissCircle24Regular,
-  Cart24Regular
+  Cart24Regular,
+  AddSquare24Regular,
+  AddSquare24Filled,
+  SubtractSquare24Regular,
+  SubtractSquare24Filled,
+  BoxMultipleArrowRight24Regular,
+  BoxMultipleArrowRight24Filled
 } from "@fluentui/react-icons";
 
 
@@ -59,6 +66,10 @@ type AppEditProps = {
   inventoryId: string;
   itemDataForForm: Inventory;
 };
+
+const AddIcon = bundleIcon(AddSquare24Filled, AddSquare24Regular);
+const SubstractIcon = bundleIcon(SubtractSquare24Filled, SubtractSquare24Regular);
+const BoxMultipleArrowRightIcon = bundleIcon(BoxMultipleArrowRight24Filled, BoxMultipleArrowRight24Regular);
 
 export default function AppWithdrawInventory({ onItemEditSuccess, inventoryId, itemDataForForm }: AppEditProps) {
 
@@ -148,13 +159,21 @@ export default function AppWithdrawInventory({ onItemEditSuccess, inventoryId, i
           <DialogBody >
             <DialogTitle>Withdraw</DialogTitle>
             <DialogContent className={styles.dialogContentContainer}>
-
+              <Image
+                alt="Erik's avatar"
+                bordered
+                shape="circular"
+                src="https://fabricweb.azureedge.net/fabric-website/assets/images/avatar/ErikNason.jpg"
+                height={200}
+                width={200}
+                className={styles.itemImageContainer}
+              />
               <Field
                 size="large"
                 label="Item"
                 orientation="horizontal"
               >
-                <span>{itemDataForForm.no}</span>
+                <span>{itemDataForForm.itemValue}</span>
               </Field>
 
               <Field
@@ -162,37 +181,28 @@ export default function AppWithdrawInventory({ onItemEditSuccess, inventoryId, i
                 label="Withdraw From"
                 orientation="horizontal"
               >
-                <span>{itemDataForForm.positionTargetId}</span>
+                <span>{itemDataForForm.no}</span>
               </Field>
 
               <Field
                 size="large"
-                label="Code"
-                validationState={errors.code ? "error" : "none"}
+                label="Qty"
+                validationState={errors.quantity ? "error" : "none"}
                 validationMessage={
-                  errors.code ? `${errors.code?.message}` : null}
-                required
+                  errors.quantity ? `${errors.quantity?.message}` : null}
               >
-                <Input
-                  size="large"
-                  {...register("code")}
-                  onBlur={() => handleInputBlur("code")}
-                  defaultValue={itemDataForForm.itemValue}
-                />
-              </Field>
-              <Field
-                size="large"
-                label="Description"
-                validationState={errors.description ? "error" : "none"}
-                validationMessage={
-                  errors.description ? `${errors.description?.message}` : null}
-              >
-                <Textarea
-                  {...register("description")}
-                  onBlur={() => handleInputBlur("description")}
-                  resize="none"
-                  defaultValue={itemDataForForm.memo}
-                  placeholder="#...#..." />
+                <div className={styles.inputNumberContainer}>
+                  <Button appearance="transparent" icon={<SubstractIcon />} />
+                  <Input
+                    size="large"
+                    type="number"
+                    {...register("quantity")}
+                    onBlur={() => handleInputBlur("quantity")}
+
+                  />
+                  <Button appearance="transparent" icon={<AddIcon />} />
+                </div>
+
               </Field>
 
             </DialogContent>
@@ -200,6 +210,7 @@ export default function AppWithdrawInventory({ onItemEditSuccess, inventoryId, i
               <DialogTrigger disableButtonEnhancement>
                 <Button appearance="secondary" icon={<DismissCircle24Regular />}>Close</Button>
               </DialogTrigger>
+              <Button appearance="secondary" icon={<BoxMultipleArrowRightIcon />} >Withdraw All</Button>
               <Button
                 appearance="primary"
                 type="submit"

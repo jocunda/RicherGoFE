@@ -143,6 +143,16 @@ export default function AppInventoryList() {
     }),
 
     createTableColumn<Inventory>({
+      columnId: "memo",
+      renderHeaderCell: () => {
+        return "Memo";
+      },
+      renderCell: (item) => {
+        return item?.memo;
+      },
+    }),
+
+    createTableColumn<Inventory>({
       columnId: "actions",
       renderHeaderCell: () => {
         return "Actions";
@@ -177,7 +187,7 @@ export default function AppInventoryList() {
 
 
   const [inventories, setInventories] = useState<Inventory[]>([]);
-
+  console.log(inventories)
   //retrieve item data
   useEffect(() => {
     getInventoriesByItem();
@@ -223,9 +233,11 @@ export default function AppInventoryList() {
     </DataGrid>
 
     <CardFooter className={styles.buttonContainer}>
-      <React.Suspense fallback={<div>Loading...</div>}>
-        <InventoriesTool onInventorySuccess={handleInventoryCallBack} count={0} itemWithId={itemId} />
-      </React.Suspense>
+      <InventoriesTool
+        onInventorySuccess={handleInventoryCallBack}
+        count={0}
+        itemWithId={itemId}
+      />
     </CardFooter>
 
   </>;
