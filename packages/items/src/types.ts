@@ -74,3 +74,7 @@ export type EditInventoryRequest = {
 export type EditInventoryResponse = {
   message: string;
 };
+
+export type WithdrawInventoryRequest = {
+  quantity: number;
+};

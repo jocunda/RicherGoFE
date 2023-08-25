@@ -160,7 +160,7 @@ export default function AppInventoryList() {
       renderCell: (item) => {
         return (
           <div className={styles.actionsContainer}>
-            <AppWithdrawInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
+            <AppWithdrawInventory inventoryId={item.id} itemDataForForm={item} />
             <AppEditInventory onItemEditSuccess={handleInventoryCallBack} inventoryId={item.id} itemDataForForm={item} />
             <AppDeleteInventory onInventoryDeleteSuccess={handleInventoryCallBack} inventoryId={item.id} />
           </div>
