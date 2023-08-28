@@ -8,6 +8,8 @@ import type {
   ResetPassResponse,
   LogoutResponse,
   GetUserResponse,
+  AddUserDetailRequest,
+  AddUserDetailResponse,
 } from "./types";
 
 // export async function login(payload: LoginRequest) {
@@ -37,4 +39,8 @@ export async function logoutUser() {
 
 export async function getUser() {
   return api.get<GetUserResponse>("/api/auth/username");
+}
+
+export async function addUserDetail(payload: AddUserDetailRequest) {
+  return api.post<AddUserDetailResponse>("/api/auth/addUserDetail", payload);
 }

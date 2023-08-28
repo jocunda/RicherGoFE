@@ -45,7 +45,6 @@ export default function UserProfile() {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
       console.log(errMessage)
-
     }
     if (data) {
       setUserData(data);

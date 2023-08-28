@@ -33,6 +33,23 @@ export type LogoutResponse = {
 };
 
 export type GetUserResponse = {
+  id: string;
   username: string;
   email: string;
+  name: string;
+  department: string;
+  employmentDate: Date;
+  role: string;
+};
+
+export type AddUserDetailRequest = {
+  name: string;
+  department: string;
+  employmentDate: Date;
+  role: string;
+  userId: string;
+};
+
+export type AddUserDetailResponse = {
+  message: string;
 };

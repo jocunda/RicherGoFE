@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // import { useLoaderData } from "react-router-dom";
 
@@ -18,24 +18,24 @@ import {
   Toaster,
 } from "@fluentui/react-components";
 import {
-  bundleIcon,
-  DocumentAdd24Filled,
-  DocumentAdd24Regular,
+  // bundleIcon,
+  // DocumentAdd24Filled,
+  // DocumentAdd24Regular,
   AddCircle24Regular,
 } from "@fluentui/react-icons";
 
 // APIs
-import { addInventory } from "@mimo/items";
+import { getUser, addUserDetail } from "@mimo/authentication";
+//type
+import { AddUserDetailRequest } from "@mimo/authentication";
 
-// types
-import type { AddInventoryRequest } from "@mimo/items";
 
 //form validation
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
+// const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
 
 
 // const getCharacterValidationError = (str: string) => {
@@ -44,13 +44,16 @@ const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
 
 const schema = yup.object({
   name: yup.string()
-    .min(4, 'Code must be at least 6 characters long')
-    .required('Please Enter Item Code'),
-  department: yup.number()
-    .min(1)
-    .max(1000000),
-  employmentDate: yup.string(),
-  role: yup.string()
+    .min(3, 'Name must be at least 3 characters long')
+    .max(50, 'Name must be below 50 characters')
+    .required('Please Enter your Name'),
+  department: yup.string()
+    .min(3, 'Department must be at least 3 characters long')
+    .max(50, 'Department must be below 50 characters')
+    .required('Please Enter your Department'),
+  employmentDate: yup.date()
+    .required('Please Enter your Employment Date'),
+  role: yup.string(),
 }).required();
 
 export default function UserSetting() {
@@ -77,6 +80,25 @@ export default function UserSetting() {
     );
   }
 
+  const [userData, setUserData] = useState<{ [key: string]: string }>({});
+
+  //retrieve user data
+  useEffect(() => {
+    userDataGet();
+  }, []);
+
+  const userDataGet = async () => {
+    const { data, error, errorMessage } = await getUser();
+    if (error) {
+      const obj = JSON.stringify(errorMessage);
+      const errMessage = JSON.parse(obj)
+      errorNotify(errMessage.message)
+    }
+    if (data) {
+      setUserData(data);
+    }
+  }
+
   //react-hook-form
   const { register,
     handleSubmit,
@@ -90,15 +112,8 @@ export default function UserSetting() {
     await trigger(fieldName);
   };
 
-  type AddEmployeeRequest = {
-    name: string;
-    department: string;
-    employmentDate: Date;
-    role: string;
-    userId: string;
-  };
 
-  const convertToAddEmployeeRequest = (dataInput: FieldValues): AddEmployeeRequest => {
+  const convertToAddEmployeeRequest = (dataInput: FieldValues): AddUserDetailRequest => {
     const { name, department, employmentDate, role, userId } = dataInput;
     return {
       name: name as string,
@@ -109,10 +124,14 @@ export default function UserSetting() {
     };
   };
 
+
   const onSubmit: SubmitHandler<FieldValues> = async (dataInput, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
     const addEmployeeRequest = convertToAddEmployeeRequest(dataInput);
-    const { data, error, errorMessage } = await addInventory({ ...addEmployeeRequest, userId });
+    const { data, error, errorMessage } = await addUserDetail({
+      ...addEmployeeRequest,
+      userId: userData.id
+    });
 
     //show alert
     if (error) {
@@ -136,45 +155,58 @@ export default function UserSetting() {
     >
       <Field
         size="large"
-        label="Item"
+        label="Name"
         orientation="horizontal"
-      >
-        <span>value</span>
-      </Field>
-      <Field
-        size="large"
-        label="Position"
-        orientation="horizontal"
-      >
-        <span><DocumentAddIcon /></span>
-      </Field>
-
-      <Field
-        size="large"
-        label="Code"
-        validationState={errors.code ? "error" : "none"}
+        validationState={errors.name ? "error" : "none"}
         validationMessage={
-          errors.code ? `${errors.code?.message}` : null}
-        required
+          errors.name ? `${errors.name?.message}` : null}
       >
         <Input
           size="large"
-          {...register("code")}
-          onBlur={() => handleInputBlur("code")}
+          {...register("name")}
+          onBlur={() => handleInputBlur("name")}
         />
       </Field>
       <Field
         size="large"
-        label="Qty"
-        validationState={errors.quantity ? "error" : "none"}
+        label="Department"
+        orientation="horizontal"
+        validationState={errors.department ? "error" : "none"}
         validationMessage={
-          errors.quantity ? `${errors.quantity?.message}` : null}
+          errors.department ? `${errors.department?.message}` : null}
       >
         <Input
           size="large"
-          type="number"
-          {...register("quantity")}
-          onBlur={() => handleInputBlur("quantity")}
+          {...register("department")}
+          onBlur={() => handleInputBlur("department")}
+        />
+      </Field>
+      <Field
+        size="large"
+        label="Employment Date"
+        orientation="horizontal"
+        validationState={errors.employmentDate ? "error" : "none"}
+        validationMessage={
+          errors.employmentDate ? `${errors.employmentDate?.message}` : null}
+      >
+        <Input
+          size="large"
+          {...register("employmentDate")}
+          onBlur={() => handleInputBlur("employmentDate")}
+        />
+      </Field>
+      <Field
+        size="large"
+        label="Role"
+        orientation="horizontal"
+        validationState={errors.role ? "error" : "none"}
+        validationMessage={
+          errors.role ? `${errors.role?.message}` : null}
+      >
+        <Input
+          size="large"
+          {...register("role")}
+          onBlur={() => handleInputBlur("role")}
         />
       </Field>
 
@@ -182,7 +214,7 @@ export default function UserSetting() {
         appearance="primary"
         type="submit"
         disabled={!isDirty && !isValid}
-        icon={<AddCircle24Regular />}>Add</Button>
+        icon={<AddCircle24Regular />}>Update</Button>
     </form>
   </>
 }
