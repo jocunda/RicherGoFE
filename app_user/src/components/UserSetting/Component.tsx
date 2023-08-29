@@ -27,7 +27,7 @@ import {
 // APIs
 import { getUser, addUserDetail } from "@mimo/authentication";
 //type
-import { AddUserDetailRequest } from "@mimo/authentication";
+import { AddUserDetailRequest, GetUserResponse } from "@mimo/authentication";
 
 
 //form validation
@@ -80,7 +80,7 @@ export default function UserSetting() {
     );
   }
 
-  const [userData, setUserData] = useState<{ [key: string]: string }>({});
+  const [userData, setUserData] = useState<GetUserResponse>();
 
   //retrieve user data
   useEffect(() => {
@@ -130,7 +130,7 @@ export default function UserSetting() {
     const addEmployeeRequest = convertToAddEmployeeRequest(dataInput);
     const { data, error, errorMessage } = await addUserDetail({
       ...addEmployeeRequest,
-      userId: userData.id
+      userId: userData?.id
     });
 
     //show alert

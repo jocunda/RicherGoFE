@@ -47,7 +47,7 @@ export type AddUserDetailRequest = {
   department: string;
   employmentDate: Date;
   role: string;
-  userId: string;
+  userId: string | undefined;
 };
 
 export type AddUserDetailResponse = {
