@@ -28,7 +28,6 @@ import {
   Toast,
   useToastController,
   Toaster,
-  ToastIntent,
 } from "@fluentui/react-components";
 import {
   bundleIcon,
@@ -49,64 +48,49 @@ import styles from './styles.module.scss';
 import { logoutUser } from "@mimo/authentication";
 
 
-//other component
-// import ResetPasswordForm from "../ResetPasswordForm/Component";
-
 export default function AppUser() {
   const user = sessionStorage.getItem("user")
 
   //toaster fluent
   const toasterId = useId("toaster");
   const { dispatchToast } = useToastController(toasterId);
-  const [intent, setIntent] = React.useState<
-    ToastIntent | "progress" | "avatar"
-  >("info");
-  const notify = (message: string) => {
-    switch (intent) {
-      case "error":
-      case "info":
-      case "success":
-      case "warning":
-        dispatchToast(
-          <Toast>
-            <ToastTitle>{message}</ToastTitle>
-          </Toast>,
-          { position: "top-end", intent }
-        );
-        break;
-    }
+  const errorNotify = (message: string) => {
+    dispatchToast(
+      <Toast>
+        <ToastTitle>{message}</ToastTitle>
+      </Toast>,
+      { position: "top-end", intent: "error" }
+    );
   };
 
-  //alert message
-  // const [alertMessage, setAlertMessage] = useState<string | undefined>(undefined);
-  // const [isError, setIsError] = useState<boolean>()
+  const successNotify = (message: string) => {
+    dispatchToast(
+      <Toast>
+        <ToastTitle>{message}</ToastTitle>
+      </Toast>,
+      { position: "top-end", intent: "success" }
+    );
+  };
 
   //router things
   const data = useLoaderData();
   console.log('user: ', data);
+
+  //routerDOM
   const navigate = useNavigate();
   const { tab } = useParams();
 
   const handleLogout = async () => {
-    console.log("logout")
     sessionStorage.clear();
     const { data, error, errorMessage } = await logoutUser();
     if (error) {
       const obj = JSON.stringify(errorMessage);
       const errMessage = JSON.parse(obj)
-      // setAlertMessage(errMessage.message);
-      // setIsError(true)
-
-      setIntent("error")
-      notify(errMessage.message)
+      errorNotify(errMessage.message)
     }
     if (data) {
       const { message } = data;
-      // setAlertMessage(message);
-      // setIsError(false)
-
-      setIntent("success")
-      notify(message)
+      successNotify(message);
     }
     navigate("/");
   }
@@ -164,33 +148,8 @@ export default function AppUser() {
 
 
 
-
-  //for alert animation
-  // useEffect(() => {
-  //   let timeoutId: any;
-
-  //   if (alertMessage) {
-  //     timeoutId = setTimeout(() => {
-  //       setAlertMessage('');
-  //     }, 8000);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [alertMessage]);
-
   return <>
     <Toaster toasterId={toasterId} />
-
-    {/* <div className={styles.alertSection}>
-      {alertMessage && (
-        <Alert intent={isError ? "error" : "success"}>
-          {alertMessage}
-        </Alert>
-      )}
-
-    </div> */}
 
     <div className={styles.headerContainer} >
       <div className={styles.userHeader}>

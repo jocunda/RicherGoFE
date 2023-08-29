@@ -28,5 +28,9 @@
       "container",
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@fluentui/react-date-time": "^8.7.110",
+    "@fluentui/react-datepicker-compat": "^0.3.6"
   }
 }

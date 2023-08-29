@@ -23,6 +23,7 @@ import {
   // DocumentAdd24Regular,
   AddCircle24Regular,
 } from "@fluentui/react-icons";
+import { DatePicker } from "@fluentui/react-datepicker-compat";
 
 // APIs
 import { getUser, addUserDetail } from "@mimo/authentication";
@@ -38,9 +39,15 @@ import * as yup from "yup";
 // const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
 
 
-// const getCharacterValidationError = (str: string) => {
-//   return `Your password must have at least 1 ${str} character`;
-// };
+const onFormatDate = (date?: Date): string => {
+  return !date
+    ? ""
+    : date.getDate() +
+    "/" +
+    (date.getMonth() + 1) +
+    "/" +
+    (date.getFullYear() % 100);
+};
 
 const schema = yup.object({
   name: yup.string()
@@ -57,6 +64,40 @@ const schema = yup.object({
 }).required();
 
 export default function UserSetting() {
+
+  //date picker FluentUI
+  const [value, setValue] = React.useState<Date | null | undefined>(null);
+  const datePickerRef = React.useRef<HTMLInputElement>(null);
+
+  const onClick = React.useCallback((): void => {
+    setValue(null);
+    datePickerRef.current?.focus();
+  }, []);
+
+  const onParseDateFromString = React.useCallback(
+    (newValue: string): Date => {
+      const previousValue = value || new Date();
+      const newValueParts = (newValue || "").trim().split("/");
+      const day =
+        newValueParts.length > 0
+          ? Math.max(1, Math.min(31, parseInt(newValueParts[0], 10)))
+          : previousValue.getDate();
+      const month =
+        newValueParts.length > 1
+          ? Math.max(1, Math.min(12, parseInt(newValueParts[1], 10))) - 1
+          : previousValue.getMonth();
+      let year =
+        newValueParts.length > 2
+          ? parseInt(newValueParts[2], 10)
+          : previousValue.getFullYear();
+      if (year < 100) {
+        year +=
+          previousValue.getFullYear() - (previousValue.getFullYear() % 100);
+      }
+      return new Date(year, month, day);
+    },
+    [value]
+  );
 
   //toaster fluent
   const toasterId = useId("toaster");
@@ -195,6 +236,26 @@ export default function UserSetting() {
           onBlur={() => handleInputBlur("employmentDate")}
         />
       </Field>
+
+      <Field label="Select a date. Input format is day slash month slash year.">
+        <DatePicker
+          ref={datePickerRef}
+          allowTextInput
+          value={value}
+          onSelectDate={setValue as (date?: Date | null) => void}
+          formatDate={onFormatDate}
+          parseDateFromString={onParseDateFromString}
+          placeholder="Select a date..."
+          className={styles.control}
+        />
+      </Field>
+      <div>
+        <Button onClick={onClick} className={styles.clearButton}>
+          Clear
+        </Button>
+        <div>Selected date: {(value || "").toString()}</div>
+      </div>
+
       <Field
         size="large"
         label="Role"
