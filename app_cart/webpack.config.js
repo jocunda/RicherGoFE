@@ -64,6 +64,7 @@ module.exports = {
           exposes: {
             // expose each component
             "./AppCart": "./src/components/AppCart",
+            "./AppCartPreview": "./src/components/AppCartPreview",
           },
           shared: {
             ...deps,

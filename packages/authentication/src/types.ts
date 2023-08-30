@@ -45,7 +45,7 @@ export type GetUserResponse = {
 export type AddUserDetailRequest = {
   name: string;
   department: string;
-  employmentDate: Date;
+  employmentDate: string | null | undefined;
   role: string;
   userId: string | undefined;
 };

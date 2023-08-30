@@ -19,9 +19,9 @@ import {
 } from "@fluentui/react-components";
 import {
   // bundleIcon,
-  // DocumentAdd24Filled,
-  // DocumentAdd24Regular,
-  AddCircle24Regular,
+  // ArrowSync24Filled,
+  ArrowSync24Regular,
+
 } from "@fluentui/react-icons";
 import { DatePicker } from "@fluentui/react-datepicker-compat";
 
@@ -36,7 +36,7 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-// const DocumentAddIcon = bundleIcon(DocumentAdd24Filled, DocumentAdd24Regular);
+// const ArrowSyncIcon = bundleIcon(ArrowSync24Filled, ArrowSync24Regular);
 
 
 const onFormatDate = (date?: Date): string => {
@@ -46,7 +46,7 @@ const onFormatDate = (date?: Date): string => {
     "/" +
     (date.getMonth() + 1) +
     "/" +
-    (date.getFullYear() % 100);
+    (date.getFullYear());
 };
 
 const schema = yup.object({
@@ -58,8 +58,8 @@ const schema = yup.object({
     .min(3, 'Department must be at least 3 characters long')
     .max(50, 'Department must be below 50 characters')
     .required('Please Enter your Department'),
-  employmentDate: yup.date()
-    .required('Please Enter your Employment Date'),
+  // employmentDate: yup.date()
+  //   .required('Please Enter your Employment Date'),
   role: yup.string(),
 }).required();
 
@@ -68,11 +68,6 @@ export default function UserSetting() {
   //date picker FluentUI
   const [value, setValue] = React.useState<Date | null | undefined>(null);
   const datePickerRef = React.useRef<HTMLInputElement>(null);
-
-  const onClick = React.useCallback((): void => {
-    setValue(null);
-    datePickerRef.current?.focus();
-  }, []);
 
   const onParseDateFromString = React.useCallback(
     (newValue: string): Date => {
@@ -159,7 +154,7 @@ export default function UserSetting() {
     return {
       name: name as string,
       department: department as string,
-      employmentDate: employmentDate as Date,
+      employmentDate: employmentDate as string,
       role: role as string,
       userId: userId as string,
     };
@@ -171,9 +166,11 @@ export default function UserSetting() {
     const addEmployeeRequest = convertToAddEmployeeRequest(dataInput);
     const { data, error, errorMessage } = await addUserDetail({
       ...addEmployeeRequest,
+      employmentDate: value ? value.toISOString().slice(0, 19).replace('T', ' ') : null,
       userId: userData?.id
-    });
 
+    });
+    debugger
     //show alert
     if (error) {
       const obj = JSON.stringify(errorMessage);
@@ -222,6 +219,7 @@ export default function UserSetting() {
           onBlur={() => handleInputBlur("department")}
         />
       </Field>
+
       <Field
         size="large"
         label="Employment Date"
@@ -230,14 +228,6 @@ export default function UserSetting() {
         validationMessage={
           errors.employmentDate ? `${errors.employmentDate?.message}` : null}
       >
-        <Input
-          size="large"
-          {...register("employmentDate")}
-          onBlur={() => handleInputBlur("employmentDate")}
-        />
-      </Field>
-
-      <Field label="Select a date. Input format is day slash month slash year.">
         <DatePicker
           ref={datePickerRef}
           allowTextInput
@@ -246,15 +236,8 @@ export default function UserSetting() {
           formatDate={onFormatDate}
           parseDateFromString={onParseDateFromString}
           placeholder="Select a date..."
-          className={styles.control}
         />
       </Field>
-      <div>
-        <Button onClick={onClick} className={styles.clearButton}>
-          Clear
-        </Button>
-        <div>Selected date: {(value || "").toString()}</div>
-      </div>
 
       <Field
         size="large"
@@ -275,7 +258,7 @@ export default function UserSetting() {
         appearance="primary"
         type="submit"
         disabled={!isDirty && !isValid}
-        icon={<AddCircle24Regular />}>Update</Button>
+        icon={<ArrowSync24Regular />}>Update</Button>
     </form>
   </>
 }
