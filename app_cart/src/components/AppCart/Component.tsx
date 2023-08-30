@@ -36,57 +36,56 @@ export default function AppCart() {
   );
 
   const onSelected3Change = React.useCallback(
-    (_: React.ChangeEvent<HTMLInputElement>, state: StateType) => setCheckboxState(state, setSelected3),
+    (_: any, state: any) => setCheckboxState(state, setSelected3),
     [setCheckboxState]
   );
   const onSelected4Change = React.useCallback(
-    (_: React.ChangeEvent<HTMLInputElement>, state: StateType) => setCheckboxState(state, setSelected4),
+    (_: any, state: any) => setCheckboxState(state, setSelected4),
     [setCheckboxState]
   );
 
   return <>
-    <div className={styles.row}>
-      <Card
-        className={styles.card}
-        selected={selected3}
-        onSelectionChange={onSelected3Change}
-        floatingAction={
-          <Checkbox onChange={onSelected3Change} checked={selected3} />
+    <Card
+      className={styles.card}
+      selected={selected3}
+      onSelectionChange={onSelected3Change}
+      floatingAction={
+        <Checkbox onChange={onSelected3Change} checked={selected3} />
+      }
+    >
+      <CardHeader
+        image={
+          <img src={resolveAsset("docx.png")} alt="Microsoft Word Logo" />
         }
-      >
-        <CardHeader
-          image={
-            <img src={resolveAsset("docx.png")} alt="Microsoft Word Logo" />
-          }
-          header={<Text weight="semibold">Secret Project Briefing</Text>}
-          description={
-            <Caption1 className={styles.caption}>
-              OneDrive &gt; Documents
-            </Caption1>
-          }
-        />
-      </Card>
+        header={<Text weight="semibold">Inventory</Text>}
+        description={
+          <Caption1 className={styles.caption}>
+            Item name <br /> 1
+          </Caption1>
+        }
+      />
+    </Card>
 
-      <Card
-        className={styles.card}
-        selected={selected4}
-        onSelectionChange={onSelected4Change}
-        floatingAction={
-          <Checkbox onChange={onSelected4Change} checked={selected4} />
+    <Card
+      className={styles.card}
+      selected={selected4}
+      onSelectionChange={onSelected4Change}
+      floatingAction={
+        <Checkbox onChange={onSelected4Change} checked={selected4} />
+      }
+    >
+      <CardHeader
+        image={
+          <img src={resolveAsset("xlsx.png")} alt="Microsoft Excel Logo" />
         }
-      >
-        <CardHeader
-          image={
-            <img src={resolveAsset("xlsx.png")} alt="Microsoft Excel Logo" />
-          }
-          header={<Text weight="semibold">Team Budget</Text>}
-          description={
-            <Caption1 className={styles.caption}>
-              OneDrive &gt; Spreadsheets
-            </Caption1>
-          }
-        />
-      </Card>
-    </div>
+        header={<Text weight="semibold">Inventory Name</Text>}
+        description={
+          <Caption1 className={styles.caption}>
+            Item name <br /> 1
+          </Caption1>
+
+        }
+      />
+    </Card>
   </>;
 }
